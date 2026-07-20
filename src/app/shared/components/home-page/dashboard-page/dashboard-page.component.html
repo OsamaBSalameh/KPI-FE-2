@@ -1,0 +1,201 @@
+<div class="dashboard-page">
+  <div class="dashboard-hero">
+    <div>
+      <h2><i class="fas fa-tachometer-alt"></i> KPI Dashboard</h2>
+      <p>Stay on top of performance trends, pending approvals, and upcoming deadlines in one place.</p>
+    </div>
+    <a routerLink="/homeNavbar" class="back-link">
+      <i class="fas fa-arrow-left"></i> Back to home
+    </a>
+  </div>
+
+  <div class="status-box" *ngIf="isLoading">
+    Loading KPI data from the system...
+  </div>
+
+  <div class="status-box" *ngIf="!isLoading && !hasData">
+    No KPI data is available yet. Start submitting or reviewing KPI records to populate this dashboard.
+  </div>
+
+  <div class="summary-grid" *ngIf="!isLoading && hasData">
+    <div class="summary-card" *ngFor="let card of summaryCards" [ngClass]="'card-' + card.color">
+      <div class="card-icon">
+        <i [class]="card.icon"></i>
+      </div>
+      <div class="card-content">
+        <h3>{{ card.title }}</h3>
+        <div class="card-value">{{ card.value }}</div>
+        <div class="card-meta">{{ card.change }}</div>
+        <div class="card-description">{{ card.description }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-grid">
+    <section class="panel chart-panel">
+      <div class="panel-header">
+        <h3><i class="fas fa-percentage"></i> Achievement overview</h3>
+      </div>
+      <div class="achievement-layout">
+        <div class="ring-card">
+          <svg width="160" height="160" viewBox="0 0 140 140">
+            <circle cx="70" cy="70" r="54" class="ring-track"></circle>
+            <circle
+              cx="70"
+              cy="70"
+              r="54"
+              class="ring-progress"
+              [attr.stroke-dasharray]="ringCircumference"
+              [attr.stroke-dashoffset]="getCircleOffset(achievementOverview.achieved)"
+            ></circle>
+          </svg>
+          <div class="ring-center">
+            <strong>{{ achievementOverview.achieved }}%</strong>
+            <span>Achievement</span>
+          </div>
+        </div>
+        <div class="achievement-metrics">
+          <div class="metric-box">
+            <span class="metric-label">Completed</span>
+            <strong>{{ achievementOverview.completed }} items</strong>
+          </div>
+          <div class="metric-box">
+            <span class="metric-label">Target</span>
+            <strong>{{ achievementOverview.target }}%</strong>
+          </div>
+          <div class="metric-box">
+            <span class="metric-label">Remaining</span>
+            <strong>{{ achievementOverview.remaining }} gaps</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel chart-panel">
+      <div class="panel-header">
+        <h3><i class="fas fa-chart-column"></i> Department performance</h3>
+      </div>
+      <div class="department-list">
+        <div class="department-item" *ngFor="let department of departmentPerformance">
+          <div class="department-meta">
+            <strong>{{ department.name }}</strong>
+            <span>{{ department.value }}%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" [style.width.%]="department.value" [style.background]="department.color"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="dashboard-grid">
+    <section class="panel panel-large">
+      <div class="panel-header">
+        <h3><i class="fas fa-bolt"></i> Quick actions</h3>
+      </div>
+      <div class="action-grid">
+        <a class="action-item" *ngFor="let action of quickActions" [routerLink]="action.link">
+          <div class="action-icon">
+            <i [class]="action.icon"></i>
+          </div>
+          <div>
+            <strong>{{ action.title }}</strong>
+            <p>{{ action.description }}</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h3><i class="fas fa-exclamation-circle"></i> Needs attention</h3>
+      </div>
+      <ul class="attention-list">
+        <li *ngFor="let item of attentionItems">
+          <strong>{{ item.title }}</strong>
+          <span>{{ item.text }}</span>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="dashboard-grid secondary-grid">
+    <section class="panel">
+      <div class="panel-header">
+        <h3><i class="fas fa-chart-line"></i> Trend snapshot</h3>
+      </div>
+      <div class="trend-chart">
+        <svg viewBox="0 0 240 90" preserveAspectRatio="none">
+          <path d="M10 70 L40 58 L70 62 L100 48 L130 35 L170 25 L210 20 L230 15" class="trend-grid"></path>
+          <polyline [attr.points]="getTrendPoints(trendSeries)" class="trend-line"></polyline>
+        </svg>
+        <div class="trend-labels">
+          <span>Jan</span>
+          <span>Feb</span>
+          <span>Mar</span>
+          <span>Apr</span>
+          <span>May</span>
+          <span>Jun</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h3><i class="fas fa-trophy"></i> Top performers</h3>
+      </div>
+      <div class="activity-list">
+        <div class="activity-item" *ngFor="let performer of topPerformers">
+          <span class="activity-dot"></span>
+          <div>
+            <strong>{{ performer.name }}</strong>
+            <p>{{ performer.value }}% progress • {{ performer.status }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h3><i class="fas fa-history"></i> Recent activity</h3>
+      </div>
+      <div class="activity-list">
+        <div class="activity-item" *ngFor="let activity of recentActivity">
+          <span class="activity-dot"></span>
+          <div>
+            <strong>{{ activity.title }}</strong>
+            <p>{{ activity.time }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h3><i class="fas fa-exclamation-triangle"></i> Risk indicators</h3>
+      </div>
+      <div class="deadline-list">
+        <div class="deadline-item" *ngFor="let risk of riskItems">
+          <div>
+            <strong>{{ risk.title }}</strong>
+            <span>{{ risk.text }}</span>
+          </div>
+          <span class="risk-badge" [ngClass]="'risk-' + risk.severity.toLowerCase()">{{ risk.severity }}</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h3><i class="fas fa-calendar-check"></i> Upcoming deadlines</h3>
+      </div>
+      <div class="deadline-list">
+        <div class="deadline-item" *ngFor="let deadline of upcomingDeadlines">
+          <strong>{{ deadline.title }}</strong>
+          <span>{{ deadline.date }}</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

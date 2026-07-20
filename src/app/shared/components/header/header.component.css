@@ -65,3 +65,27 @@
 .cls-2 {
     fill: #27688f;
 }
+
+.theme-toggle-btn {
+    border: none;
+    background: transparent;
+    color: #1f2937;
+    padding: 8px 10px;
+    margin: 0 8px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+body.dark-theme .theme-toggle-btn {
+    color: #f8fafc !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+}
+
+body.dark-theme .theme-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+}

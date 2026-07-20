@@ -22,6 +22,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   notifications: Notification[] = [];
 
   messagesCount: number = 0;
+  isDarkMode = false;
 
   //#endregion
 
@@ -44,6 +45,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.initUser();
     this.initNotifications();
     this.getMyNewMessages();
+    this.initTheme();
   }
 
   ngOnDestroy(): void {}
@@ -91,12 +93,31 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
+  toggleTheme(): void {
+    this.isDarkMode = !this.isDarkMode;
+    this.applyTheme(this.isDarkMode);
+  }
+
   //#endregion
 
   //#region Private
 
   private initUser() {
     this.currentUser = this.authService.getUserInfo();
+  }
+
+  private initTheme(): void {
+    const savedTheme = localStorage.getItem('kpi-theme');
+    this.isDarkMode = savedTheme === 'dark';
+    this.applyTheme(this.isDarkMode);
+  }
+
+  private applyTheme(isDark: boolean): void {
+    document.body.classList.toggle('dark-theme', isDark);
+    document.body.classList.toggle('light-theme', !isDark);
+    document.documentElement.classList.toggle('dark-theme', isDark);
+    document.documentElement.classList.toggle('light-theme', !isDark);
+    localStorage.setItem('kpi-theme', isDark ? 'dark' : 'light');
   }
 
   private initNotifications() {

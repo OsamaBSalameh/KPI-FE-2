@@ -32,6 +32,7 @@ import { CaptchaComponent } from './components/captcha/captcha.component';
 import { InputBehaveClassDirective } from './directives/input-behave-class.directive';
 import { ConfirmationModalComponent } from './components/modals/confirmation-modal/confirmation-modal.component';
 import { MessagesLandPageComponent } from './components/my-messages/messages-land-page/messages-land-page.component';
+import { DashboardPageComponent } from './components/home-page/dashboard-page/dashboard-page.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { MessagesLandPageComponent } from './components/my-messages/messages-lan
     TileNavigatorComponent,
     InputBehaveClassDirective,
     MessagesLandPageComponent,
+    DashboardPageComponent,
   ],
   imports: [
     CommonModule,

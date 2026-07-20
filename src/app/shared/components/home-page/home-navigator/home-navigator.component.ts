@@ -91,6 +91,12 @@ export class HomeNavigatorComponent implements OnInit {
 
     this.kpiList = [
       {
+        name: 'Dashboard',
+        icon: 'fas fa-tachometer-alt',
+        link: '/homeNavbar/dashboard',
+        roles: ['SUPER_ADMIN', 'WORK_SPACE_ADMIN', 'CEO', 'KPI_OWNER', 'DATA_CUSTADION', 'DATA_SPONSER'],
+      },
+      {
         name: 'KPI Templates',
         icon: 'ion ion-stats-bars',
         link: '/kpi/list',

@@ -5,6 +5,7 @@ import { HomeNavigatorComponent } from './components/home-page/home-navigator/ho
 import { NotificationListComponent } from './components/notification-list/notification-list.component';
 import { ProfileManagerComponent } from './components/profile/profile-manager/profile-manager.component';
 import { MessagesLandPageComponent } from './components/my-messages/messages-land-page/messages-land-page.component';
+import { DashboardPageComponent } from './components/home-page/dashboard-page/dashboard-page.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,17 @@ const routes: Routes = [
         only: ['SUPER_ADMIN', 'WORK_SPACE_ADMIN', 'CEO', 'KPI_OWNER', 'DATA_CUSTADION', 'DATA_SPONSER'],
         redirectTo: '/homeNavbar',
         // default: '/login'
+      },
+    },
+  },
+  {
+    path: 'dashboard',
+    component: DashboardPageComponent,
+    canActivate: [NgxPermissionsGuard],
+    data: {
+      permissions: {
+        only: ['SUPER_ADMIN', 'WORK_SPACE_ADMIN', 'CEO', 'KPI_OWNER', 'DATA_CUSTADION', 'DATA_SPONSER'],
+        redirectTo: '/homeNavbar',
       },
     },
   },

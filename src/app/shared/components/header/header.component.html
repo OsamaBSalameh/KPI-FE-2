@@ -191,6 +191,12 @@
             </a>
         </li> -->
         <li class="nav-item">
+            <a href="#" class="theme-toggle-btn nav-link" (click)="toggleTheme(); $event.preventDefault()" title="Toggle theme">
+                <i class="fas" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a (click)="logout()" routerLink="#" class="nav-link" data-bs-toggle="dropdown"
                 style="padding: 10px;margin: 0 10px 0 0;">
                 <!-- <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 69.96 51.19">
