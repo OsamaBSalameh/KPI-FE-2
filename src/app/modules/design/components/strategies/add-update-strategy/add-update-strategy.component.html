@@ -1,0 +1,685 @@
+<div id="strategy-model" class="modern-kpi-modal">
+    <div class="modal-header">
+        <div class="header-content">
+            <div class="icon-wrapper">
+                <i class="fas fa-chess"></i>
+            </div>
+            <div class="title-section">
+                <h5 class="modal-title">{{actionType}} Strategy</h5>
+                <p class="modal-subtitle">Define key strategy for your organization</p>
+            </div>
+        </div>
+        <button type="button" class="btn-close" (click)="close()" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+
+    <div id="strategyDiv" class="modal-body content-body">
+        <form [formGroup]="strategyForm" (ngSubmit)="onSubmit()">
+
+
+
+            <!-- Strategy Details Card -->
+            <div class="form-card">
+                <div class="card-header-custom">
+                    <i class="fas fa-cogs"></i>
+                    <span>Strategy Details</span>
+                </div>
+                <div class="card-body-custom">
+                    <div class="row g-3">
+
+                        <!-- Strategy Name -->
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-caret-square-o-right input-icon"></i>
+                                    <label for="name" class="form-label">Strategy name<span
+                                            class="required-star">*</span></label>
+                                    <input type="text" class="form-control modern-input font-size-16 height-100per"
+                                        formControlName="name" id="name" placeholder="Enter strategy name"
+                                        [ngClass]="{ 'is-invalid': submitted && formFields['name'].errors }"
+                                        [ngClass]="{ 'is-valid': submitted && !formFields['name'].errors }">
+                                </div>
+                                <div class="invalid-feedback d-block mt-2">
+                                    <span
+                                        *ngIf="(submitted && formFields['name'].errors) && (formFields['name'].errors['required'])">
+                                        <i class="fas fa-exclamation-circle"></i> Value is Mandatory
+                                    </span>
+                                    <span
+                                        *ngIf="(submitted && formFields['name'].errors) && (formFields['name'].errors['maxlength'])">
+                                        <i class="fas fa-exclamation-circle"></i> Maximum allowed characters is 1000
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Select Scorecards -->
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-tasks input-icon"></i>
+                                    <label for="selectedScorecards" class="form-label">Scorecards<span
+                                            class="required-star">*</span></label>
+                                    <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="scorecards"
+                                        formControlName="selectedScorecards" [placeholder]="'Select Scorecards'"
+                                        (onSelect)="onScorecardSelect($event)"
+                                        (onDeSelect)="onDeSelectScorecard($event)" (onDeSelectAll)="onDeSelectAll()"
+                                        (onSelectAll)="onSelectAllScorecards($event)" 
+                                        [ngClass]="{ 'is-invalid': submitted && formFields['selectedScorecards'].errors, 
+                                        'is-valid': submitted && !formFields['selectedScorecards'].errors }">
+                                    </ng-multiselect-dropdown>
+                                </div>
+                                <div class="invalid-feedback d-block mt-2">
+                                    <span
+                                        *ngIf="(submitted && formFields['selectedScorecards'].errors) && (formFields['selectedScorecards'].errors['required'])">
+                                        <i class="fas fa-exclamation-circle"></i> Value is Mandatory
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Start Date -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-calendar-check input-icon"></i>
+                                    <label for="startDate" class="form-label">Start date<span
+                                            class="required-star">*</span></label>
+                                    <div class="input-group">
+                                        <input formControlName="startDate" placeholder="dd-mm-yyyy" name="dp_StartDate"
+                                            type="text"
+                                            [ngClass]="{ 'is-invalid': submitted && formFields['startDate'].errors }"
+                                            [ngClass]="{ 'is-valid': submitted && !formFields['startDate'].errors }"
+                                            #startDateId="ngbDatepicker" class="form-control modern-input height-100per"
+                                            ngbDatepicker />
+
+                                        <div class="input-group-append"><button
+                                                class="btn btn-outline-secondary calendar"
+                                                (click)="startDateId.toggle()" type="button">
+                                            </button></div>
+
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback d-block mt-2">
+                                    <span
+                                        *ngIf="(submitted && formFields['startDate'].errors) && (formFields['startDate'].errors['required'])">
+                                        <i class="fas fa-exclamation-circle"></i> Value is Mandatory
+                                    </span>
+                                    <span
+                                        *ngIf="(submitted && formFields['startDate'].errors) && (formFields['startDate'].errors['lessThan'])">
+                                        <i class="fas fa-exclamation-circle"></i> Value should be less than End date
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End Date -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-calendar-times input-icon"></i>
+                                    <label for="endDate" class="form-label">End date<span
+                                            class="required-star">*</span></label>
+                                    <div class="input-group">
+                                        <input formControlName="endDate" placeholder="dd-mm-yyyy" name="dp_EndDate"
+                                            type="text"
+                                            [ngClass]="{ 'is-invalid': submitted && formFields['endDate'].errors }"
+                                            [ngClass]="{ 'is-valid': submitted && !formFields['endDate'].errors }"
+                                            #endDateId="ngbDatepicker" class="form-control modern-input height-100per"
+                                            ngbDatepicker />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary calendar"
+                                                (click)="endDateId.toggle()" type="button">
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback d-block mt-2">
+                                    <span
+                                        *ngIf="(submitted && formFields['endDate'].errors) && (formFields['endDate'].errors['required'])">
+                                        <i class="fas fa-exclamation-circle"></i> Value is Mandatory
+                                    </span>
+                                    <span
+                                        *ngIf="(submitted && formFields['endDate'].errors) && (formFields['endDate'].errors['greaterThan'])">
+                                        <i class="fas fa-exclamation-circle"></i> Value should be greater than Start
+                                        Date
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scorecard Weights Table -->
+            <div class="form-card mt-4">
+                <div class="card-header-custom">
+                    <i class="fas fa-balance-scale"></i>
+                    <span>Scorecard Weights</span>
+                </div>
+                <div class="card-body-custom">
+                    <div class="row">
+                        <div class="form-group col-lg-8">
+                            <label for="weight">Selected Scorecard</label>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label for="weight">Weight <span style="color: #337ab7;">{{(100 -
+                                    weightSum)}}</span></label>
+                        </div>
+                    </div>
+
+                    <div formArrayName="strategyScorecards"
+                        *ngFor="let strategyScorecard of strategyScorecardFormGroups(); let i = index">
+
+                        <form class="row" [formGroupName]="i">
+
+                            <div class="form-group col-lg-8">
+                                <input class="form-control modern-input" formControlName="scorecaredName" type="text"
+                                    [attr.disabled]="true"
+                                    [ngClass]="{ 'is-invalid': submitted && strategyScorecard.controls['scorecaredName'].errors }"
+                                    [ngClass]="{ 'is-valid': submitted && !strategyScorecard.controls['scorecaredName'].errors }" />
+                            </div>
+
+                            <div class="form-group col-lg-4">
+                                <input class="form-control modern-input dummyWeightClass" formControlName="weight"
+                                    type="number" step="1" placeholder="add weight"
+                                    (keyup)="calculateWeight($event.target)"
+                                    [ngClass]="{ 'is-invalid': submitted && weightSumNotEnough && strategyScorecard.controls['weight'].errors }"
+                                    [ngClass]="{ 'is-valid': submitted && !weightSumNotEnough && !strategyScorecard.controls['weight'].errors }" />
+
+                                <div class="inner-validation-div text-danger">
+                                    <span *ngIf="(submitted && strategyScorecard.controls['weight'].errors) && 
+                                                 (strategyScorecard.controls['weight'].errors['required'])">
+                                        Value is Mandatory
+                                    </span>
+                                    <span *ngIf="(submitted && weightSumNotEnough)">
+                                        weight sum should be 100
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Accordion -->
+            <div class="form-card mt-4">
+                <div class="card-header-custom">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>Settings</span>
+                </div>
+                <div id="accordion">
+                    <div class="card card-primary-dark">
+                        <!-- <div class="card-header">
+                            <h4 class="card-title w-100">
+                                <a class="d-block w-100" data-bs-toggle="collapse" href="#collapseOne">
+                                    Settings
+                                </a>
+                            </h4>
+                        </div> -->
+                        <div class="card-body">
+
+                            <!-- Q1 -->
+                            <label for="firstQuarterSettings">First Quarter</label>
+                            <hr>
+
+                            <form class="row" formGroupName="firstQuarterSettings">
+
+                                <div class="col-lg-4">
+                                    <div for="startDate">Start date<span class="redStar">*</span></div>
+                                    <div class="input-group">
+                                        <input formControlName="startDate" placeholder="dd-mm-yyyy" name="q1_StartDate"
+                                            type="text"
+                                            [ngClass]="{ 'is-invalid': submitted && Q1SettingsformFields['startDate'].errors }"
+                                            [ngClass]="{ 'is-valid': submitted && !Q1SettingsformFields['startDate'].errors }"
+                                            #startDateQ1Id="ngbDatepicker" class="form-control modern-input"
+                                            ngbDatepicker />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary calendar"
+                                                (click)="startDateQ1Id.toggle()" type="button"></button>
+                                        </div>
+                                    </div>
+
+                                    <div class="validation-div text-danger">
+                                        <span
+                                            *ngIf="(submitted && Q1SettingsformFields['startDate'].errors) && 
+                                                                                             (Q1SettingsformFields['startDate'].errors['required'])">
+                                            Value is Mandatory
+                                        </span>
+                                        <span
+                                            *ngIf="(submitted && Q1SettingsformFields['startDate'].errors) && 
+                                                                                (Q1SettingsformFields['startDate'].errors['lessThan'])">
+                                            Value should be less than End date
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div for="endDate">End date<span class="redStar">*</span></div>
+                                    <div class="input-group">
+                                        <input formControlName="endDate" placeholder="dd-mm-yyyy" name="q1_EndDate"
+                                            type="text"
+                                            [ngClass]="{ 'is-invalid': submitted && Q1SettingsformFields['endDate'].errors }"
+                                            [ngClass]="{ 'is-valid': submitted && !Q1SettingsformFields['endDate'].errors }"
+                                            #endDateQ1Id="ngbDatepicker" class="form-control modern-input"
+                                            ngbDatepicker />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary calendar"
+                                                (click)="endDateQ1Id.toggle()" type="button"></button>
+                                        </div>
+                                    </div>
+
+                                    <div class="validation-div text-danger">
+                                        <span *ngIf="(submitted && Q1SettingsformFields['endDate'].errors) && 
+                                                         (Q1SettingsformFields['endDate'].errors['required'])">
+                                            Value is Mandatory
+                                        </span>
+                                        <span *ngIf="(submitted && Q1SettingsformFields['endDate'].errors) && 
+                                            (Q1SettingsformFields['endDate'].errors['greaterThan'])">
+                                            Value should be greater than End date
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-4">
+                                    <div for="reminderLifespan">Reminder</div>
+                                    <div class="input-group">
+                                        <input class="form-control modern-input" min="1" step="1"
+                                            formControlName="reminderLifespan" type="number"
+                                            [ngClass]="{ 'is-invalid': submitted && Q1SettingsformFields['reminderLifespan'].errors }"
+                                            [ngClass]="{ 'is-valid': submitted && !Q1SettingsformFields['reminderLifespan'].errors }" />
+                                    </div>
+
+                                    <div class="validation-div text-danger">
+                                        <span
+                                            *ngIf="(submitted && Q1SettingsformFields['reminderLifespan'].errors) && 
+                                                             (Q1SettingsformFields['reminderLifespan'].errors['required'])">
+                                            Value is Mandatory
+                                        </span>
+                                        <span *ngIf="(submitted && Q1SettingsformFields['reminderLifespan'].errors) && 
+                                                         (Q1SettingsformFields['reminderLifespan'].errors['pattern'])">
+                                            Only real positive numbers
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </form>
+                            <!-- Q1 -->
+
+
+                            <!-- Q2s -->
+                            <label for="secondQuarterSettings">Second Quarter</label>
+                            <hr>
+
+                            <form class="row" formGroupName="secondQuarterSettings">
+
+                                <div class="col-lg-4">
+                                    <div for="q2_StartDate">Start date<span class="redStar">*</span></div>
+                                    <div class="input-group">
+                                        <input formControlName="startDate" placeholder="dd-mm-yyyy" name="q2_StartDate"
+                                            type="text"
+                                            [ngClass]="{ 'is-invalid': submitted && Q2SettingsformFields['startDate'].errors }"
+                                            [ngClass]="{ 'is-valid': submitted && !Q2SettingsformFields['startDate'].errors }"
+                                            #startDateQ2Id="ngbDatepicker" class="form-control modern-input"
+                                            ngbDatepicker />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary calendar"
+                                                (click)="startDateQ2Id.toggle()" type="button"></button>
+                                        </div>
+                                    </div>
+
+                                    <div class="validation-div text-danger">
+                                        <span
+                                            *ngIf="(submitted && Q2SettingsformFields['startDate'].errors) && 
+                                                                                             (Q2SettingsformFields['startDate'].errors['required'])">
+                                            Value is Mandatory
+                                        </span>
+                                        <span
+                                            *ngIf="(submitted && Q2SettingsformFields['startDate'].errors) && 
+                                                                                (Q2SettingsformFields['startDate'].errors['lessThan'])">
+                                            Value should be less than End date
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div for="q2_endDate">End date<span class="redStar">*</span></div>
+                                    <div class="input-group">
+                                        <input formControlName="endDate" placeholder="dd-mm-yyyy" name="q2_endDate"
+                                            type="text"
+                                            [ngClass]="{ 'is-invalid': submitted && Q2SettingsformFields['endDate'].errors }"
+                                            [ngClass]="{ 'is-valid': submitted && !Q2SettingsformFields['endDate'].errors }"
+                                            #endDateQ2Id="ngbDatepicker" class="form-control modern-input"
+                                            ngbDatepicker />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary calendar"
+                                                (click)="endDateQ2Id.toggle()" type="button"></button>
+                                        </div>
+                                    </div>
+
+                                    <div class="validation-div text-danger">
+                                        <span
+                                            *ngIf="(submitted && Q2SettingsformFields['endDate'].errors) && 
+                                                                                             (Q2SettingsformFields['endDate'].errors['required'])">
+                                            Value is Mandatory
+                                        </span>
+                                        <span
+                                            *ngIf="(submitted && Q2SettingsformFields['endDate'].errors) && 
+                                                                                (Q2SettingsformFields['endDate'].errors['greaterThan'])">
+                                            Value should be greater than End date
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-4">
+                                    <div for="reminderLifespan">Reminder</div>
+                                    <div class="input-group"> <input class="form-control modern-input"
+                                            formControlName="reminderLifespan" type="number" min="1" step="1"
+                                            [ngClass]="{ 'is-invalid': submitted && Q2SettingsformFields['reminderLifespan'].errors }"
+                                            [ngClass]="{ 'is-valid': submitted && !Q2SettingsformFields['reminderLifespan'].errors }" />
+                                    </div>
+
+                                    <div class="validation-div text-danger">
+                                        <span
+                                            *ngIf="(submitted && Q2SettingsformFields['reminderLifespan'].errors) && 
+                                                             (Q2SettingsformFields['reminderLifespan'].errors['required'])">
+                                            Value is Mandatory
+                                        </span>
+                                        <span *ngIf="(submitted && Q2SettingsformFields['reminderLifespan'].errors) && 
+                                                         (Q2SettingsformFields['reminderLifespan'].errors['pattern'])">
+                                            Only real positive numbers
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </form>
+                            <!-- Q2 -->
+
+
+                            <!-- Q3 -->
+                            <label for="thirdQuarterSettings">Third Quarter</label>
+                            <hr>
+
+                            <form class="row" formGroupName="thirdQuarterSettings">
+
+                                <div class="col-lg-4">
+                                    <div for="q3_StartDate">Start date<span class="redStar">*</span></div>
+                                    <div class="input-group">
+                                        <input formControlName="startDate" placeholder="dd-mm-yyyy" name="q3_StartDate"
+                                            type="text"
+                                            [ngClass]="{ 'is-invalid': submitted && Q3SettingsformFields['startDate'].errors }"
+                                            [ngClass]="{ 'is-valid': submitted && !Q3SettingsformFields['startDate'].errors }"
+                                            #startDateQ3Id="ngbDatepicker" class="form-control modern-input"
+                                            ngbDatepicker />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary calendar"
+                                                (click)="startDateQ3Id.toggle()" type="button"></button>
+                                        </div>
+                                    </div>
+
+                                    <div class="validation-div text-danger">
+                                        <span
+                                            *ngIf="(submitted && Q3SettingsformFields['startDate'].errors) && 
+                                                                                             (Q3SettingsformFields['startDate'].errors['required'])">
+                                            Value is Mandatory
+                                        </span>
+                                        <span
+                                            *ngIf="(submitted && Q3SettingsformFields['startDate'].errors) && 
+                                                                                (Q3SettingsformFields['startDate'].errors['lessThan'])">
+                                            Value should be less than End date
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div for="q3_endDate">End date<span class="redStar">*</span></div>
+                                    <div class="input-group">
+                                        <input formControlName="endDate" placeholder="dd-mm-yyyy" name="q3_endDate"
+                                            type="text"
+                                            [ngClass]="{ 'is-invalid': submitted && Q3SettingsformFields['endDate'].errors }"
+                                            [ngClass]="{ 'is-valid': submitted && !Q3SettingsformFields['endDate'].errors }"
+                                            #endDateQ3Id="ngbDatepicker" class="form-control modern-input"
+                                            ngbDatepicker />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary calendar"
+                                                (click)="endDateQ3Id.toggle()" type="button"></button>
+                                        </div>
+                                    </div>
+
+                                    <div class="validation-div text-danger">
+                                        <span
+                                            *ngIf="(submitted && Q3SettingsformFields['endDate'].errors) && 
+                                                                                             (Q3SettingsformFields['endDate'].errors['required'])">
+                                            Value is Mandatory
+                                        </span>
+                                        <span
+                                            *ngIf="(submitted && Q3SettingsformFields['endDate'].errors) && 
+                                                                                (Q3SettingsformFields['endDate'].errors['greaterThan'])">
+                                            Value should be greater than End date
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-4">
+                                    <div for="reminderLifespan">Reminder</div>
+                                    <div class="input-group"> <input class="form-control modern-input"
+                                            formControlName="reminderLifespan" type="number" min="1" step="1"
+                                            [ngClass]="{ 'is-invalid': submitted && Q3SettingsformFields['reminderLifespan'].errors }"
+                                            [ngClass]="{ 'is-valid': submitted && !Q3SettingsformFields['reminderLifespan'].errors }" />
+                                    </div>
+
+                                    <div class="validation-div text-danger">
+                                        <span
+                                            *ngIf="(submitted && Q3SettingsformFields['reminderLifespan'].errors) && 
+                                                             (Q3SettingsformFields['reminderLifespan'].errors['required'])">
+                                            Value is Mandatory
+                                        </span>
+
+                                        <span *ngIf="(submitted && Q3SettingsformFields['reminderLifespan'].errors) && 
+                                                         (Q3SettingsformFields['reminderLifespan'].errors['pattern'])">
+                                            Only real positive numbers
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </form>
+                            <!-- Q3 -->
+
+
+                            <!-- Q4 -->
+                            <label for="forthQuarterSettings">Forth Quarter</label>
+                            <hr>
+
+                            <form class="row" formGroupName="forthQuarterSettings">
+
+                                <div class="col-lg-4">
+                                    <div for="q4_StartDate">Start date<span class="redStar">*</span></div>
+                                    <div class="input-group">
+                                        <input formControlName="startDate" placeholder="dd-mm-yyyy" name="q4_StartDate"
+                                            type="text"
+                                            [ngClass]="{ 'is-invalid': submitted && Q4SettingsformFields['startDate'].errors }"
+                                            [ngClass]="{ 'is-valid': submitted && !Q4SettingsformFields['startDate'].errors }"
+                                            #startDateQ4Id="ngbDatepicker" class="form-control modern-input"
+                                            ngbDatepicker />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary calendar"
+                                                (click)="startDateQ4Id.toggle()" type="button"></button>
+                                        </div>
+                                    </div>
+
+                                    <div class="validation-div text-danger">
+                                        <span
+                                            *ngIf="(submitted && Q4SettingsformFields['startDate'].errors) && 
+                                                                                             (Q4SettingsformFields['startDate'].errors['required'])">
+                                            Value is Mandatory
+                                        </span>
+                                        <span
+                                            *ngIf="(submitted && Q4SettingsformFields['startDate'].errors) && 
+                                                                                (Q4SettingsformFields['startDate'].errors['lessThan'])">
+                                            Value should be less than End date
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div for="q4_endDate">End date<span class="redStar">*</span></div>
+                                    <div class="input-group">
+                                        <input formControlName="endDate" placeholder="dd-mm-yyyy" name="q4_endDate"
+                                            type="text"
+                                            [ngClass]="{ 'is-invalid': submitted && Q4SettingsformFields['endDate'].errors }"
+                                            [ngClass]="{ 'is-valid': submitted && !Q4SettingsformFields['endDate'].errors }"
+                                            #endDateQ4Id="ngbDatepicker" class="form-control modern-input"
+                                            ngbDatepicker />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary calendar"
+                                                (click)="endDateQ4Id.toggle()" type="button"></button>
+                                        </div>
+                                    </div>
+
+                                    <div class="validation-div text-danger">
+                                        <span
+                                            *ngIf="(submitted && Q4SettingsformFields['endDate'].errors) && 
+                                                                                             (Q4SettingsformFields['endDate'].errors['required'])">
+                                            Value is Mandatory
+                                        </span>
+                                        <span
+                                            *ngIf="(submitted && Q4SettingsformFields['endDate'].errors) && 
+                                                                                (Q4SettingsformFields['endDate'].errors['greaterThan'])">
+                                            Value should be greater than End date
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-4">
+                                    <div for="reminderLifespan">Reminder</div>
+                                    <div class="input-group"> <input class="form-control modern-input"
+                                            formControlName="reminderLifespan" type="number" min="1" step="1"
+                                            [ngClass]="{ 'is-invalid': submitted && Q4SettingsformFields['reminderLifespan'].errors }"
+                                            [ngClass]="{ 'is-valid': submitted && !Q4SettingsformFields['reminderLifespan'].errors }" />
+                                    </div>
+
+                                    <div class="validation-div text-danger">
+                                        <span
+                                            *ngIf="(submitted && Q4SettingsformFields['reminderLifespan'].errors) && 
+                                                             (Q4SettingsformFields['reminderLifespan'].errors['required'])">
+                                            Value is Mandatory
+                                        </span>
+
+                                        <span *ngIf="(submitted && Q4SettingsformFields['reminderLifespan'].errors) && 
+                                                         (Q4SettingsformFields['reminderLifespan'].errors['pattern'])">
+                                            Only real positive numbers
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </form>
+                            <!-- Q4 -->
+
+
+                            <!-- Y -->
+                            <label for="yearlySettings">Yearly settings</label>
+                            <hr>
+
+                            <form class="row" formGroupName="yearlySettings">
+                                <div class="col-lg-4">
+                                    <div for="y_StartDate">Start date<span class="redStar">*</span></div>
+                                    <div class="input-group">
+                                        <input formControlName="startDate" placeholder="dd-mm-yyyy" name="y_StartDate"
+                                            type="text"
+                                            [ngClass]="{ 'is-invalid': submitted && YSettingsformFields['startDate'].errors }"
+                                            [ngClass]="{ 'is-valid': submitted && !YSettingsformFields['startDate'].errors }"
+                                            #startDateYId="ngbDatepicker" class="form-control modern-input"
+                                            ngbDatepicker />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary calendar"
+                                                (click)="startDateYId.toggle()" type="button"></button>
+                                        </div>
+                                    </div>
+
+                                    <div class="validation-div text-danger">
+                                        <span
+                                            *ngIf="(submitted && YSettingsformFields['startDate'].errors) && 
+                                                                                             (YSettingsformFields['startDate'].errors['required'])">
+                                            Value is Mandatory
+                                        </span>
+                                        <span
+                                            *ngIf="(submitted && YSettingsformFields['startDate'].errors) && 
+                                                                                (YSettingsformFields['startDate'].errors['lessThan'])">
+                                            Value should be less than End date
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div for="y_endDate">End date<span class="redStar">*</span></div>
+                                    <div class="input-group">
+                                        <input formControlName="endDate" placeholder="dd-mm-yyyy" name="y_endDate"
+                                            type="text"
+                                            [ngClass]="{ 'is-invalid': submitted && YSettingsformFields['endDate'].errors }"
+                                            [ngClass]="{ 'is-valid': submitted && !YSettingsformFields['endDate'].errors }"
+                                            #endDateYId="ngbDatepicker" class="form-control modern-input"
+                                            ngbDatepicker />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary calendar"
+                                                (click)="endDateYId.toggle()" type="button"></button>
+                                        </div>
+                                    </div>
+
+                                    <div class="validation-div text-danger">
+                                        <span
+                                            *ngIf="(submitted && YSettingsformFields['endDate'].errors) && 
+                                                                                             (YSettingsformFields['endDate'].errors['required'])">
+                                            Value is Mandatory
+                                        </span>
+                                        <span
+                                            *ngIf="(submitted && YSettingsformFields['endDate'].errors) && 
+                                                                                (YSettingsformFields['endDate'].errors['greaterThan'])">
+                                            Value should be greater than End date
+                                        </span>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-lg-4">
+                                    <div for="reminderLifespan">Reminder</div>
+                                    <div class="input-group"> <input class="form-control modern-input"
+                                            formControlName="reminderLifespan" type="number" min="1" step="1"
+                                            [ngClass]="{ 'is-invalid': submitted && YSettingsformFields['reminderLifespan'].errors }"
+                                            [ngClass]="{ 'is-valid': submitted && !YSettingsformFields['reminderLifespan'].errors }" />
+                                    </div>
+
+                                    <div class="validation-div text-danger">
+                                        <span
+                                            *ngIf="(submitted && YSettingsformFields['reminderLifespan'].errors) && 
+                                                             (YSettingsformFields['reminderLifespan'].errors['required'])">
+                                            Value is Mandatory
+                                        </span>
+                                        <span *ngIf="(submitted && YSettingsformFields['reminderLifespan'].errors) && 
+                                                         (YSettingsformFields['reminderLifespan'].errors['pattern'])">
+                                            Only real positive numbers
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- Y -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Unified Footer -->
+            <div class="modal-footer-custom justify-content-between">
+                <button type="button" (click)="close()" class="btn btn-outline-danger">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button type="submit" [disabled]="view" class="btn btn-primary modern-btn btn-save"
+                    *ngxPermissionsOnly="['WORK_SPACE_ADMIN']">
+                    <i class="fas fa-save"></i> Save changes
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

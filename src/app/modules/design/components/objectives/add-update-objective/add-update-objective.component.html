@@ -1,0 +1,261 @@
+<!-- <div id="kpi-model" class=" modern-kpi-modal">
+    <div class="modal-header">
+        <div class="header-content">
+            <div class="icon-wrapper">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="title-section">
+                <h5 class="modal-title">{{actionType}} Objective</h5>
+                <p class="modal-subtitle">Define key objective for your organization</p>
+            </div>
+        </div>
+        <button type="button" class="btn-close" (click)="close()" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <div id="objectiveDiv" class="modal-body content-body">
+        <form [formGroup]="objectiveForm" (ngSubmit)="onSubmit()">
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <label for="name">Objective name<span class="redStar">*</span></label>
+
+                    <textarea formControlName="name" id="name" placeholder="Enter objective name"
+                        class="form-control font-size-16 height-50" rows="3"
+                        [ngClass]="{ 'is-invalid': submitted && formFileds['name'].errors }"
+                        [ngClass]="{ 'is-valid': submitted && !formFileds['name'].errors }"></textarea>
+
+                    <div class="validation-div text-danger">
+                        <span *ngIf="(submitted && formFileds['name'].errors) && 
+                                    (formFileds['name'].errors['required'])">
+                            Value is Mandatory
+                        </span>
+                        <span *ngIf="(submitted && formFileds['name'].errors) && 
+                        (formFileds['name'].errors['maxlength'])">
+                            Maximum allowed characters is 1000
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <label for="code">Objective code<span class="redStar">*</span></label>
+                    <input type="text" class="form-control font-size-16 height-50" formControlName="code" id="code"
+                        placeholder="Enter objective code"
+                        [ngClass]="{ 'is-invalid': submitted && formFileds['code'].errors }"
+                        [ngClass]="{ 'is-valid': submitted && !formFileds['code'].errors }">
+                    <div class="validation-div text-danger">
+                        <span *ngIf="(submitted && formFileds['code'].errors) && 
+                                    (formFileds['code'].errors['required'])">
+                            Value is Mandatory
+                        </span>
+                        <span *ngIf="(submitted && formFileds['code'].errors) && 
+                        (formFileds['code'].errors['maxlength'])">
+                            Maximum allowed characters is 100
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <label for="target">Objective target</label>
+                    <input type="number" class="form-control font-size-16 height-50" formControlName="target"
+                        id="target" placeholder="Enter objective target"
+                        [ngClass]="{ 'is-invalid': submitted && formFileds['target'].errors }"
+                        [ngClass]="{ 'is-valid': submitted && !formFileds['target'].errors }">
+                    <div class="validation-div text-danger">
+                        <span *ngIf="(submitted && formFileds['target'].errors) && 
+                                    (formFileds['target'].errors['required'])">
+                            Value is Mandatory
+                        </span>
+                        <span *ngIf="(submitted && formFileds['target'].errors) && 
+                        (formFileds['target'].errors['maxlength'])">
+                            Maximum allowed characters is 100
+                        </span>
+                        <span *ngIf="(submitted && formFileds['target'].errors) && 
+                        (formFileds['target'].errors['pattern'])">
+                            Only numbers allowed
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <label for="measurmentUnit">Objective measurment unit</label>
+                    <select formControlName="measurmentUnit" class="form-select form-control font-size-16 height-50"
+                        id="measurmentUnit"
+                        [ngClass]="{ 'is-invalid': submitted && formFileds['measurmentUnit'].errors }"
+                        [ngClass]="{ 'is-valid': submitted && !formFileds['measurmentUnit'].errors }">
+                        <option *ngFor="let unit of measurmentUnits" value="{{unit.id}}">{{unit.value}}</option>
+                    </select>
+                    <div class="validation-div text-danger">
+                        <span *ngIf="(submitted && formFileds['measurmentUnit'].errors) && 
+                                    (formFileds['measurmentUnit'].errors['min'])">
+                            Value is Mandatory
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer justify-content-between">
+                <button type="button" (click)="close()" class="btn btn-outline-danger"
+                    data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+    </div>
+</div> -->
+
+
+<div id="objective-modal" class="modern-kpi-modal">
+    <!-- Unified Modern Header -->
+    <div class="modal-header">
+        <div class="header-content">
+            <div class="icon-wrapper">
+                <i class="fas fa-bullseye"></i> <!-- Icon representing objective/target -->
+            </div>
+            <div class="title-section">
+                <h5 class="modal-title">{{actionType}} Objective</h5>
+                <p class="modal-subtitle">Define key objective for your organization</p>
+            </div>
+        </div>
+        <button type="button" class="btn-close" (click)="close()" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <div id="objectiveDiv" class="modal-body content-body">
+        <form [formGroup]="objectiveForm" (ngSubmit)="onSubmit()">
+
+            <!-- Unified Card Wrapper -->
+            <div class="form-card">
+                <div class="card-header-custom">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>Objective Details</span>
+                </div>
+                <div class="card-body-custom">
+                    <div class="row g-3">
+
+                        <!-- Objective Name -->
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-caret-square-o-right input-icon"></i>
+                                    <label for="name" class="form-label">Objective name<span
+                                            class="required-star">*</span></label>
+                                    <textarea formControlName="name" id="name" placeholder="Enter objective name"
+                                        class="form-control modern-input modern-textarea" rows="3"
+                                        [ngClass]="{ 'is-invalid': submitted && formFileds['name'].errors }"
+                                        [ngClass]="{ 'is-valid': submitted && !formFileds['name'].errors }"></textarea>
+                                </div>
+                                <div class="validation-messages">
+                                    <span
+                                        *ngIf="(submitted && formFileds['name'].errors) && (formFileds['name'].errors['required'])">
+                                        <i class="fas fa-exclamation-circle"></i> Value is Mandatory
+                                    </span>
+                                    <span
+                                        *ngIf="(submitted && formFileds['name'].errors) && (formFileds['name'].errors['maxlength'])">
+                                        <i class="fas fa-exclamation-circle"></i> Maximum allowed characters is 1000
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Objective Code -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-hashtag input-icon"></i>
+                                    <label for="code" class="form-label">Objective code<span
+                                            class="required-star">*</span></label>
+                                    <input type="text" class="form-control height-100per modern-input"
+                                        formControlName="code" id="code" placeholder="Enter objective code"
+                                        [ngClass]="{ 'is-invalid': submitted && formFileds['code'].errors }"
+                                        [ngClass]="{ 'is-valid': submitted && !formFileds['code'].errors }">
+                                </div>
+                                <div class="validation-messages">
+                                    <span
+                                        *ngIf="(submitted && formFileds['code'].errors) && (formFileds['code'].errors['required'])">
+                                        <i class="fas fa-exclamation-circle"></i> Value is Mandatory
+                                    </span>
+                                    <span
+                                        *ngIf="(submitted && formFileds['code'].errors) && (formFileds['code'].errors['maxlength'])">
+                                        <i class="fas fa-exclamation-circle"></i> Maximum allowed characters is 100
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Objective Target -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-crosshairs input-icon"></i>
+                                    <label for="target" class="form-label">Objective target<span
+                                            class="required-star">*</span></label>
+                                    <input type="number" class="form-control height-100per modern-input"
+                                        formControlName="target" id="target" placeholder="Enter objective target"
+                                        [ngClass]="{ 'is-invalid': submitted && formFileds['target'].errors }"
+                                        [ngClass]="{ 'is-valid': submitted && !formFileds['target'].errors }">
+                                </div>
+                                <div class="validation-messages">
+                                    <span
+                                        *ngIf="(submitted && formFileds['target'].errors) && (formFileds['target'].errors['required'])">
+                                        <i class="fas fa-exclamation-circle"></i> Value is Mandatory
+                                    </span>
+                                    <span
+                                        *ngIf="(submitted && formFileds['target'].errors) && (formFileds['target'].errors['maxlength'])">
+                                        <i class="fas fa-exclamation-circle"></i> Maximum allowed characters is 100
+                                    </span>
+                                    <span
+                                        *ngIf="(submitted && formFileds['target'].errors) && (formFileds['target'].errors['pattern'])">
+                                        <i class="fas fa-exclamation-circle"></i> Only numbers allowed
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Measurement Unit -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-ruler input-icon"></i>
+                                    <label for="measurmentUnit" class="form-label">Measurement unit<span
+                                            class="required-star">*</span></label>
+                                    <select formControlName="measurmentUnit" class="form-select modern-select"
+                                        id="measurmentUnit"
+                                        [ngClass]="{ 'is-invalid': submitted && formFileds['measurmentUnit'].errors }"
+                                        [ngClass]="{ 'is-valid': submitted && !formFileds['measurmentUnit'].errors }">
+                                        <option *ngFor="let unit of measurmentUnits" value="{{unit.id}}">{{unit.value}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="validation-messages">
+                                    <span
+                                        *ngIf="(submitted && formFileds['measurmentUnit'].errors) && (formFileds['measurmentUnit'].errors['min'])">
+                                        <i class="fas fa-exclamation-circle"></i> Value is Mandatory
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Unified Footer -->
+            <div class="modal-footer-custom justify-content-between">
+                <button type="button" (click)="close()" class="btn btn-outline-danger">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button type="submit" [disabled]="view" class="btn btn-primary modern-btn btn-save"
+                    *ngxPermissionsOnly="['WORK_SPACE_ADMIN']">
+                    <i class="fas fa-save"></i> Save changes
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

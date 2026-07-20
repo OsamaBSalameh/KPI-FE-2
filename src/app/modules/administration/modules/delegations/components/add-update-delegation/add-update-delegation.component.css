@@ -1,0 +1,28 @@
+/* ng-multiselect-dropdown validations */
+:host ::ng-deep .is-invalid .multiselect-dropdown div .dropdown-btn {
+  border: 1px solid #D3001F;
+}
+
+:host ::ng-deep .is-valid .multiselect-dropdown div .dropdown-btn {
+  border: 1px solid #28a745;
+}
+
+:host  ::ng-deep .multiselect-dropdown>div>span.dropdown-btn {
+  display: inline-flex !important;
+}
+.col-lg-2:empty {
+  display: none;
+}
+
+.multiselect-dropdown .dropdown-btn{
+  display: inline-flex !important;
+}
+
+:host  ::ng-deep .multiselect-dropdown>div>span.dropdown-btn>span {
+  padding: 10px 0px 10px 30px !important;
+}
+
+.form-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+    transform: none !important;
+}

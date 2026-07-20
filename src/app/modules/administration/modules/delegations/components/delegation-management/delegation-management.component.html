@@ -1,0 +1,227 @@
+<div class="delegations-management-container">
+    <!-- Header Section -->
+    <div class="management-header">
+        <div class="header-content">
+            <div class="header-title-section">
+                <h1 class="page-title">
+                    <i class="fas fa-exchange-alt me-3"></i>Delegations Management
+                </h1>
+                <p class="page-subtitle">Manage user role delegations and permissions</p>
+            </div>
+
+            <div class="header-actions">
+                <div class="filter-section" *ngxPermissionsOnly="['SUPER_ADMIN']" style="padding: 0 1rem;">
+                    <label for="organizationFilter" class="filter-label">
+                        <i class="fas fa-filter me-2"></i>Department:
+                    </label>
+                    <select class="filter-select" id="organizationFilter" [value]="selectedUnit"
+                        (change)="onOrganizationSelect($event.target)" [class.filter-active]="selectedUnit != 0">
+                        <option value="0">All Departments</option>
+                        <option *ngFor="let unit of allUnits" [value]="unit.id">{{unit.name}}</option>
+                    </select>
+                </div>
+
+                <button type="button" class="btn btn-add-delegation" (click)="add(AddUpdateDelegation_template)"
+                    *ngxPermissionsOnly="['SUPER_ADMIN','KPI_OWNER']">
+                    <i class="fas fa-plus me-2"></i>Add Delegation
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="table-section">
+        <div class="table-wrapper">
+            <table class="delegations-table">
+                <thead>
+                    <tr>
+                        <th class="col-id">
+                            <div class="header-cell">
+                                <span>ID</span>
+                                <button class="sort-btn" (click)="sort('Id')" title="Sort by ID">
+                                    <i class="fas fa-arrows-alt-v"></i>
+                                </button>
+                            </div>
+                        </th>
+                        <th class="col-delegate-from">
+                            <div class="header-cell">
+                                <span>Delegate From</span>
+                                <button class="sort-btn" (click)="sort('DelegateFrom')" title="Sort by Delegate From">
+                                    <i class="fas fa-arrows-alt-v"></i>
+                                </button>
+                            </div>
+                        </th>
+                        <th class="col-delegate-to">
+                            <div class="header-cell">
+                                <span>Delegate To</span>
+                                <button class="sort-btn" (click)="sort('DelegateTo')" title="Sort by Delegate To">
+                                    <i class="fas fa-arrows-alt-v"></i>
+                                </button>
+                            </div>
+                        </th>
+                        <th class="col-start-date">
+                            <div class="header-cell">
+                                <span>Start Date</span>
+                                <button class="sort-btn" (click)="sort('StartDate')" title="Sort by Start Date">
+                                    <i class="fas fa-arrows-alt-v"></i>
+                                </button>
+                            </div>
+                        </th>
+                        <th class="col-end-date">
+                            <div class="header-cell">
+                                <span>End Date</span>
+                                <button class="sort-btn" (click)="sort('EndDate')" title="Sort by End Date">
+                                    <i class="fas fa-arrows-alt-v"></i>
+                                </button>
+                            </div>
+                        </th>
+                        <th class="col-status">
+                            <div class="header-cell">
+                                <span>Status</span>
+                                <button class="sort-btn" (click)="sort('Status')" title="Sort by Status">
+                                    <i class="fas fa-arrows-alt-v"></i>
+                                </button>
+                            </div>
+                        </th>
+                        <th class="col-actions">
+                            <div class="header-cell">
+                                <span>Actions</span>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-data-row" *ngFor="let delegation of paginatedDelegations; let i = index" [class.row-alternate]="i % 2 === 1">
+                        <td class="col-id">
+                            <span class="id-badge">{{delegation.id}}</span>
+                        </td>
+                        <td class="col-delegate-from">
+                            <div class="user-name-cell">
+                                <i class="fas fa-user-times"></i>
+                                <span class="user-name-text">
+                                    {{delegation.delegatedFrom?.firstName}} {{delegation.delegatedFrom?.lastName}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="col-delegate-to">
+                            <div class="user-name-cell">
+                                <i class="fas fa-user-check"></i>
+                                <span class="user-name-text">
+                                    {{delegation.delegatedTo?.firstName}} {{delegation.delegatedTo?.lastName}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="col-start-date">
+                            <span class="date-badge">
+                                <i class="fas fa-calendar-check"></i>
+                                {{delegation.startDate | date:'dd MMM yyyy'}}
+                            </span>
+                        </td>
+                        <td class="col-end-date">
+                            <span class="date-badge">
+                                <i class="fas fa-calendar-times"></i>
+                                {{delegation.endDate | date:'dd MMM yyyy'}}
+                            </span>
+                        </td>
+                        <td class="col-status">
+                            <span class="status-badge" [ngClass]="getStatusClass(delegation.statusId ?? 0)">
+                                <i class="fas" [ngClass]="getStatusIcon(delegation.statusId ?? 0)"></i>
+                                {{delegation?.status?.value}}
+                            </span>
+                        </td>
+                        <td class="col-actions">
+                            <div class="actions-menu">
+                                <button type="button" class="action-btn view-btn"
+                                    (click)="view(delegation, AddUpdateDelegation_template)" title="View delegation">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button type="button"
+                                    *ngIf="delegation.statusId != Completed && delegation.statusId != Stopped"
+                                    class="action-btn edit-btn"
+                                    (click)="update(delegation, AddUpdateDelegation_template)" title="Edit delegation">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button type="button"
+                                    *ngIf="delegation.statusId != Completed && delegation.statusId != Stopped"
+                                    class="action-btn stop-btn" (click)="stopDelegation(delegation, confirmationModal)"
+                                    title="Stop delegation">
+                                    <i class="fas fa-stop-circle"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" *ngIf="paginatedDelegations.length === 0">
+            <div class="empty-state-content">
+                <i class="fas fa-inbox"></i>
+                <h3>No delegations found</h3>
+                <p>Create your first delegation to get started</p>
+                <button type="button" class="btn-add-delegation mt-3" (click)="add(AddUpdateDelegation_template)"
+                    *ngxPermissionsOnly="['SUPER_ADMIN','KPI_OWNER']">
+                    <i class="fas fa-plus me-2"></i>Create First Delegation
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination Section -->
+    <div class="pagination-section">
+        <div class="pagination-info">
+            <span class="info-text">
+                total: <strong>{{paginationResult.totalCount}}</strong> delegation 
+            </span>
+            <div class="page-size-selector">
+                <label for="pageSize">Items per page:</label>
+                <select id="pageSize" class="page-size-select" (change)="onLimitChange($event.target)"
+                    [value]="paginationItem.pageSize">
+                    <option *ngFor="let option of pageLimitOptions" [value]="option">
+                        {{option}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <nav class="pagination-nav">
+            <button type="button" class="pagination-btn" [disabled]="!paginationResult.hasPreviousPage"
+                (click)="first()" title="First page">
+                <i class="fas fa-angle-double-left"></i>
+            </button>
+            <button type="button" class="pagination-btn" [disabled]="!paginationResult.hasPreviousPage"
+                (click)="previous()" title="Previous page">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <div class="page-numbers">
+                <button type="button" class="page-number-btn" *ngFor="let page of pages()"
+                    [class.active]="page === paginationItem.pageNumber" (click)="goToPage(page)">
+                    {{page}}
+                </button>
+            </div>
+
+            <button type="button" class="pagination-btn" [disabled]="!paginationResult.hasNextPage" (click)="next()"
+                title="Next page">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <button type="button" class="pagination-btn" [disabled]="!paginationResult.hasNextPage" (click)="last()"
+                title="Last page">
+                <i class="fas fa-angle-double-right"></i>
+            </button>
+        </nav>
+    </div>
+</div>
+
+<!-- Modals -->
+<ng-template #AddUpdateDelegation_template let-modal>
+    <app-add-update-delegation [modal]="addUpdateModal" (delegationAddedEvent)="delegationAddedEventHandler($event)"
+        (delegationUpdatedEvent)="delegationUpdatedEventHandler($event)">
+    </app-add-update-delegation>
+</ng-template>
+
+<ng-template #confirmationModal>
+    <app-confirmation-modal [modal]="confirmationModalReference" (confirmedEvent)="confirmedEventHandler($event)">
+    </app-confirmation-modal>
+</ng-template>

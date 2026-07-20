@@ -1,0 +1,246 @@
+/* --- General Layout --- */
+.workspace-container {
+  padding: 1.5rem;
+  max-width: 1440px;
+  margin: 0 auto;
+  background-color: #f8fafc; /* Very light slate background */
+  min-height: 100vh;
+}
+
+/* --- Header & Buttons --- */
+.workspace-container h2 {
+  font-size: 1.75rem;
+  letter-spacing: -0.025em;
+}
+
+.btn-primary {
+  background-color: #4f46e5;
+  border-color: #4f46e5;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #4338ca;
+  border-color: #4338ca;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
+}
+
+/* --- Filters Card --- */
+.card {
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* --- Table Styling --- */
+.table {
+  margin-bottom: 0;
+}
+
+.table thead th {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  background-color: #f1f5f9;
+  border-bottom: 2px solid #e2e8f0;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  white-space: nowrap;
+}
+
+.table tbody td {
+  vertical-align: middle;
+  padding: 1.25rem 1rem;
+  font-size: 0.95rem;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f8fafc;
+  transition: background-color 0.15s ease;
+}
+
+/* --- Workspace Icon (SVG) --- */
+.workspace-icon {
+  width: 44px;
+  height: 44px;
+  color: #4f46e5;
+  background: #e0e7ff;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.workspace-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* --- Avatar Group (Admins) --- */
+.avatar-group {
+  display: inline-flex;
+  align-items: center;
+}
+
+.avatar-item {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #4f46e5;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  border: 2px solid #ffffff;
+  position: relative;
+  margin-right: -8px; /* Creates the overlap effect */
+  transition: transform 0.2s ease, z-index 0s;
+  z-index: 1;
+}
+
+.avatar-item:hover {
+  transform: scale(1.15);
+  z-index: 10;
+  border-color: #4f46e5;
+}
+
+.avatar-item:last-child {
+  margin-right: 0;
+}
+
+.avatar-item.bg-light {
+  background-color: #f1f5f9;
+  color: #64748b;
+}
+
+/* --- Badges --- */
+.badge {
+  font-weight: 500;
+  padding: 0.4em 0.8em;
+  border-radius: 6px;
+  font-size: 0.8rem;
+}
+
+.badge.bg-light {
+  background-color: #f1f5f9 !important;
+  color: #475569 !important;
+  border: 1px solid #e2e8f0;
+}
+
+.badge.bg-opacity-10 {
+  background-color: rgba(79, 70, 229, 0.1) !important;
+  color: #4f46e5 !important;
+}
+
+/* --- Actions Buttons --- */
+.btn-group .btn {
+  border: 1px solid transparent;
+}
+
+.btn-outline-primary:hover {
+  background-color: #eff6ff;
+  border-color: #4f46e5;
+  color: #4f46e5;
+}
+
+.btn-outline-danger:hover {
+  background-color: #fef2f2;
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+/* --- Pagination --- */
+.pagination .page-link {
+  border: none;
+  color: #64748b;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  margin: 0 0.2rem;
+  border-radius: 6px;
+}
+
+.pagination .page-link:hover {
+  background-color: #f1f5f9;
+  color: #4f46e5;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #4f46e5;
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #cbd5e1;
+  cursor: not-allowed;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 992px) {
+  .workspace-container {
+    padding: 1rem;
+  }
+
+  .table thead th {
+    font-size: 0.7rem;
+    padding: 0.75rem 0.5rem;
+  }
+
+  .table tbody td {
+    padding: 1rem 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .avatar-item {
+    width: 28px;
+    height: 28px;
+    font-size: 0.65rem;
+    margin-right: -6px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Stack filters on mobile */
+  .col-md-5, .col-md-4, .col-md-3 {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Make table scrollable horizontally */
+  .table-responsive {
+    border-radius: 0.5rem;
+  }
+
+  /* Hide less critical columns on very small screens if needed, 
+     or just ensure horizontal scroll works well */
+  
+  .workspace-icon {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* --- Utility: Cursor Pointer for Sort --- */
+.cursor-pointer {
+  cursor: pointer;
+  user-select: none;
+}
+
+.cursor-pointer:hover {
+  color: #4f46e5 !important;
+}
+
+.page-title i {
+    font-size: 3.5rem;
+}

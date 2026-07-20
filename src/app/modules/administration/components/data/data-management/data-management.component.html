@@ -1,0 +1,101 @@
+<h2>Data</h2>
+
+<div class="row mt-3">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+
+                <div class="card-title">
+                    <ul class="pagination pagination m-0 float-end">
+                        <li class="page-item" [ngClass]="{ 'disabled': !paginationResult.hasPreviousPage }">
+                            <a class="page-link" (click)="first()"><i class="fa fa-angle-double-left"
+                                    aria-hidden="true"></i></a>
+                        </li>
+                        <li class="page-item" [ngClass]="{ 'disabled': !paginationResult.hasPreviousPage }">
+                            <a class="page-link" (click)="previous()"><i class="fa fa-angle-left"
+                                    aria-hidden="true"></i></a>
+                        </li>
+
+                        <li *ngFor="let page of pages()" class="page-item"
+                            [ngClass]="{ 'active': page == paginationItem.pageNumber }">
+                            <a class="page-link" (click)="goToPage(page)">{{page}}</a>
+                        </li>
+
+                        <li class="page-item" [ngClass]="{ 'disabled': !paginationResult.hasNextPage }">
+                            <a class="page-link" (click)="next()"><i class="fa fa-angle-right"
+                                    aria-hidden="true"></i></a>
+                        </li>
+                        <li class="page-item" [ngClass]="{ 'disabled': !paginationResult.hasNextPage }">
+                            <a class="page-link" (click)="last()"><i class="fa fa-angle-double-right"
+                                    aria-hidden="true"></i></a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card-tools">
+                    <div class="input-group input-group">
+                        <input type="text" name="table_search" [(ngModel)]="searchValue" (keydown.enter)="search()"
+                            class="height-100per form-control float-end font-size-18" placeholder="Search">
+                        <div class="input-group-append">
+                            <button type="button" (click)="search()" class="btn btn-default">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-body table-responsive p-0 minHigh-500">
+                <table class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th width="10%">ID</th>
+                            <th>Name</th>
+                            <th width="10%" class="text-end">
+                                <button type="button" class=" btn btn-primary text-white" styleClass="add"
+                                    (click)="add(AddUpdate_template)">
+                                    <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                    Add
+                                </button>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of paginatedData">
+                            <td>{{data.id}}</td>
+                            <td>{{data.name}}</td>
+                            <td class="dropdown text-end">
+                                <button class="btn dropdown align-middle" type="button" id="dropdownMenu20"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div class="three-dots"></div>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end font-size-18" aria-labelledby="dropdownMenu20">
+                                    <button class="dropdown-item" type="button"
+                                        (click)="update(data, AddUpdate_template)">Edit
+                                    </button>
+                                    <button class="dropdown-item" type="button"
+                                        (click)="copy(data, AddUpdate_template)">Copy
+                                    </button>
+                                    <button class="dropdown-item" type="button"
+                                        (click)="delete(data, deleteModal)">Delete
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #AddUpdate_template let-modal>
+    <app-add-update-data [modal]="addUpdateModal" (dataAddedEvent)="dataAddedEventHandler($event)"
+        (dataUpdatedEvent)="dataUpdatedEventHandler($event)">
+    </app-add-update-data>
+</ng-template>
+
+<ng-template #deleteModal class="test">
+    <app-delete-modal [modal]="deleteModalReference" (deletedEvent)="dataDeletedEventHandler($event)">
+    </app-delete-modal>
+</ng-template>

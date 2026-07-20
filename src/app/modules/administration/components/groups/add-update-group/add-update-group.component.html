@@ -1,0 +1,182 @@
+<!-- <div id="userPermissionGroup-model" class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">{{actionType}} Permission Group</h5>
+    </div>
+    <div id="permissionGroupDiv" class="modal-body content-body">
+        <form [formGroup]="userPermissionGroupForm" (ngSubmit)="onSubmit()">
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <label for="name">Permission Group name<span class="redStar">*</span></label>
+                    <input type="text" class="form-control" formControlName="name" id="name"
+                        placeholder="Enter userPermissionGroup name"
+                        [ngClass]="{ 'is-invalid': submitted && formFileds['name'].errors }"
+                        [ngClass]="{ 'is-valid': submitted && !formFileds['name'].errors }">
+                    <div class="validation-div text-danger">
+                        <span *ngIf="(submitted && formFileds['name'].errors) && 
+                                    (formFileds['name'].errors['required'])">
+                            Value is Mandatory
+                        </span>
+                        <span *ngIf="(submitted && formFileds['name'].errors) && 
+                        (formFileds['name'].errors['maxlength'])">
+                            Maximum allowed characters is 100
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <label>Users<span class="redStar">*</span></label>
+                    <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="allUsers"
+                        formControlName="selectedUsers" [placeholder]="'Select Users'" (onSelect)="onUserSelect($event)"
+                        (onDeSelect)="onDeSelectUser($event)" (onDeSelectAll)="onDeSelectAll()"
+                        (onSelectAll)="onSelectAllUsers($event)"
+                        [ngClass]="{ 'is-invalid': submitted && formFileds['userPermissionGroupUsers'].errors }"
+                        [ngClass]="{ 'is-valid': submitted && !formFileds['userPermissionGroupUsers'].errors }">
+                    </ng-multiselect-dropdown>
+                    <div class="validation-div text-danger">
+                        <span *ngIf="(submitted && formFileds['userPermissionGroupUsers'].errors) && 
+                                    (formFileds['userPermissionGroupUsers'].errors['required'])">
+                            Value is Mandatory
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="weight">Name</label>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="weight">Email</label>
+                    </div>
+                </div>
+
+                <div formArrayName="allUsers" *ngFor="let user of userPermissionGroupUsersFormGroups(); let i = index">
+
+                    <form class="row" [formGroupName]="i">
+
+                        <div class="form-group col-lg-6">
+                            <input class="form-control" formControlName="fullName" type="text" [attr.disabled]="true"
+                                [ngClass]="{ 'is-invalid': submitted && user.controls['fullName'].errors }"
+                                [ngClass]="{ 'is-valid': submitted && !user.controls['fullName'].errors }" />
+                        </div>
+
+                        <div class="form-group col-lg-6">
+                            <input class="form-control" formControlName="email" type="text" [attr.disabled]="true"
+                                [ngClass]="{ 'is-invalid': submitted && user.controls['email'].errors }"
+                                [ngClass]="{ 'is-valid': submitted && !user.controls['email'].errors }" />
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+            <div class="modal-footer justify-content-between">
+                <button type="button" (click)="close()" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+    </div>
+</div> -->
+
+
+<div id="permissionGroup-model" class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">{{actionType}} Permission Group</h5>
+    </div>
+    <div id="permissionGroupDiv" class="modal-body content-body">
+        <form [formGroup]="permissionGroupForm" (ngSubmit)="onSubmit()">
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <label for="name">Permission Group name<span class="redStar">*</span></label>
+                    <input type="text" class="form-control" formControlName="name" id="name"
+                        placeholder="Permission group name (only for naming)"
+                        [ngClass]="{ 'is-invalid': submitted && formFileds['name'].errors }"
+                        [ngClass]="{ 'is-valid': submitted && !formFileds['name'].errors }">
+                    <div class="validation-div text-danger">
+                        <span *ngIf="(submitted && formFileds['name'].errors) && 
+                                    (formFileds['name'].errors['required'])">
+                            Value is Mandatory
+                        </span>
+                        <span *ngIf="(submitted && formFileds['name'].errors) && 
+                        (formFileds['name'].errors['maxlength'])">
+                            Maximum allowed characters is 1000
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <label for="code">Permission Group code<span class="redStar">*</span></label>
+                    <input type="text" class="form-control" formControlName="code" id="code" 
+                        placeholder="Permission group code (no spaces allowed)" pattern="[^\s]*"
+                        [ngClass]="{ 'is-invalid': submitted && formFileds['code'].errors }"
+                        [ngClass]="{ 'is-valid': submitted && !formFileds['code'].errors }">
+                    <div class="validation-div text-danger">
+                        <span *ngIf="(submitted && formFileds['code'].errors) && 
+                                    (formFileds['code'].errors['required'])">
+                            Value is Mandatory
+                        </span>
+                        <span *ngIf="(submitted && formFileds['code'].errors) && 
+                        (formFileds['code'].errors['maxlength'])">
+                            Maximum allowed characters is 100
+                        </span>
+                        <span *ngIf="(submitted && formFileds['code'].errors) && 
+                        (formFileds['code'].errors['pattern'])">
+                            No space allowed
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    <label for="permissionGroupId">Select User<span class="redStar">*</span></label>
+                    <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="allUsers" formControlName="selectedUsers"
+                        [placeholder]="'Select Users'" (onSelect)="onUserSelect($event)"
+                        (onDeSelect)="onDeSelectUser($event)" (onDeSelectAll)="onDeSelectAll()"
+                        (onSelectAll)="onSelectAllUsers($event)">
+                    </ng-multiselect-dropdown>
+                    <div class="validation-div text-danger">
+                        <span *ngIf="(submitted && formFileds['selectedUsers'].errors) && 
+                                    (formFileds['selectedUsers'].errors['required'])">
+                            Value is Mandatory
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="weight">Selected User</label>
+                    </div>
+                </div>
+
+                <div formArrayName="userPermissionGroups" *ngFor="let permissionGroupUser of userPermissionGroupFormGroups(); let i = index">
+
+                    <form class="row" [formGroupName]="i">
+                        <div class="form-group col-lg-6">
+                            <input class="form-control" formControlName="userName" type="text" [attr.disabled]="true"
+                                [ngClass]="{ 'is-invalid': submitted && permissionGroupUser.controls['userName'].errors }"
+                                [ngClass]="{ 'is-valid': submitted && !permissionGroupUser.controls['userName'].errors }" />
+                        </div>
+
+                        <div class="form-group col-lg-6">
+                            <input class="form-control" formControlName="unitName" type="text" [attr.disabled]="true"
+                                [ngClass]="{ 'is-invalid': submitted && permissionGroupUser.controls['unitName'].errors }"
+                                [ngClass]="{ 'is-valid': submitted && !permissionGroupUser.controls['unitName'].errors }" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="modal-footer justify-content-between">
+                <button type="button" (click)="close()" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+    </div>
+</div>

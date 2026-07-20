@@ -1,0 +1,173 @@
+<div class="units-management-container">
+    <!-- Header Section -->
+    <div class="management-header">
+        <div class="header-content">
+            <div class="header-title-section">
+                <h1 class="page-title">
+                    <i class="fas fa-sitemap me-3"></i>Organization Units
+                </h1>
+                <p class="page-subtitle">Manage and organize your organizational structure</p>
+            </div>
+
+            <button type="button" class="btn btn-add-unit" (click)="add(AddUpdate_template)"
+                *ngxPermissionsOnly="['SUPER_ADMIN']">
+                <i class="fas fa-plus me-2"></i>Add Unit
+            </button>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="table-section">
+        <div class="table-wrapper">
+            <table class="units-table">
+                <thead>
+                    <tr>
+                        <th class="col-id">
+                            <div class="header-cell">
+                                <span>ID</span>
+                                <button class="sort-btn" (click)="sort('Id')" title="Sort by ID">
+                                    <i class="fas fa-arrows-alt-v"></i>
+                                </button>
+                            </div>
+                        </th>
+                        <th class="col-name" style="width: 400px;">
+                            <div class="header-cell">
+                                <span>Unit Name</span>
+                                <button class="sort-btn" (click)="sort('Name')" title="Sort by Name">
+                                    <i class="fas fa-arrows-alt-v"></i>
+                                </button>
+                            </div>
+                        </th>
+                        <th class="col-code">
+                            <div class="header-cell">
+                                <span>Unit Code</span>
+                                <button class="sort-btn" (click)="sort('Code')" title="Sort by Code">
+                                    <i class="fas fa-arrows-alt-v"></i>
+                                </button>
+                            </div>
+                        </th>
+                        <th class="col-code">
+                            <div class="header-cell">
+                                <span>Manager</span>
+                                <button class="sort-btn" (click)="sort('Code')" title="Sort by Code">
+                                    <i class="fas fa-arrows-alt-v"></i>
+                                </button>
+                            </div>
+                        </th>
+                        <th class="col-actions">
+                            <div class="header-cell">
+                                <span>Actions</span>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-data-row" *ngFor="let unit of paginatedUnits; let i = index"
+                        [class.row-alternate]="i % 2 === 1">
+                        <td class="col-id">
+                            <span class="id-badge">{{unit.id}}</span>
+                        </td>
+                        <td class="col-name">
+                            <div class="unit-name-cell">
+                                <i class="fas fa-folder-open unit-icon"></i>
+                                <span class="unit-name-text">{{unit.name}}</span>
+                            </div>
+                        </td>
+                        <td class="col-code">
+                            <span class="code-badge">{{unit.code}}</span>
+                        </td>
+                        <td class="col-code">
+                            <span class="code-badge">{{unit.ownerName}}</span>
+                        </td>
+                        <td class="col-actions">
+                            <div class="actions-menu">
+                                <button type="button" class="action-btn edit-btn"
+                                    (click)="update(unit, AddUpdate_template)" title="Edit unit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button type="button" class="action-btn copy-btn"
+                                    (click)="copy(unit, AddUpdate_template)" title="Duplicate unit">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                                <button type="button" class="action-btn delete-btn" (click)="delete(unit, deleteModal)"
+                                    title="Delete unit">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" *ngIf="paginatedUnits.length === 0">
+            <div class="empty-state-content">
+                <i class="fas fa-inbox"></i>
+                <h3>No units found</h3>
+                <p>Create your first organizational unit to get started</p>
+                <button type="button" class="btn btn-add-unit mt-3" (click)="add(AddUpdate_template)"
+                    *ngxPermissionsOnly="['SUPER_ADMIN']">
+                    <i class="fas fa-plus me-2"></i>Create First Unit
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination Section -->
+    <div class="pagination-section">
+        <div class="pagination-info">
+            <span class="info-text">
+                total: <strong>{{paginationResult.totalCount}}</strong> departments
+            </span>
+            <div class="page-size-selector">
+                <label for="pageSize">Items per page:</label>
+                <select id="pageSize" class="page-size-select" (change)="onLimitChange($event.target)"
+                    [value]="paginationItem.pageSize">
+                    <option *ngFor="let option of pageLimitOptions" [value]="option">
+                        {{option}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <nav class="pagination-nav">
+            <button type="button" class="pagination-btn" [disabled]="!paginationResult.hasPreviousPage"
+                (click)="first()" title="First page">
+                <i class="fas fa-angle-double-left"></i>
+            </button>
+            <button type="button" class="pagination-btn" [disabled]="!paginationResult.hasPreviousPage"
+                (click)="previous()" title="Previous page">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <div class="page-numbers">
+                <button type="button" class="page-number-btn" *ngFor="let page of pages()"
+                    [class.active]="page === paginationItem.pageNumber" (click)="goToPage(page)">
+                    {{page}}
+                </button>
+            </div>
+
+            <button type="button" class="pagination-btn" [disabled]="!paginationResult.hasNextPage" (click)="next()"
+                title="Next page">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <button type="button" class="pagination-btn" [disabled]="!paginationResult.hasNextPage" (click)="last()"
+                title="Last page">
+                <i class="fas fa-angle-double-right"></i>
+            </button>
+        </nav>
+    </div>
+</div>
+
+<!-- Modals -->
+<ng-template #AddUpdate_template let-modal>
+    <app-add-update-unit [modal]="addUpdateModal" (unitAddedEvent)="unitAddedEventHandler($event)"
+        (unitUpdatedEvent)="unitUpdatedEventHandler($event)">
+    </app-add-update-unit>
+</ng-template>
+
+<ng-template #deleteModal>
+    <app-delete-modal [modal]="deleteModalReference" (deletedEvent)="unitDeletedEventHandler($event)">
+    </app-delete-modal>
+</ng-template>

@@ -1,0 +1,128 @@
+/* ============================================================================
+   TABLE SECTION - STRATEGIES SPECIFIC STYLING
+   ============================================================================ */
+
+.strategies-management-container .header-text i {
+    color: #667eea;
+}
+
+/* ============================================================================
+   STATUS BADGE STYLING - STRATEGIES
+   ============================================================================ */
+
+.cell-badge.cell-id {
+    background: #e7f3ff;
+    color: #0066cc;
+}
+
+.cell-badge.cell-id i {
+    font-size: 0.9rem;
+}
+
+/* Status Badge Variants */
+.cell-badge.status-active {
+    background: #d4edda;
+    color: #155724;
+}
+
+.cell-badge.status-active i {
+    color: #28a745;
+}
+
+.cell-badge.status-inactive {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.cell-badge.status-inactive i {
+    color: #dc3545;
+}
+
+.cell-badge.status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.cell-badge.status-pending i {
+    color: #ffc107;
+}
+
+.cell-badge.status-completed {
+    background: #cce5ff;
+    color: #004085;
+}
+
+.cell-badge.status-completed i {
+    color: #0066cc;
+}
+
+/* ============================================================================
+   DATE CELL STYLING
+   ============================================================================ */
+
+.cell-date {
+    color: #667eea;
+    font-weight: 500;
+}
+
+.cell-date i {
+    margin-right: 0.4rem;
+    font-size: 0.9rem;
+}
+
+/* ============================================================================
+   ACTION BUTTONS - STRATEGIES SPECIFIC
+   ============================================================================ */
+
+.strategies-management-container .btn-action-menu {
+    color: #667eea;
+    border: 1px solid #e9ecef;
+}
+
+.strategies-management-container .btn-action-menu:hover {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.strategies-management-container .actions-dropdown-menu .dropdown-item i {
+    color: #667eea;
+}
+
+.strategies-management-container .actions-dropdown-menu .dropdown-item:hover {
+    color: #667eea;
+}
+
+.strategies-management-container .actions-dropdown-menu .dropdown-item:hover i {
+    color: #667eea;
+}
+
+/* ============================================================================
+   PAGINATION - STRATEGIES SPECIFIC
+   ============================================================================ */
+
+.strategies-management-container .pagination-btn {
+    color: #667eea;
+    border: 1px solid #e9ecef;
+}
+
+.strategies-management-container .pagination-btn:hover:not(:disabled) {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.strategies-management-container .pagination-item.active .pagination-btn {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.2);
+}
+
+/* ============================================================================
+   RESPONSIVE ADJUSTMENTS - STRATEGIES
+   ============================================================================ */
+
+   .page-title i {
+    font-size: 3.5rem;
+}

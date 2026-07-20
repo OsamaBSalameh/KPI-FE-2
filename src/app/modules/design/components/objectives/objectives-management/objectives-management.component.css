@@ -1,0 +1,485 @@
+/* ============================================================================
+   HEADER SECTION - OBJECTIVES
+   ============================================================================ */
+
+.management-header-section {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.management-header-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,50 Q300,0 600,50 T1200,50 L1200,120 L0,120 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+    background-size: cover;
+    pointer-events: none;
+}
+
+.management-header-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+/* Title */
+.management-title-wrapper {
+    flex: 1;
+    min-width: 250px;
+}
+
+.management-main-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.management-main-title i {
+    font-size: 2.2rem;
+}
+
+.management-subtitle {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0.5rem 0 0 0;
+    font-weight: 400;
+}
+
+/* Add Button */
+.btn-add {
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    color: white;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.btn-add:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-add:active {
+    transform: translateY(0);
+}
+
+.btn-add i {
+    font-size: 1.1rem;
+}
+
+/* ============================================================================
+   TABLE SECTION - OBJECTIVES
+   ============================================================================ */
+
+.management-table-section {
+    padding: 1.5rem;
+    overflow-x: auto;
+}
+
+.management-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+/* Table Header */
+.table-header-row {
+    background: linear-gradient(90deg, #f8f9fa 0%, #f0f2f5 100%);
+    border-bottom: 2px solid #e9ecef;
+}
+
+.header-cell-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.header-text {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.header-text i {
+    font-size: 0.95rem;
+    color: #f5576c;
+}
+
+/* Table Body */
+.table-data-row {
+    border-bottom: 1px solid #f0f2f5;
+    transition: all var(--transition-fast);
+}
+
+.table-data-row:hover {
+    background: #f8f9fa;
+    box-shadow: inset 0 0 8px rgba(245, 87, 108, 0.05);
+}
+
+.table-data-row.row-alternate {
+    background: #fafbfc;
+}
+
+.table-data-row.row-alternate:hover {
+    background: #f5f7fa;
+}
+
+/* Cell Content */
+.cell-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.cell-title {
+    font-weight: 600;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.cell-subtitle {
+    font-size: 0.8rem;
+    color: #999;
+}
+
+.cell-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.cell-code {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.cell-code i {
+    font-size: 0.9rem;
+}
+
+.cell-unit {
+    background: #e2e3e5;
+    color: #383d41;
+}
+
+.cell-unit i {
+    font-size: 0.9rem;
+}
+
+/* Value Cells */
+.cell-value {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cell-target {
+    color: #667eea;
+}
+
+/* Actions Cell */
+.table-actions-cell {
+    text-align: right;
+}
+
+/* ============================================================================
+   ACTIONS DROPDOWN
+   ============================================================================ */
+
+.actions-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.btn-action {
+    padding: 0.5rem 0.75rem;
+    background: transparent;
+    border: 1px solid #e9ecef;
+    color: #667eea;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    min-height: 36px;
+}
+
+.btn-action-menu:hover {
+    background: #f5576c;
+    color: white;
+    border-color: #f5576c;
+    transform: scale(1.1);
+}
+
+.btn-action-menu:active {
+    transform: scale(0.95);
+}
+
+.actions-dropdown-menu {
+    min-width: 160px;
+    border: 1px solid #e9ecef;
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem 0;
+}
+
+.actions-dropdown-menu .dropdown-item {
+    padding: 0.75rem 1rem;
+    color: #333;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border: none;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+}
+
+.actions-dropdown-menu .dropdown-item i {
+    font-size: 0.9rem;
+    width: 1.2rem;
+    text-align: center;
+    color: #667eea;
+}
+
+.actions-dropdown-menu .dropdown-item:hover {
+    background: #f8f9fa;
+    color: #f5576c;
+    padding-left: 1.25rem;
+}
+
+.actions-dropdown-menu .dropdown-item:hover i {
+    color: #f5576c;
+}
+
+.actions-dropdown-menu .dropdown-item-danger {
+    color: #dc3545;
+}
+
+.actions-dropdown-menu .dropdown-item-danger i {
+    color: #dc3545;
+}
+
+.actions-dropdown-menu .dropdown-item-danger:hover {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.actions-dropdown-menu .dropdown-item-danger:hover i {
+    color: #721c24;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: #e9ecef;
+    margin: 0.5rem 0;
+}
+
+/* Empty State */
+.table-empty-row {
+    background: white;
+}
+
+.empty-state {
+    padding: 3rem 1rem !important;
+    text-align: center;
+}
+
+.empty-state-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    color: #999;
+}
+
+.empty-state-content i {
+    font-size: 3rem;
+    color: #ddd;
+    opacity: 0.5;
+}
+
+.empty-state-content p {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.empty-state-content small {
+    font-size: 0.85rem;
+    color: #bbb;
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN - OBJECTIVES
+   ============================================================================ */
+
+@media (max-width: 1200px) {
+    .management-header-content {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .btn-add {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 992px) {
+    .management-header-section {
+        padding: 1.5rem;
+    }
+
+    .management-main-title {
+        font-size: 1.75rem;
+    }
+
+    .pagination-wrapper {
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .btn-add {
+        width: 100%;
+    }
+
+    .management-table-section {
+        padding: 1rem;
+        overflow-x: auto;
+    }
+
+    .management-table {
+        font-size: 0.8rem;
+    }
+
+
+    .cell-badge {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.5rem;
+    }
+
+    .header-cell-content {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .sort-btn {
+        width: 100%;
+    }
+
+    .pagination-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .pagination-controls {
+        width: 100%;
+    }
+
+    .pagination-list {
+        gap: 0.25rem;
+    }
+
+    .pagination-btn {
+        min-width: 2rem;
+        height: 2rem;
+        font-size: 0.8rem;
+    }
+
+    .pagination-info {
+        width: 100%;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .management-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .btn-add {
+        padding: 0.6rem 1rem;
+        font-size: 0.75rem;
+    }
+
+    .management-table-section {
+        padding: 0.75rem;
+    }
+
+    .cell-badge {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.4rem;
+    }
+
+    .btn-action {
+        min-width: 32px;
+        min-height: 32px;
+        padding: 0.4rem;
+    }
+
+    .pagination-btn {
+        min-width: 1.75rem;
+        height: 1.75rem;
+        font-size: 0.7rem;
+    }
+
+    .total-label,
+    .page-size-label {
+        font-size: 0.8rem;
+    }
+
+    .total-count {
+        font-size: 1rem;
+    }
+}
+
+.page-title i {
+    font-size: 3.5rem;
+}

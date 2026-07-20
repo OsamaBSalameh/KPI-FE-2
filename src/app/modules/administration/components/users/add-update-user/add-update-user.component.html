@@ -1,0 +1,220 @@
+<div id="user-modal" class="modal-content modern-profile-modal-v3">
+    <div class="modal-body p-0">
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="h-100">
+            <div class="d-flex h-100">
+
+                <!-- Left Sidebar -->
+                <div class="profile-sidebar">
+                    <div class="sidebar-header">
+                        <i class="fas fa-edit me-2"></i>{{actionType}} User Profile
+                        <p class="content-description">Manage user information, permissions, and access settings</p>
+                    </div>
+
+                    <div class="profile-card-container">
+                        <div class="profile-card-inner">
+                            <img [src]="currentUserThumbNail" alt="User Avatar" class="profile-avatar-large">
+                            <h5 class="profile-name">{{userForm.get('firstName')?.value}}
+                                {{userForm.get('lastName')?.value}}</h5>
+                            <p class="profile-email">{{userForm.get('email')?.value}}</p>
+
+                            <div class="profile-status">
+                                <div class="status-item">
+                                    <span class="status-label">Role</span>
+                                    <span class="badge font-size-14"
+                                        [ngClass]="userForm.get('isManager')?.value ? 'bg-soft-primary' : 'bg-secondary'">
+                                        {{userForm.get('isManager')?.value ? 'Manager' : 'Employee'}}
+                                    </span>
+                                </div>
+                                <div class="status-item">
+                                    <span class="status-label">Status</span>
+                                    <span class="badge font-size-14"
+                                        [ngClass]="userForm.get('isSystemUserEnabled')?.value ? 'bg-green' : 'bg-red'">
+                                        {{userForm.get('isSystemUserEnabled')?.value ? 'Active' : 'Inactive'}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Content Area -->
+                <div class="profile-content">
+                    <!-- <div class="content-header">
+                        <div class="header-top">
+                            <div class="header-title-section">
+                                <h6 class="content-title">
+                                    <i class="fas fa-edit me-2"></i>{{actionType}} User Profile
+                                </h6>
+                                <p class="content-description">Manage user information, permissions, and access settings
+                                </p>
+                            </div>
+                            <button type="button" class="btn-close-header" (click)="close()" aria-label="Close">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div> -->
+
+
+                    <div class="content-scroll">
+                        <!-- Basic Information Section -->
+                        <div class="form-card m-0 mb-4">
+                            <div class="card-header-custom">
+                                <i class="fas fa-building me-2"></i>
+                                <span>Organization Information</span>
+                            </div>
+                            <div class="card-body-custom">
+                                <div class="row g-3">
+                                    <div class="col-12" *ngIf="actionType != updateActionType">
+                                        <div class="input-wrapper">
+                                            <i class="fas fa-address-book input-icon"></i>
+                                            <label for="searchUser" class="form-label">Select User</label>
+                                            <div class="form-section" *ngIf="actionType != updateActionType">
+                                                <ngx-select-dropdown [config]="selectConfig" [options]="adUsers"
+                                                    (change)="onUserSelect($event)"
+                                                    (searchChange)="onUserSearch($event)"
+                                                    [multiple]="false"></ngx-select-dropdown>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6" hidden>
+                                        <label for="firstName" class="form-label">First Name</label>
+                                        <input type="text" class="form-control disabled-input height-100per"
+                                            formControlName="firstName" id="firstName" [attr.disabled]="true">
+                                    </div>
+                                    <div class="col-6" hidden>
+                                        <label for="lastName" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control disabled-input height-100per"
+                                            formControlName="lastName" id="lastName" [attr.disabled]="true">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <div class="input-wrapper">
+                                            <i class="fas fa-envelope input-icon"></i>
+                                            <label for="email" class="form-label">Email Address</label>
+                                            <input type="email" class="form-control disabled-input height-100per"
+                                                formControlName="email" id="email" [attr.disabled]="true">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-8">
+                                        <div class="input-wrapper">
+                                            <i class="fas fa-briefcase input-icon"></i>
+                                            <label for="organizationUnitId" class="form-label">Organization Unit<span
+                                                    class="text-danger">*</span></label>
+                                            <select formControlName="organizationUnitId" id="organizationUnitId"
+                                                class="form-select"
+                                                [ngClass]="{ 'is-invalid': submitted && formFileds['organizationUnitId'].errors }">
+                                                <option disabled hidden value="0">Select Unit</option>
+                                                <option *ngFor="let unit of allUnits" [value]="unit.id">{{unit.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf="submitted && formFileds['organizationUnitId'].errors">
+                                            Please select a unit
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Permissions -->
+                        <div class="form-card m-0 mb-4">
+                            <div class="card-header-custom">
+                                <i class="fas fa-lock me-2"></i>
+                                <span>Permissions</span>
+                            </div>
+                            <div class="card-body-custom">
+                                <div class="row g-3">
+                                    <div class="col-12">
+
+                                        <div class="input-wrapper">
+                                            <i class="fas fa-unlock-alt input-icon"></i>
+                                            <label for="selectedPermissions" class="form-label">Permission Groups<span
+                                                    class="text-danger">*</span></label>
+                                            <ng-multiselect-dropdown [settings]="dropdownSettings"
+                                                [data]="allPermissionGroups"
+                                                [ngClass]="{ 'is-invalid': submitted && formFileds['selectedPermissions'].errors }"
+                                                [placeholder]="'Select permission groups...'"
+                                                (onSelect)="onPermissionGroupSelect($event)"
+                                                (onDeSelect)="onDeSelectPermissionGroup($event)"
+                                                (onDeSelectAll)="onDeSelectAll()"
+                                                (onSelectAll)="onSelectAllPermissionGroups($event)"
+                                                formControlName="selectedPermissions">
+                                            </ng-multiselect-dropdown>
+                                            <div class="invalid-feedback d-block mt-2"
+                                                *ngIf="submitted && formFileds['selectedPermissions'].errors">
+                                                <i class="fas fa-exclamation-circle me-2"></i>At least one permission
+                                                group is required
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Access Control -->
+                        <div class="form-card m-0 mb-4">
+                            <div class="card-header-custom">
+                                <i class="fas fa-shield-alt me-2"></i>
+                                <span>Access Control</span>
+                            </div>
+                            <div class="card-body-custom">
+                                <div class="row g-3">
+                                    <div class="col-6">
+                                        <div class="access-control-item">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h6 class="mb-1">Manager Privileges</h6>
+                                                    <p class="text-muted small mb-0">Grant manager-level access</p>
+                                                </div>
+                                                <ui-switch uncheckedTextColor="red" uncheckedLabel="No"
+                                                    checkedLabel="Yes" formControlName="isManager"></ui-switch>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="access-control-item">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h6 class="mb-1">Account Access</h6>
+                                                    <p class="text-muted small mb-0">Enable or disable account</p>
+                                                </div>
+                                                <ui-switch uncheckedTextColor="red" uncheckedLabel="Disabled"
+                                                    checkedLabel="Enabled"
+                                                    formControlName="isSystemUserEnabled"></ui-switch>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="modal-footer-custom justify-content-between">
+                        <button type="button" (click)="close()" class="btn btn-outline-danger">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary modern-btn btn-save"
+                            *ngxPermissionsOnly="['SUPER_ADMIN']">
+                            <i class="fas fa-save"></i> Save changes
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <!-- <div class="modal-footer border-top">
+        <button type="button" (click)="close()" class="btn btn-outline-secondary">Cancel</button>
+        <button type="submit" (click)="onSubmit()" class="btn btn-primary" [disabled]="userForm.status == 'INVALID'">
+            <i class="fas fa-save me-2"></i>Save Changes
+        </button>
+    </div> -->
+
+</div>

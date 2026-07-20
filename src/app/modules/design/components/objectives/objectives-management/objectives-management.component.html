@@ -1,0 +1,228 @@
+<div class="objectives-management-container">
+    <div class="management-header">
+        <div class="header-content">
+            <div class="header-title-section">
+                <h1 class="page-title">
+                    <i class="fas fa-bullseye"></i>
+                    Objectives Management
+                </h1>
+                <p class="page-subtitle">Create and manage strategic objectives</p>
+            </div>
+
+            <div class="header-actions">
+                <div class="search-bar-wrapper">
+                    <div class="search-input-group">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" [(ngModel)]="searchValue" (keydown.enter)="search()"
+                            placeholder="Search objectives...">
+                        <button type="button" class="btn-search" (click)="search()" title="Search">
+                            <i class="fas fa-arrow-right color-primary"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-add-tag" (click)="add(AddUpdate_template)"
+                    *ngxPermissionsOnly="['WORK_SPACE_ADMIN']">
+                    <i class="fas fa-plus me-2"></i>Add Objective
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================================
+         TABLE SECTION - Objectives Data
+         ============================================================================ -->
+    <div class="table-section">
+        <div class="table-wrapper">
+            <table class="management-table" dir="ltr">
+                <thead>
+                    <tr class="table-header-row">
+                        <!-- Code Column -->
+                        <th width="12%">
+                            <div class="header-cell-content">
+                                <span class="header-content">
+                                    <i class="fas fa-barcode"></i>
+                                    Code
+                                </span>
+                                <button class="sort-btn" (click)="sort('Code')" title="Sort by Code">
+                                    <i class="fas fa-sort"></i>
+                                </button>
+                            </div>
+                        </th>
+
+                        <!-- Name Column -->
+                        <th width="35%">
+                            <div class="header-cell-content">
+                                <span class="header-content">
+                                    <i class="fas fa-caret-square-o-right"></i>
+                                    Name
+                                </span>
+                                <button class="sort-btn" (click)="sort('Name')" title="Sort by Name">
+                                    <i class="fas fa-sort"></i>
+                                </button>
+                            </div>
+                        </th>
+
+                        <!-- Target Column -->
+                        <th width="12%">
+                            <div class="header-cell-content">
+                                <span class="header-content">
+                                    <i class="fas fa-bullseye"></i>
+                                    Target
+                                </span>
+                                <button class="sort-btn" (click)="sort('Target')" title="Sort by Target">
+                                    <i class="fas fa-sort"></i>
+                                </button>
+                            </div>
+                        </th>
+
+                        <!-- Measurement Unit Column -->
+                        <th width="25%">
+                            <span class="">
+                                <i class="fas fa-ruler cell-target"></i>
+                                Measurement Unit
+                            </span>
+                        </th>
+
+                        <!-- Actions Column -->
+                        <th width="16%">
+                            <span class="">
+                                <i class="fas fa-cogs cell-target"></i>
+                                Actions
+                            </span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Empty State -->
+                    <tr class="table-empty-row" *ngIf="!paginatedObjectives || paginatedObjectives.length === 0">
+                        <td [attr.colspan]="5" class="empty-state">
+                            <div class="empty-state-content">
+                                <i class="fas fa-inbox"></i>
+                                <p>No objectives found</p>
+                                <small>Try adjusting your search or create a new objective</small>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Data Rows -->
+                    <tr class="table-data-row" *ngFor="let objective of paginatedObjectives; let i = index"
+                        [class.row-alternate]="i % 2 === 1">
+
+                        <!-- Code -->
+                        <td>
+                            <span class="cell-badge cell-code">
+                                <i class="fas fa-barcode"></i>
+                                {{objective.code}}
+                            </span>
+                        </td>
+
+                        <!-- Name -->
+                        <td>
+                            <div class="cell-content">
+                                <span class="cell-title">{{objective.name}}</span>
+                            </div>
+                        </td>
+
+                        <!-- Target -->
+                        <td>
+                            <span class="cell-value cell-target">
+                                {{objective.target}}
+                            </span>
+                        </td>
+
+                        <!-- Measurement Unit -->
+                        <td>
+                            <span class="cell-badge cell-unit">
+                                <i class="fas fa-ruler"></i>
+                                {{objective.measurmentUnit?.value || 'N/A'}}
+                            </span>
+                        </td>
+
+                        <!-- Actions -->
+
+                        <td class="col-actions">
+                            <div class="actions-menu">
+                                <button type="button" class="action-btn edit-btn"
+                                    (click)="update(objective, AddUpdate_template)" title="Edit objective">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn copy-btn" type="button"
+                                    (click)="copy(objective, AddUpdate_template)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                                <button type="button" class="action-btn delete-btn"
+                                    (click)="delete(objective, deleteModal)" title="Delete objective">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Pagination Section -->
+    <div class="pagination-section">
+        <div class="pagination-info">
+            <span class="info-text">
+                total: <strong>{{paginationResult.totalCount}}</strong> objectives
+            </span>
+            <div class="page-size-selector">
+                <label for="pageSize">Items per page:</label>
+                <select id="pageSize" class="page-size-select" (change)="onLimitChange($event.target)"
+                    [value]="paginationItem.pageSize">
+                    <option *ngFor="let option of pageLimitOptions" [value]="option">
+                        {{option}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <nav class="pagination-nav">
+            <button type="button" class="pagination-btn" [disabled]="!paginationResult.hasPreviousPage"
+                (click)="first()" title="First page">
+                <i class="fas fa-angle-double-left"></i>
+            </button>
+            <button type="button" class="pagination-btn" [disabled]="!paginationResult.hasPreviousPage"
+                (click)="previous()" title="Previous page">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <div class="page-numbers">
+                <button type="button" class="page-number-btn" *ngFor="let page of pages()"
+                    [class.active]="page === paginationItem.pageNumber" (click)="goToPage(page)">
+                    {{page}}
+                </button>
+            </div>
+
+            <button type="button" class="pagination-btn" [disabled]="!paginationResult.hasNextPage" (click)="next()"
+                title="Next page">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <button type="button" class="pagination-btn" [disabled]="!paginationResult.hasNextPage" (click)="last()"
+                title="Last page">
+                <i class="fas fa-angle-double-right"></i>
+            </button>
+        </nav>
+    </div>
+</div>
+
+<!-- ============================================================================
+     MODALS
+     ============================================================================ -->
+
+<!-- Add/Update Objective Modal -->
+<ng-template #AddUpdate_template let-modal>
+    <app-add-update-objective [modal]="addUpdateModal" (objectiveAddedEvent)="objectiveAddedEventHandler($event)"
+        (objectiveUpdatedEvent)="objectiveUpdatedEventHandler($event)">
+    </app-add-update-objective>
+</ng-template>
+
+<!-- Delete Confirmation Modal -->
+<ng-template #deleteModal>
+    <app-delete-modal [modal]="deleteModalReference" (deletedEvent)="objectiveDeletedEventHandler($event)">
+    </app-delete-modal>
+</ng-template>

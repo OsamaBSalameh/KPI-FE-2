@@ -1,0 +1,188 @@
+<div id="kpi-model" class="modern-kpi-modal">
+    <div class="modal-header">
+        <div class="header-content">
+            <div class="icon-wrapper">
+                <i class="fas fa-trophy"></i> <!-- Icon representing objective/target -->
+            </div>
+            <div class="title-section">
+                <h5 class="modal-title">{{actionType}} Scorecard</h5>
+                <p class="modal-subtitle">Define key scorecard for your organization</p>
+            </div>
+        </div>
+        <button type="button" class="btn-close" (click)="close()" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <div id="scorecardDiv" class="modal-body content-body">
+        <form [formGroup]="scorecardForm" (ngSubmit)="onSubmit()">
+
+            <div class="form-card">
+                <div class="card-header-custom">
+                    <i class="fas fa-list-alt"></i>
+                    <span>Scorecard Details</span>
+                </div>
+                <div class="card-body-custom">
+                    <div class="row g-3">
+
+                        <!-- Scorecard Name -->
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-caret-square-o-right input-icon"></i>
+                                    <label for="name" class="form-label">Scorecard name<span
+                                            class="required-star">*</span></label>
+                                    <textarea formControlName="name" id="name" placeholder="Enter objective name"
+                                        class="form-control modern-input modern-textarea" rows="3"
+                                        [ngClass]="{ 'is-invalid': submitted && formFileds['name'].errors }"
+                                        [ngClass]="{ 'is-valid': submitted && !formFileds['name'].errors }"></textarea>
+                                </div>
+
+                                <div class="validation-messages">
+                                    <span
+                                        *ngIf="(submitted && formFileds['name'].errors) && (formFileds['name'].errors['required'])">
+                                        <i class="fas fa-exclamation-circle"></i> Value is Mandatory
+                                    </span>
+                                    <span
+                                        *ngIf="(submitted && formFileds['name'].errors) && (formFileds['name'].errors['maxlength'])">
+                                        <i class="fas fa-exclamation-circle"></i> Maximum allowed characters is 1000
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Select Objective -->
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-tasks input-icon"></i>
+                                    <label for="measurmentUnit" class="form-label">Select Objective<span
+                                            class="required-star">*</span></label>
+                                    <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="objectives"
+                                        formControlName="selectedObjectives" [placeholder]="'Select Objective'"
+                                        (onSelect)="onObjectiveSelect($event)"
+                                        (onDeSelect)="onDeSelectObjective($event)" (onDeSelectAll)="onDeSelectAll()"
+                                        (onSelectAll)="onSelectAllObjectives($event)">
+                                    </ng-multiselect-dropdown>
+                                </div>
+                                <div class="validation-messages">
+                                    <span
+                                        *ngIf="(submitted && formFileds['selectedObjectives'].errors) && (formFileds['selectedObjectives'].errors['required'])">
+                                        <i class="fas fa-exclamation-circle"></i> Value is Mandatory
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-card mb-4">
+                <div class="card-header-custom">
+                    <i class="fas fa-tasks"></i>
+                    <span>Objectives Details</span>
+                </div>
+
+                <div class="card-body-custom">
+                
+                    <div class="row g-3">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <div class="input-wrapper mb-5">
+                                    <i class="fas fa-filter input-icon"></i>
+                                    <label for="objectiveFilterId" class="form-label">Filter Objectives by Scorecard Prospective</label>
+                                    <select class="form-select modern-select font-size-16" id="objectiveFilterId"
+                                        (change)="objectivesFilter($event.target)">
+                                        <option value="0">Select All</option>
+                                        <option *ngFor="let prospectiveValue of objectiveProspectiveValues"
+                                            value="{{prospectiveValue.id}}">{{prospectiveValue.value}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="form-group col-lg-8">
+                            <label for="weight">Objective Name</label>
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label for="weight">Scorecard Prospective</label>
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label for="weight">Weight <span style="color: #337ab7;">{{(100 -
+                                    weightSum)}}</span></label>
+                        </div>
+                    </div>
+
+                    <div formArrayName="objectiveScorecards" *ngFor="let objectiveScorecard of objectiveScorecardFormGroups(); let i = index">
+
+                        <form class="row" [formGroupName]="i">
+
+                            <div class="form-group col-lg-8"
+                                [hidden]="selectedProspective != 0 && objectiveScorecard.controls['objectiveProspective'].value != selectedProspective">
+                                <input class="form-control modern-input" formControlName="objectiveName" type="text" style="padding: 0px 10px;"
+                                    [attr.disabled]="true"
+                                    [ngClass]="{ 'is-invalid': submitted && objectiveScorecard.controls['objectiveName'].errors }"
+                                    [ngClass]="{ 'is-valid': submitted && !objectiveScorecard.controls['objectiveName'].errors }" />
+                            </div>
+
+                            <div class="form-group col-lg-2"
+                                [hidden]="selectedProspective != 0 && objectiveScorecard.controls['objectiveProspective'].value != selectedProspective">
+                                <select formControlName="objectiveProspective" class="form-select modern-select form-control" class="form-select modern-select "
+                                    id="objectiveProspective" style="padding: 0px 10px;"
+                                    [ngClass]="{ 'is-invalid': submitted && objectiveScorecard.controls['objectiveProspective'].errors }"
+                                    [ngClass]="{ 'is-valid': submitted && !objectiveScorecard.controls['objectiveProspective'].errors }">
+                                    <option disabled hidden value="0">Select Objective</option>
+                                    <option *ngFor="let prospective of objectiveProspectiveValues"
+                                        value={{prospective.id}}>
+                                        {{prospective.value}}</option>
+                                </select>
+
+                                <div class="inner-validation-div text-danger">
+                                    <span
+                                        *ngIf="(submitted && objectiveScorecard.controls['objectiveProspective'].errors) && 
+                                             (objectiveScorecard.controls['objectiveProspective'].errors['required'] || objectiveScorecard.controls['objectiveProspective'].errors['min'])">
+                                        Value is Mandatory
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-lg-2"
+                                [hidden]="selectedProspective != 0 && objectiveScorecard.controls['objectiveProspective'].value != selectedProspective">
+                                <input class="form-control modern-input dummyWeightClass" formControlName="weight" type="number" style="padding: 0px 10px;"
+                                    step="1" placeholder="add weight" (keyup)="calculateWeight($event.target)"
+                                    [ngClass]="{ 'is-invalid': submitted && weightSumNotEnough && objectiveScorecard.controls['weight'].errors }"
+                                    [ngClass]="{ 'is-valid': submitted && !weightSumNotEnough && !objectiveScorecard.controls['weight'].errors }" />
+
+                                <div class="inner-validation-div text-danger">
+                                    <span *ngIf="(submitted && objectiveScorecard.controls['weight'].errors) && 
+                                                 (objectiveScorecard.controls['weight'].errors['required'])">
+                                        Value is Mandatory
+                                    </span>
+                                    <span *ngIf="(submitted && weightSumNotEnough)">
+                                        weight sum should be 100
+                                    </span>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer-custom justify-content-between">
+                <button type="button" (click)="close()" class="btn btn-outline-danger">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button type="submit" [disabled]="view" class="btn btn-primary modern-btn btn-save"
+                    *ngxPermissionsOnly="['WORK_SPACE_ADMIN']">
+                    <i class="fas fa-save"></i> Save changes
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

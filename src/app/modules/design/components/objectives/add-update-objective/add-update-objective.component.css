@@ -1,0 +1,8 @@
+/* ng-multiselect-dropdown validations */
+:host ::ng-deep .is-invalid .multiselect-dropdown div .dropdown-btn {
+  border: 1px solid #D3001F;
+}
+
+:host ::ng-deep .is-valid .multiselect-dropdown div .dropdown-btn {
+  border: 1px solid #28a745;
+}

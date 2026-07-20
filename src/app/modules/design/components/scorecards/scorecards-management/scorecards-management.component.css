@@ -1,0 +1,316 @@
+/* ============================================================================
+   TABLE SECTION - SCORECARDS SPECIFIC STYLING
+   ============================================================================ */
+.scorecards-management-container .header-text i {
+    color: #667eea;
+}
+
+/* ============================================================================
+   ID BADGE STYLING - SCORECARDS
+   ============================================================================ */
+
+.scorecards-management-container .cell-badge.cell-id {
+    background: #d1ecf1;
+    color: #0c5460;
+    font-weight: 600;
+}
+
+.scorecards-management-container .cell-badge.cell-id i {
+    font-size: 0.9rem;
+    margin-right: 0.4rem;
+}
+
+/* ============================================================================
+   NAME CELL STYLING - SCORECARDS
+   ============================================================================ */
+
+.scorecards-management-container .cell-title {
+    color: #212529;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.scorecards-management-container .cell-title:hover {
+    color: #17a2b8;
+    transition: color 0.2s ease;
+}
+
+/* ============================================================================
+   ACTION BUTTONS - SCORECARDS SPECIFIC
+   ============================================================================ */
+
+
+
+/* .scorecards-management-container .sort-btn {
+    color: #17a2b8;
+    border: 1px solid #ddd;
+}
+
+.scorecards-management-container .sort-btn:hover {
+    background: #17a2b8;
+    color: white;
+    border-color: #17a2b8;
+    transform: scale(1.05);
+} */
+
+.scorecards-management-container .btn-action-menu {
+    color: #17a2b8;
+    border: 1px solid #e9ecef;
+    transition: all 0.2s ease;
+}
+
+.scorecards-management-container .btn-action-menu:hover {
+    background: #17a2b8;
+    color: white;
+    border-color: #17a2b8;
+    box-shadow: 0 2px 8px rgba(23, 162, 184, 0.2);
+}
+
+.scorecards-management-container .actions-dropdown-menu .dropdown-item i {
+    color: #17a2b8;
+    margin-right: 0.5rem;
+}
+
+.scorecards-management-container .actions-dropdown-menu .dropdown-item:hover {
+    background: #f0f9fa;
+    color: #17a2b8;
+    border-left: 3px solid #17a2b8;
+    padding-left: calc(1rem - 3px);
+}
+
+.scorecards-management-container .actions-dropdown-menu .dropdown-item:hover i {
+    color: #17a2b8;
+}
+
+/* ============================================================================
+   PAGINATION - SCORECARDS SPECIFIC
+   ============================================================================ */
+
+.scorecards-management-container .pagination-btn {
+    color: #17a2b8;
+    border: 1px solid #e9ecef;
+    transition: all 0.2s ease;
+}
+
+.scorecards-management-container .pagination-btn:hover:not(:disabled) {
+    background: #17a2b8;
+    color: white;
+    border-color: #17a2b8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(23, 162, 184, 0.2);
+}
+
+.scorecards-management-container .pagination-item.active .pagination-btn {
+    background: #17a2b8;
+    color: white;
+    border-color: #17a2b8;
+    box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
+}
+
+.scorecards-management-container .pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ============================================================================
+   PAGE SIZE SELECTOR - SCORECARDS SPECIFIC
+   ============================================================================ */
+
+.scorecards-management-container .page-size-select {
+    border: 1px solid #17a2b8;
+    color: #17a2b8;
+    font-weight: 500;
+}
+
+.scorecards-management-container .page-size-select:focus {
+    border-color: #17a2b8;
+    box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
+}
+
+/* ============================================================================
+   TOTAL RECORDS - SCORECARDS SPECIFIC
+   ============================================================================ */
+
+.scorecards-management-container .total-count {
+    color: #17a2b8;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+/* ============================================================================
+   EMPTY STATE - SCORECARDS SPECIFIC
+   ============================================================================ */
+
+.scorecards-management-container .empty-state-content i {
+    color: #17a2b8;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.scorecards-management-container .empty-state-content p {
+    color: #495057;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.scorecards-management-container .empty-state-content small {
+    color: #6c757d;
+}
+
+/* ============================================================================
+   TABLE ROW STYLING - SCORECARDS SPECIFIC
+   ============================================================================ */
+
+.scorecards-management-container .table-data-row {
+    border-bottom: 1px solid #e9ecef;
+    transition: background-color 0.2s ease;
+}
+
+.scorecards-management-container .table-data-row:hover {
+    background-color: #f8f9fa;
+}
+
+.scorecards-management-container .table-data-row.row-alternate {
+    background-color: #ffffff;
+}
+
+.scorecards-management-container .table-data-row.row-alternate:hover {
+    background-color: #f0f9fa;
+}
+
+/* ============================================================================
+   RESPONSIVE ADJUSTMENTS - SCORECARDS
+   ============================================================================ */
+
+@media (max-width: 1200px) {
+    .scorecards-management-container .management-header-content {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .scorecards-management-container .management-search-wrapper {
+        width: 100%;
+    }
+
+    .scorecards-management-container .search-box {
+        flex: 1;
+        min-width: 100%;
+    }
+
+    .scorecards-management-container .btn-add {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .scorecards-management-container .table-header-cell {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    .scorecards-management-container .table-data-cell {
+        padding: 0.75rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .scorecards-header {
+        padding: 1rem;
+    }
+
+    .scorecards-management-container .management-main-title {
+        font-size: 1.3rem;
+    }
+
+    .scorecards-management-container .management-subtitle {
+        font-size: 0.85rem;
+    }
+
+    .scorecards-management-container .table-header-cell {
+        padding: 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .scorecards-management-container .table-data-cell {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .scorecards-management-container .cell-badge {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.5rem;
+    }
+
+    .scorecards-management-container .cell-title {
+        font-size: 0.85rem;
+    }
+
+    .scorecards-management-container .pagination-btn {
+        min-width: 2rem;
+        height: 2rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .scorecards-header {
+        padding: 0.75rem;
+    }
+
+    .scorecards-management-container .management-main-title {
+        font-size: 1.1rem;
+    }
+
+    .scorecards-management-container .management-subtitle {
+        font-size: 0.7rem;
+    }
+
+    .scorecards-management-container .search-box {
+        padding: 0.5rem;
+    }
+
+    .scorecards-management-container .table-header-cell {
+        padding: 0.4rem;
+        font-size: 0.65rem;
+    }
+
+    .scorecards-management-container .table-data-cell {
+        padding: 0.4rem;
+        font-size: 0.7rem;
+    }
+
+    .scorecards-management-container .cell-badge {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.4rem;
+    }
+
+    .scorecards-management-container .pagination-btn {
+        min-width: 1.75rem;
+        height: 1.75rem;
+        font-size: 0.65rem;
+    }
+
+    .scorecards-management-container .pagination-info {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .scorecards-management-container .page-size-selector {
+        flex-direction: row;
+        gap: 0.3rem;
+    }
+
+    .scorecards-management-container .page-size-label {
+        font-size: 0.7rem;
+    }
+
+    .scorecards-management-container .page-size-select {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.3rem;
+    }
+}
+
+.page-title i {
+    font-size: 3.5rem;
+}

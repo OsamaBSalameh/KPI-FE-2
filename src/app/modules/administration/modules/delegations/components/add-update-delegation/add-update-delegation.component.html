@@ -1,0 +1,222 @@
+<div id="delegation-model" class="modern-kpi-modal">
+    <div class="modal-header">
+        <div class="header-content">
+            <div class="icon-wrapper">
+                <i class="fas fa-retweet"></i> <!-- Icon representing objective/target -->
+            </div>
+            <div class="title-section">
+                <h5 class="modal-title">{{actionType}} Delegation</h5>
+                <p class="modal-subtitle">Delegate roles between users</p>
+            </div>
+        </div>
+        <button type="button" class="btn-close" (click)="close()" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <div id="delegationDiv" class="modal-body content-body">
+        <form [formGroup]="delegationForm" (ngSubmit)="onSubmit()">
+
+            <div class="form-card">
+                <div class="card-header-custom">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>Delegation Details</span>
+                </div>
+                <div class="card-body-custom">
+                    <div class="row g-3">
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-user-times input-icon"></i>
+                                    <label for="measurmentUnit" class="form-label">Delegate From<span
+                                            class="required-star">*</span></label>
+                                    <input type="text"
+                                        [value]="delegation.delegatedFrom?.firstName + ' ' + delegation.delegatedFrom?.lastName"
+                                        class="form-select height-100per font-size-18 modern-input form-control"
+                                        readonly *ngIf="view || actionType == 'Update'">
+                                    <ngx-select-dropdown [config]="selectConfig" [options]="delegatedFromUsers"
+                                        [multiple]="false" *ngIf="!(view || actionType == 'Update')"
+                                        formControlName="delegatedFromId" (change)="onDelegatedFromSelected($event)"
+                                        id="delegatedFromId"
+                                        [ngClass]="{ 'is-invalid': submitted && formFields['delegatedFromId'].errors }"
+                                        [ngClass]="{ 'is-valid': submitted && !formFields['delegatedFromId'].errors }"
+                                        (searchChange)="onUserSearch($event)"></ngx-select-dropdown>
+                                </div>
+                                <div class="validation-messages">
+                                    <span
+                                        *ngIf="(submitted && formFields['delegatedFromId'].errors) && 
+                                                                                                        (formFields['delegatedFromId'].errors['required'])">
+                                        Value is Mandatory
+                                    </span>
+                                    <span
+                                        *ngIf="(submitted && formFields['delegatedFromId'].errors) && 
+                                                                                            (formFields['delegatedFromId'].errors['min'])">
+                                        Value is Mandatory
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-user-plus input-icon"></i>
+                                    <label class="form-label">Delegate To<span class="redStar">*</span></label>
+                                    <input type="text"
+                                        [value]="delegation.delegatedTo?.firstName + ' ' + delegation.delegatedTo?.lastName"
+                                        class="form-select height-100per font-size-18 modern-input form-control"
+                                        readonly *ngIf="view || actionType == 'Update'">
+                                    <ngx-select-dropdown [config]="selectConfig" [options]="delegatedToUsers"
+                                        [multiple]="false" *ngIf="!(view || actionType == 'Update')"
+                                        formControlName="delegatedToId"
+                                        [ngClass]="{ 'is-invalid': submitted && formFields['delegatedToId'].errors }"
+                                        [ngClass]="{ 'is-valid': submitted && !formFields['delegatedToId'].errors }"
+                                        id="delegatedToId" (searchChange)="onUserSearch($event)"></ngx-select-dropdown>
+                                </div>
+                                <div class="validation-div text-danger">
+                                    <span
+                                        *ngIf="(submitted && formFields['delegatedToId'].errors) && 
+                                                                                (formFields['delegatedToId'].errors['required'])">
+                                        Value is Mandatory
+                                    </span>
+                                    <span *ngIf="(submitted && formFields['delegatedToId'].errors) && 
+                                                        (formFields['delegatedToId'].errors['min'])">
+                                        Value is Mandatory
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-unlock-alt input-icon"></i>
+                                    <label class="form-label">Permissions<span class="redStar">*</span></label>
+                                    <input type="text" [value]="delegation.permissionGroup?.code"
+                                        class="form-select height-100per font-size-18 modern-input form-control"
+                                        readonly *ngIf="view || actionType == 'Update'">
+                                    <select formControlName="permissionGroupId"
+                                        class="form-select modern-dropdown font-size-18 form-control"
+                                        id="permissionGroupId" *ngIf="!(view || actionType == 'Update')"
+                                        style="height: 46px;"
+                                        [ngClass]="{ 'is-invalid': submitted && formFields['permissionGroupId'].errors }"
+                                        [ngClass]="{ 'is-valid': submitted && !formFields['permissionGroupId'].errors }">
+                                        <option disabled hidden value="0">Select Permission</option>
+                                        <option *ngFor="let permissionGroup of allPermissionGroups"
+                                            value="{{permissionGroup.id}}">
+                                            {{permissionGroup.code}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="validation-div text-danger">
+                                    <span
+                                        *ngIf="(submitted && formFields['permissionGroupId'].errors) && (formFields['permissionGroupId'].errors['required'])">
+                                        Value is Mandatory
+                                    </span>
+                                    <span
+                                        *ngIf="(submitted && formFields['permissionGroupId'].errors) && (formFields['permissionGroupId'].errors['min'])">
+                                        Value is Mandatory
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-card">
+                <div class="card-header-custom">
+                    <i class="fas fa-calendar"></i>
+                    <span>Delegation Dates</span>
+                </div>
+                <div class="card-body-custom">
+                    <div class="row">
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-calendar-check-o input-icon"></i>
+                                    <label class="form-label" for="startDate">Start Date Date<span
+                                            class="redStar">*</span></label>
+                                    <div class="input-group">
+                                        <input formControlName="startDate" placeholder="dd-mm-yyyy" name="dp_StartDate"
+                                            type="text"
+                                            [disabled]="(delegation.statusId == 2 && actionType == 'Update')"
+                                            [ngClass]="{ 'is-invalid': submitted && formFields['startDate'].errors }"
+                                            [ngClass]="{ 'is-valid': submitted && !formFields['startDate'].errors }"
+                                            #startDateId="ngbDatepicker" [placement]="['top']"
+                                            class="form-control modern-input height-100per font-size-18"
+                                            ngbDatepicker />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary calendar"
+                                                (click)="startDateId.toggle()" type="button"></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="validation-div text-danger">
+                                    <span *ngIf="(submitted && formFields['startDate'].errors) && 
+                                     (formFields['startDate'].errors['required'])">
+                                        Value is Mandatory
+                                    </span>
+                                    <span *ngIf="(submitted && formFields['startDate'].errors) && 
+                        (formFields['startDate'].errors['lessThan'])">
+                                        Value should be less than End Date
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-calendar-minus-o input-icon"></i>
+                                    <label class="form-label" for="endDate">End Date<span
+                                            class="redStar">*</span></label>
+                                    <div class="input-group">
+                                        <input formControlName="endDate" placeholder="dd-mm-yyyy" name="dp_endDate"
+                                            type="text"
+                                            [ngClass]="{ 'is-invalid': submitted && formFields['endDate'].errors }"
+                                            [ngClass]="{ 'is-valid': submitted && !formFields['endDate'].errors }"
+                                            #endDateId="ngbDatepicker"
+                                            class="form-control modern-input height-100per font-size-18" ngbDatepicker
+                                            [placement]="['top']" />
+
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary calendar"
+                                                (click)="endDateId.toggle()" type="button"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="validation-div text-danger">
+                                    <span *ngIf="(submitted && formFields['endDate'].errors) && 
+                                     (formFields['endDate'].errors['required'])">
+                                        Value is Mandatory
+                                    </span>
+                                    <span
+                                        *ngIf="(submitted && formFields['endDate'].errors) && (formFields['endDate'].errors['greaterThan'])">
+                                        Value should be greater than Start date
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Unified Footer -->
+            <div class="modal-footer-custom justify-content-between">
+                <button type="button" (click)="close()" class="btn btn-outline-danger">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button type="submit" [disabled]="isDropdownDisabled" class="btn btn-primary"
+                    class="btn btn-primary modern-btn btn-save" *ngxPermissionsOnly="['SUPER_ADMIN','KPI_OWNER']">
+                    <i class="fas fa-save"></i> Save changes
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

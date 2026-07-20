@@ -1,0 +1,183 @@
+<div id="unit-model" class="modern-kpi-modal">
+    <div class="modal-header">
+        <div class="header-content">
+            <div class="icon-wrapper">
+                <i class="fas fa-briefcase"></i>
+            </div>
+            <div class="title-section">
+                <h5 class="modal-title">{{actionType}} department</h5>
+                <p class="modal-subtitle">Define Departments for your organization</p>
+            </div>
+        </div>
+        <button type="button" class="btn-close" (click)="close()" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <div id="unitDiv" class="modal-body content-body">
+        <form [formGroup]="unitForm" (ngSubmit)="onSubmit()">
+
+            <div class="form-card mb-4">
+                <div class="card-header-custom">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Department Information</span>
+                </div>
+                <div class="card-body-custom">
+                    <div class="row g-3">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-caret-square-o-right input-icon"></i>
+                                    <label for="name" class="form-label">Name<span class="redStar">*</span></label>
+                                    <input type="text" class="form-control height-100per modern-input"
+                                        formControlName="name" id="name" placeholder="Enter department name"
+                                        [ngClass]="{ 'is-invalid': submitted && formFileds['name'].errors, 'is-valid': submitted && !formFileds['name'].errors }">
+                                </div>
+                                <div class="validation-messages" *ngIf="submitted && formFileds['name'].errors">
+                                    <small *ngIf="formFileds['name'].errors['required']" class="text-danger">
+                                        <i class="fas fa-exclamation-circle"></i> Department name is required
+                                    </small>
+                                    <small *ngIf="formFileds['name'].errors['maxlength']" class="text-danger">
+                                        <i class="fas fa-exclamation-circle"></i> Maximum 100 characters allowed
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-hashtag input-icon"></i>
+                                    <label for="code" class="form-label">Department Code<span
+                                            class="redStar">*</span></label>
+                                    <input type="text" class="form-control height-100per modern-input"
+                                        formControlName="code" id="code" placeholder="Enter department code"
+                                        [ngClass]="{ 'is-invalid': submitted && formFileds['code'].errors, 'is-valid': submitted && !formFileds['code'].errors }">
+                                </div>
+                                <div class="validation-messages" *ngIf="submitted && formFileds['code'].errors">
+                                    <small *ngIf="formFileds['code'].errors['required']" class="text-danger">
+                                        <i class="fas fa-exclamation-circle"></i> Department code is required
+                                    </small>
+                                    <small *ngIf="formFileds['code'].errors['maxlength']" class="text-danger">
+                                        <i class="fas fa-exclamation-circle"></i> Maximum 100 characters allowed
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+<!-- 
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-user-tie input-icon"></i>
+                                    <label for="workSpaceId" class="form-label">
+                                        Work space
+                                        <span class="required-star">*</span>
+                                    </label>
+                                    <select formControlName="workSpaceId"
+                                        class="form-select height-100per modern-select" id="workSpaceId" [ngClass]="{ 
+                                            'is-invalid': submitted && formFileds['workSpaceId'].errors, 
+                                            'is-valid': submitted && !formFileds['workSpaceId'].errors 
+                                        }">
+                                        <option disabled hidden value="0">Select work space</option>
+                                        <option *ngFor="let ws of allWorkSpaces" [value]="ws.id">
+                                            {{ws.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="validation-messages"
+                                    *ngIf="submitted && formFileds['workSpaceId'].errors">
+                                    <small
+                                        *ngIf="formFileds['workSpaceId'].errors['required']  || formFileds['workSpaceId'].errors['min']"
+                                        class="text-danger">
+                                        <i class="fas fa-exclamation-circle"></i> Please select a work space
+                                    </small>
+                                </div>
+                                <small class="form-hint">
+                                    <i class="fas fa-info-circle"></i> Used to determine which work space is related to this department (KPIs are related to a work space)
+                                </small>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-card mt-4">
+                <div class="card-header-custom">
+                    <i class="fas fa-users"></i>
+                    <span>Department Members</span>
+                </div>
+
+                <div class="card-body-custom">
+
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-user-plus input-icon"></i>
+                                    <label for="selectedUsers" class="form-label">Users</label>
+                                    <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="allUsers"
+                                        formControlName="selectedUsers" [placeholder]="'Select Department Users'"
+                                        (onSelect)="onUserSelect($event)" (onDeSelect)="onDeSelectUser($event)"
+                                        (onDeSelectAll)="onDeSelectAll()" (onSelectAll)="onSelectAllUsers($event)"
+                                        class="modern-dropdown" [ngClass]="{ 
+                                                                    'is-invalid': submitted && formFileds['selectedUsers'].errors, 
+                                                                    'is-valid': submitted && !formFileds['selectedUsers'].errors 
+                                                                }">
+                                    </ng-multiselect-dropdown>
+                                    <div class="validation-div text-danger">
+                                        <span *ngIf="(submitted && formFileds['selectedUsers'].errors) && 
+                                                            (formFileds['selectedUsers'].errors['required'])">
+                                            Value is Mandatory
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="form-group col-lg-8">
+                            <label for="weight">Name</label>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label for="weight">Email</label>
+                        </div>
+                    </div>
+
+                    <div formArrayName="users" *ngFor="let user of unitUsersFormGroups(); let i = index">
+
+                        <form class="row height-50" [formGroupName]="i">
+
+                            <div class="form-group col-lg-8">
+                                <input class="form-control modern-input" formControlName="fullName" type="text"
+                                    [attr.disabled]="true" style="padding: 0px 10px;"
+                                    [ngClass]="{ 'is-invalid': submitted && user.controls['fullName'].errors }"
+                                    [ngClass]="{ 'is-valid': submitted && !user.controls['fullName'].errors }" />
+                            </div>
+
+                            <div class="form-group col-lg-4">
+                                <input class="form-control modern-input" formControlName="email" type="text"
+                                    [attr.disabled]="true"
+                                    [ngClass]="{ 'is-invalid': submitted && user.controls['email'].errors }"
+                                    [ngClass]="{ 'is-valid': submitted && !user.controls['email'].errors }" />
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer-custom justify-content-between">
+                <button type="button" (click)="close()" class="btn btn-outline-danger">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button type="submit" class="btn btn-primary modern-btn btn-save" *ngxPermissionsOnly="['SUPER_ADMIN']">
+                    <i class="fas fa-save"></i> Save changes
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

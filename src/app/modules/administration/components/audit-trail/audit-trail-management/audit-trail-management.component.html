@@ -1,0 +1,126 @@
+<div class="CustomContainer" id="auditTrail-model">
+    <div class="row">
+        <div class="col-6">
+            <h1 class="tableHeaders blackColor">History Panel</h1>
+        </div>
+
+        <div class="col-6">
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-9">
+                    <div class="input-group input-group">
+                        <input type="text" name="table_search" [(ngModel)]="searchValue" (keydown.enter)="search()"
+                            class="height-100per form-control float-end font-size-18" placeholder="Search">
+
+                        <div class="input-group-append">
+                            <button type="button" (click)="search()" class="btn btn-default">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12 table-border">
+            <table class="table table-hover text-nowrap">
+                <thead>
+                    <tr>
+                        <th width="10%" class="font-size-22">ID</th>
+                        <th class="font-size-22">Action Name</th>
+                        <th class="font-size-22">Action By</th>
+                        <th class="font-size-22">Type</th>
+                        <th class="font-size-22">Table Name</th>
+                        <th class="font-size-22">Date</th>
+                        <th width="10%" class="font-size-22">
+                            <i class="fa fa-cogs" aria-hidden="true"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let auditTrail of paginatedAuditTrail">
+                        <td>
+                            <label class="font-size-22 font-weight-400">{{auditTrail.id}}</label>
+                        </td>
+                        <td>
+                            <label class="font-size-22 font-weight-400">{{auditTrail.actionName}}</label>
+                        </td>
+                        <td>
+                            <label class="font-size-22 font-weight-400">{{auditTrail.actionBy?.firstName}}
+                                {{auditTrail.actionBy?.lastName}}</label>
+                        </td>
+                        <td>
+                            <label class="font-size-22 font-weight-400">{{auditTrail.typeString}}</label>
+                        </td>
+                        <td>
+                            <label class="font-size-22 font-weight-400">{{auditTrail.tableName}}</label>
+                        </td>
+                        <td>
+                            <label class="font-size-22 font-weight-400">
+                                {{auditTrail.createdAt | date: 'yyyy/MM/dd hh:mm'}}
+                            </label>
+                        </td>
+
+
+                        <td class="dropdown-menu-end">
+                            <button class="btn align-middle dots-btn" type="button" id="dropdownMenu20"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div class="three-dots"></div>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end font-size-18" aria-labelledby="dropdownMenu20">
+                                <button class="dropdown-item" type="button"
+                                    (click)="view(auditTrail, View_template)">View
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row ">
+        <div class="col-6 paignation-col">
+            <ul class="pagination paignation-custom">
+                <li class="page-item" [ngClass]="{ 'disabled': !paginationResult.hasPreviousPage }">
+                    <a class="page-link " (click)="first()"><i class="fa fa-angle-double-left"
+                            aria-hidden="true"></i></a>
+                </li>
+                <li class="page-item" [ngClass]="{ 'disabled': !paginationResult.hasPreviousPage }">
+                    <a class="page-link " (click)="previous()"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                </li>
+
+                <li *ngFor="let page of pages()" class="page-item"
+                    [ngClass]="{ 'active': page == paginationItem.pageNumber }">
+                    <a class="page-link " (click)="goToPage(page)">{{page}}</a>
+                </li>
+
+                <li class="page-item" [ngClass]="{ 'disabled': !paginationResult.hasNextPage }">
+                    <a class="page-link " (click)="next()"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                </li>
+                <li class="page-item" [ngClass]="{ 'disabled': !paginationResult.hasNextPage }">
+                    <a class="page-link " (click)="last()"><i class="fa fa-angle-double-right"
+                            aria-hidden="true"></i></a>
+                </li>
+                <li class="page-item">
+                    <select (change)="onLimitChange($event.target)" class="page-link paignation-page-size-tile">
+                        <option *ngFor="let option of pageLimitOptions" [value]="option">
+                            {{option}}
+                        </option>
+                    </select>
+                </li>
+            </ul>
+            <div class="total-paignation blackColor">
+                total: {{paginationResult.totalCount}}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #View_template let-modal>
+    <app-view-audit-trail [modal]="addUpdateModal">
+    </app-view-audit-trail>
+</ng-template>
