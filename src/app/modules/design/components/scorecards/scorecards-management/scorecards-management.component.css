@@ -2,7 +2,8 @@
    TABLE SECTION - SCORECARDS SPECIFIC STYLING
    ============================================================================ */
 .scorecards-management-container .header-text i {
-    color: #667eea;
+    color: #7dd3fc ;
+    font-size: 1.25rem;
 }
 
 /* ============================================================================
@@ -25,7 +26,6 @@
    ============================================================================ */
 
 .scorecards-management-container .cell-title {
-    color: #212529;
     font-weight: 500;
     font-size: 0.95rem;
 }
@@ -163,20 +163,11 @@
    ============================================================================ */
 
 .scorecards-management-container .table-data-row {
-    border-bottom: 1px solid #e9ecef;
     transition: background-color 0.2s ease;
-}
-
-.scorecards-management-container .table-data-row:hover {
-    background-color: #f8f9fa;
 }
 
 .scorecards-management-container .table-data-row.row-alternate {
     background-color: #ffffff;
-}
-
-.scorecards-management-container .table-data-row.row-alternate:hover {
-    background-color: #f0f9fa;
 }
 
 /* ============================================================================

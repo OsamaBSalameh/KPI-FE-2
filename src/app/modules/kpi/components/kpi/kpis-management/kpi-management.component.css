@@ -10,8 +10,12 @@
 }
 
 .kpi-table thead {
-    background: var(--bg-light);
     border-bottom: 2px solid var(--border-color);
+}
+
+body.dark-theme .kpi-table thead,
+body.dark-theme .kpi-table th {
+    border-bottom: 1px solid #374151 !important;
 }
 
 .kpi-table th {
@@ -19,18 +23,12 @@
     text-align: left;
     font-weight: 600;
     font-size: 0.9rem;
-    color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
 .kpi-table tbody tr {
-    border-bottom: 1px solid var(--border-color);
     transition: all var(--transition-fast);
-}
-
-.kpi-table tbody tr:hover {
-    background: var(--bg-light);
 }
 
 .kpi-table td {
@@ -71,14 +69,12 @@
 }
 
 .kpi-icon {
-    color: var(--primary-color);
     font-size: 1.1rem;
     flex-shrink: 0;
 }
 
 .kpi-name-text {
     font-weight: 500;
-    color: var(--text-dark);
 }
 
 /* Value Sense Badge */
