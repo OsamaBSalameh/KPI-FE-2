@@ -1,0 +1,138 @@
+<div class="CustomContainer">
+    <div class="row">
+        <div class="col-6">
+            <h1 class="tableHeaders blackColor">Achieved Unit KPI's</h1>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12 table-border">
+            <div [formGroup]="unitKPIsModal">
+                <table class="table table-hover text-nowrap" dir="ltr">
+                    <thead>
+                        <tr>
+                            <th class="font-size-22">Name</th>
+                            <th class="font-size-22">Owner</th>
+                            <th class="font-size-22">Unit</th>
+                            <th class="font-size-22">Target</th>
+                            <th class="font-size-22">Achievement Date</th>
+                            <th class="font-size-22">Status</th>
+                            <th class="font-size-22">Value</th>
+                            <th class="font-size-22">
+                                <i class="fa fa-cogs" aria-hidden="true"></i>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody formArrayName="unitKPIsFormArray">
+                        <tr *ngFor="let unitKPI of unitKPIFormGroups(); let i = index" [formGroupName]="i">
+                            <td class="text-start">
+                                <label controlName="kpiName" class="font-size-22 font-weight-400"></label>
+                            </td>
+                            <td>
+                                <label controlName="kpiOwnerName" class="font-size-22 font-weight-400"></label>
+                            </td>
+                            <td>
+                                <label controlName="organizationName" class="font-size-22 font-weight-400"></label>
+                            </td>
+                            <td>
+                                <label controlName="target" class="font-size-22 font-weight-400"></label>
+                            </td>
+                            <td>
+                                <label controlName="achievementDate" class="font-size-22 font-weight-400"></label>
+                            </td>
+                            <td>
+                                <label [ngClass]="colorBasedOnStatus(unitKPI)" controlName="status"
+                                    class="font-size-22 font-weight-400"></label>
+                            </td>
+                            <td class="dropdown text-end">
+                                <button class="btn align-middle dots-btn" type="button" id="dropdownMenu20"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div class="three-dots"></div>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end font-size-18"
+                                    aria-labelledby="dropdownMenu20">
+                                    <button class="dropdown-item" type="button"
+                                        (click)="reportingAttachmentsManagement(unitKPI, Attachment_template)">
+                                        Reporting Attachments
+                                    </button>
+                                    <button class="dropdown-item" type="button"
+                                        (click)="unitKPIAttachmentsManagement(unitKPI, Attachment_template)">
+                                        Unit KPI Attachments
+                                    </button>
+                                    <button class="dropdown-item" type="button"
+                                        (click)="viewComments(unitKPI, Comments_template)">Comments
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-6 paignation-col">
+            <ul class="pagination paignation-custom">
+                <li class="page-item" [ngClass]="{ 'disabled': !paginationResult.hasPreviousPage }">
+                    <a class="page-link " (click)="first()"><i class="fa fa-angle-double-left"
+                            aria-hidden="true"></i></a>
+                </li>
+                <li class="page-item" [ngClass]="{ 'disabled': !paginationResult.hasPreviousPage }">
+                    <a class="page-link " (click)="previous()"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                </li>
+
+                <li *ngFor="let page of pages()" class="page-item"
+                    [ngClass]="{ 'active': page == paginationItem.pageNumber }">
+                    <a class="page-link " (click)="goToPage(page)">{{page}}</a>
+                </li>
+
+                <li class="page-item" [ngClass]="{ 'disabled': !paginationResult.hasNextPage }">
+                    <a class="page-link " (click)="next()"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                </li>
+                <li class="page-item" [ngClass]="{ 'disabled': !paginationResult.hasNextPage }">
+                    <a class="page-link " (click)="last()"><i class="fa fa-angle-double-right"
+                            aria-hidden="true"></i></a>
+                </li>
+                <li class="page-item">
+                    <select (change)="onLimitChange($event.target)" class="page-link paignation-page-size-tile">
+                        <option *ngFor="let option of pageLimitOptions" [value]="option">
+                            {{option}}
+                        </option>
+                    </select>
+                </li>
+            </ul>
+            <div class="total-paignation blackColor">
+                total: {{paginationResult.totalCount}}
+            </div>
+        </div>
+
+        <div class="col-6 paignation-col">
+            <ul class="nav nav-pills ml-auto role-selection">
+                <li class="nav-item role-item">
+                    <a id="KPI_OWNER_BTN" class="nav-link role-btn active" href="#nothing" data-bs-toggle="tab"
+                        *ngxPermissionsOnly="['KPI_OWNER']" (click)="getPaginatedValues(userRoles.KPI_OWNER)">KPI
+                        Owner</a>
+                </li>
+                <li class="nav-item role-item">
+                    <a id="DATA_CUSTADION_BTN" class="nav-link role-btn" href="#nothing" data-bs-toggle="tab"
+                        *ngxPermissionsOnly="['DATA_CUSTADION']"
+                        (click)="getPaginatedValues(userRoles.DATA_CUSTADION)">Data Custodian</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+
+
+<ng-template #Comments_template let-modal>
+    <app-comments-section [modal]="commentsModal"></app-comments-section>
+</ng-template>
+
+
+<ng-template #Attachment_template let-modal>
+    <app-attachment-manager [modal]="attachmentsModal"></app-attachment-manager>
+</ng-template>

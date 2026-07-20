@@ -1,0 +1,123 @@
+<div class="">
+    <div class="modal-header">
+        <div class="header-content">
+            <div class="icon-wrapper">
+                <i class="fas fa-laptop"></i> <!-- Icon representing objective/target -->
+            </div>
+            <div class="title-section">
+                <h5 class="modal-title">{{actionType}} KPI Request</h5>
+                <p class="modal-subtitle">Request KPI owners to fill there KPIs</p>
+            </div>
+        </div>
+        <button type="button" class="btn-close" (click)="close()" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <div class="modal-body content-body">
+        <form [formGroup]="unitKPIRequestForm" (ngSubmit)="onSubmit()">
+
+            <div class="card-body">
+                <div id="accordion">
+                    <div class="card card-primary-dark">
+                        <div class="card-header">
+                            <h4 class="card-title w-100">
+                                <a class="d-block w-100" data-bs-toggle="collapse" href="#collapseOne">
+                                    Main Information
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                            <app-add-unit-kpi-request [addModal]="unitKPIRequestForm" [submitted]="submitted"
+                                [actionType]="modal.actionType">
+                            </app-add-unit-kpi-request>
+                        </div>
+                    </div>
+                    <div class="card card-gray-dark">
+                        <div class="card-header">
+                            <h4 class="card-title w-100">
+                                <a class="d-block w-100" data-bs-toggle="collapse" href="#collapseTwo">
+                                    Unit KPI's
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                            <div class="card-body">
+                                <app-selected-unit-kpis-management [selectUnitKPIsModal]="unitKPIRequestForm"
+                                    [unitKPIRequest]="this.unitKPIRequest" [submitted]="submitted"
+                                    [weightSumNotEnough]="weightSumNotEnough" [actionType]="modal.actionType">
+                                </app-selected-unit-kpis-management>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-gray">
+                        <div class="card-header">
+                            <h4 class="card-title w-100">
+                                <a class="d-block w-100" data-bs-toggle="collapse" href="#collapseThree">
+                                    History
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="collapse" data-parent="#accordion">
+                            <app-unit-kpi-request-history [requestId]="this.unitKPIRequest.id">
+                            </app-unit-kpi-request-history>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer-custom justify-content-between" *ngIf="modal.actionType !='Review'">
+                <div>
+                    <button type="button" (click)="close()" class="btn btn-outline-danger" style="float: left;"
+                        data-dismiss="modal">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                    <!-- <div>
+                        <a style="visibility: hidden;">
+                            hidden
+                        </a>
+                    </div> -->
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary modern-btn btn-save" style="float: right;"
+                        *ngIf="is_KPI_OWNER_ActionNeeded() || modal.actionType == 'Add'">
+                        <i class="fas fa-save"></i> Submit
+                    </button>
+                    <div>
+                        <a class="greenColor" type="button" (click)="draftSave()" *ngIf="is_KPI_OWNER_ActionNeeded()">
+                            <i class="fas fa-save"></i> Save as Draft
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngxPermissionsOnly="[workSpaceAdminUserRole]">
+                <div class="modal-footer justify-content-between"
+                    *ngIf="modal.actionType =='Review' && is_WORK_SPACE_ADMIN_ActionNeeded()">
+                    <button type="button" (click)="viewReturnReasonModal(Return_Reason_template, workSpaceAdminUserRole)"
+                        class="btn btn-outline-info" data-dismiss="modal"> <i
+                            class="fas fa-times-circle"></i> Return</button>
+                    <button type="button" (click)="acceptViaWorkSpaceAdmin()" class="btn btn-primary modern-btn btn-save"> <i
+                            class="fas fa-check-circle"></i> Accept</button>
+                </div>
+            </div>
+
+            <div *ngxPermissionsOnly="[ceoUserRole]">
+                <div class="modal-footer justify-content-between"
+                    *ngIf="modal.actionType =='Review' && is_CEO_ActionNeeded()">
+                    <button type="button" (click)="viewReturnReasonModal(Return_Reason_template, ceoUserRole)"
+                        class="btn btn-outline-info" data-dismiss="modal"><i
+                            class="fas fa-times-circle"></i> Return</button>
+                    <button type="button" (click)="acceptViaCEO()" class="btn btn-primary modern-btn btn-save"> <i
+                            class="fas fa-check-circle"></i> Accept</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<ng-template #Return_Reason_template let-modal>
+    <app-request-return-reason [modal]="returnReasonModal"
+        (returnReasonAddedEvent)="returnReasonAddedEventHandler($event)"></app-request-return-reason>
+</ng-template>

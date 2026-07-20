@@ -1,0 +1,430 @@
+/* ============================================================================
+   KPI COPIES MANAGEMENT SPECIFIC STYLES
+   ============================================================================ */
+
+/* KPI Copies Table */
+.kpi-copies-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+}
+
+.kpi-copies-table thead {
+    background: var(--bg-light);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.kpi-copies-table th {
+    padding: var(--spacing-md);
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.kpi-copies-table tbody tr {
+    border-bottom: 1px solid var(--border-color);
+    transition: all var(--transition-fast);
+}
+
+.kpi-copies-table tbody tr:hover {
+    background: var(--bg-light);
+}
+
+.kpi-copies-table td {
+    padding: var(--spacing-md);
+    vertical-align: middle;
+}
+
+/* KPI Copies Columns */
+.kpi-copies-table .col-id {
+    width: 80px;
+}
+
+.kpi-copies-table .col-name {
+    width: 25%;
+}
+
+.kpi-copies-table .col-sense {
+    width: 15%;
+}
+
+.kpi-copies-table .col-custodian {
+    width: 18%;
+}
+
+.kpi-copies-table .col-sponsor {
+    width: 18%;
+}
+
+.kpi-copies-table .col-actions {
+    width: 100px;
+}
+
+/* KPI Copy Name Cell */
+.kpi-copy-name-cell {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.kpi-copy-icon {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    opacity: 0.8;
+}
+
+.kpi-copy-name-text {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+/* Row Hover Effects */
+.kpi-copy-row:hover .kpi-copy-icon {
+    animation: bounce 0.4s ease;
+    opacity: 1;
+}
+
+/* Value Sense Badge - Matching KPI Template */
+.kpi-copies-table .sense-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.kpi-copies-table .sense-increase {
+    background: #d4edda;
+    color: #155724;
+}
+
+.kpi-copies-table .sense-decrease {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.kpi-copies-table .sense-badge i {
+    font-size: 0.8rem;
+}
+
+/* User Badge - Matching KPI Template */
+.kpi-copies-table .user-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--bg-hover);
+    color: var(--primary-color);
+    padding: 0.4rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.kpi-copies-table .user-badge i {
+    font-size: 0.85rem;
+}
+
+/* Actions for KPI Copies */
+.kpi-copies-table .actions-menu {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+}
+
+.kpi-copies-table .action-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.kpi-copies-table .view-btn {
+    color: var(--info-color);
+}
+
+.kpi-copies-table .view-btn:hover {
+    background: #d1ecf1;
+    border-color: var(--info-color);
+    transform: translateY(-2px);
+}
+
+/* Responsive adjustments for KPI Copies */
+@media (max-width: 1200px) {
+    .header-actions {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+
+    .search-bar-wrapper {
+        width: 100%;
+    }
+
+    .kpi-copies-table .col-name {
+        width: 22%;
+    }
+
+    .kpi-copies-table .col-custodian {
+        width: 16%;
+    }
+
+    .kpi-copies-table .col-sponsor {
+        width: 16%;
+    }
+}
+
+@media (max-width: 992px) {
+    .kpi-copies-table .col-sense {
+        width: 12%;
+    }
+
+    .kpi-copies-table .col-custodian {
+        width: 15%;
+    }
+
+    .kpi-copies-table .col-sponsor {
+        width: 15%;
+    }
+
+    .kpi-copies-table .col-actions {
+        width: 90px;
+    }
+}
+
+@media (max-width: 768px) {
+    .management-header {
+        padding: 1rem;
+    }
+
+    .page-title {
+        font-size: 1.25rem;
+    }
+
+    .page-subtitle {
+        display: none;
+    }
+
+    .kpi-copies-table th,
+    .kpi-copies-table td {
+        padding: 0.75rem 0.5rem;
+    }
+
+    .kpi-copies-table .col-name {
+        width: 25%;
+    }
+
+    .kpi-copies-table .col-sense {
+        width: 15%;
+    }
+
+    .kpi-copies-table .col-custodian {
+        display: none;
+    }
+
+    .kpi-copies-table .col-sponsor {
+        display: none;
+    }
+
+    .kpi-copies-table .col-actions {
+        width: 80px;
+    }
+
+    .kpi-copy-name-text {
+        font-size: 0.9rem;
+    }
+
+    .kpi-copies-table .sense-badge {
+        font-size: 0.8rem;
+        padding: 0.35rem 0.6rem;
+    }
+
+    .kpi-copies-table .action-btn {
+        padding: 0.4rem 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .pagination-section {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .pagination-nav {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .pagination-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+        width: 100%;
+    }
+
+    .page-numbers {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .management-header {
+        padding: 0.75rem;
+    }
+
+    .page-title {
+        font-size: 1.1rem;
+    }
+
+    .page-title i {
+        font-size: 1.5rem;
+    }
+
+    .search-input {
+        font-size: 0.85rem;
+    }
+
+    .kpi-copies-table th,
+    .kpi-copies-table td {
+        padding: 0.5rem;
+    }
+
+    .kpi-copies-table .col-id {
+        width: 50px;
+    }
+
+    .kpi-copies-table .col-name {
+        width: 50%;
+    }
+
+    .kpi-copies-table .col-sense {
+        width: 20%;
+    }
+
+    .kpi-copies-table .col-custodian {
+        display: none;
+    }
+
+    .kpi-copies-table .col-sponsor {
+        display: none;
+    }
+
+    .kpi-copies-table .col-actions {
+        width: 70px;
+    }
+
+    .kpi-copy-name-text {
+        font-size: 0.85rem;
+    }
+
+    .kpi-copies-table .sense-badge {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.5rem;
+    }
+
+    .kpi-copies-table .user-badge {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.5rem;
+    }
+
+    .kpi-copies-table .action-btn {
+        padding: 0.35rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .pagination-section {
+        padding: var(--spacing-md) 0.75rem;
+    }
+
+    .info-text {
+        font-size: 0.8rem;
+    }
+
+    .page-number-btn {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+        min-width: 32px;
+    }
+
+    .pagination-btn {
+        padding: 0.4rem 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .empty-state {
+        padding: 2rem 1rem;
+    }
+
+    .empty-state-content i {
+        font-size: 2.5rem;
+    }
+
+    .empty-state-content h3 {
+        font-size: 1rem;
+    }
+
+    .empty-state-content p {
+        font-size: 0.85rem;
+    }
+}
+
+/* Dark Mode Support for KPI Copies */
+/* @media (prefers-color-scheme: dark) {
+    .kpi-copies-management-container {
+        background: #2d2d2d;
+    }
+
+    .kpi-copies-table thead {
+        background: #3d3d3d;
+    }
+
+    .kpi-copies-table th {
+        color: #b0b0b0;
+    }
+
+    .kpi-copies-table tbody tr:hover {
+        background: #3d3d3d;
+    }
+
+    .kpi-copy-name-text {
+        color: #e0e0e0;
+    }
+
+    .kpi-copies-table .action-btn {
+        border-color: #4d4d4d;
+        color: #90caf9;
+    }
+
+    .kpi-copies-table .view-btn:hover {
+        background: rgba(144, 202, 249, 0.15);
+        border-color: #90caf9;
+    }
+
+    .kpi-copies-table .sense-increase {
+        background: rgba(212, 237, 218, 0.2);
+        color: #7cfc00;
+    }
+
+    .kpi-copies-table .sense-decrease {
+        background: rgba(248, 215, 218, 0.2);
+        color: #ff6b6b;
+    }
+
+    .kpi-copies-table .user-badge {
+        background: rgba(144, 202, 249, 0.15);
+        color: #90caf9;
+    }
+} */
+
+.page-title i {
+    font-size: 3.5rem;
+}

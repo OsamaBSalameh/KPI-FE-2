@@ -1,0 +1,153 @@
+<div [formGroup]="addModal">
+
+    <div class="form-card">
+        <div class="card-header-custom">
+            <i class="fas fa-sliders-h"></i>
+            <span>KPI Request Details</span>
+        </div>
+        <div class="card-body-custom">
+            <div class="row g-3">
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-chess input-icon"></i>
+                            <label class="form-label">Strategy<span class="redStar">*</span></label>
+                            <select formControlName="strategy"
+                                class="form-select modern-select form-control height-70per font-size-18" id="strategy"
+                                [ngClass]="{ 'is-invalid': submitted && formFileds['strategy'].errors }"
+                                [ngClass]="{ 'is-valid': submitted && !formFileds['strategy'].errors }">
+                                <option disabled hidden value="0">Select Strategy</option>
+                                <option *ngFor="let strategy of strategies" value="{{strategy.id}}">{{strategy.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="validation-div text-danger">
+                            <span
+                                *ngIf="(submitted && formFileds['strategy'].errors && (formFileds['strategy'].errors['required'] || formFileds['strategy'].errors['min']))">
+                                Value is Mandatory
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-crown input-icon"></i>
+                            <label class="form-label">KPI Owner<span class="redStar">*</span></label>
+                            <select formControlName="owner"
+                                class="form-select modern-select form-control height-70per font-size-18" id="owner"
+                                (change)="onOwnerSelect($event.target)"
+                                [ngClass]="{ 'is-invalid': submitted && formFileds['owner'].errors }"
+                                [ngClass]="{ 'is-valid': submitted && !formFileds['owner'].errors }">
+                                <option disabled hidden value="0">Select KPI Owner</option>
+                                <option *ngFor="let owner of kpiOwners" value="{{owner.id}}">{{owner.firstName}}
+                                    {{owner.lastName}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="validation-div text-danger">
+                            <span
+                                *ngIf="(submitted && formFileds['owner'].errors && (formFileds['owner'].errors['required'] || formFileds['owner'].errors['min']))">
+                                Value is Mandatory
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-briefcase input-icon"></i>
+                            <label class="form-label">Unit</label>
+                            <input type="text" class="form-control modern-input height-70per font-size-18"
+                                value="{{selectedOwner?.organizationUnit?.name}}" id="organizationUnit"
+                                placeholder="Unit Name" [attr.disabled]="true">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="form-card">
+        <div class="card-header-custom">
+            <i class="fas fa-sliders-h"></i>
+            <span>Dates</span>
+        </div>
+        <div class="card-body-custom">
+            <div class="row g-3">
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-calendar-check-o input-icon"></i>
+                            <label class="form-label" for="responseDueDate">Response Due Date<span
+                                    class="redStar">*</span></label>
+                            <div class="input-group">
+                                <input formControlName="responseDueDate" placeholder="dd-mm-yyyy"
+                                    name="dp_ResponseDueDate" type="text"
+                                    [ngClass]="{ 'is-invalid': submitted && formFileds['responseDueDate'].errors }"
+                                    [ngClass]="{ 'is-valid': submitted && !formFileds['responseDueDate'].errors }"
+                                    #responseDueDateId="ngbDatepicker" class="form-control height-50 font-size-18"
+                                    ngbDatepicker />
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar"
+                                        (click)="responseDueDateId.toggle()" type="button"></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="validation-div text-danger">
+                            <span *ngIf="(submitted && formFileds['responseDueDate'].errors) && 
+                         (formFileds['responseDueDate'].errors['required'])">
+                                Value is Mandatory
+                            </span>
+                            <span *ngIf="(submitted && formFileds['responseDueDate'].errors) && 
+            (formFileds['responseDueDate'].errors['lessThan'])">
+                                Value should be less than Escalation Date
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-calendar-minus-o input-icon"></i>
+                            <label class="form-label" for="escalationDate">Escalation Date<span
+                                    class="redStar">*</span></label>
+                            <div class="input-group">
+                                <input formControlName="escalationDate" placeholder="dd-mm-yyyy"
+                                    name="dp_EscalationDate" type="text"
+                                    [ngClass]="{ 'is-invalid': submitted && formFileds['escalationDate'].errors }"
+                                    [ngClass]="{ 'is-valid': submitted && !formFileds['escalationDate'].errors }"
+                                    #escalationDateId="ngbDatepicker" class="form-control height-50 font-size-18"
+                                    ngbDatepicker />
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar"
+                                        (click)="escalationDateId.toggle()" type="button"></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="validation-div text-danger">
+                            <span *ngIf="(submitted && formFileds['escalationDate'].errors) && 
+                         (formFileds['escalationDate'].errors['required'])">
+                                Value is Mandatory
+                            </span>
+                            <span *ngIf="(submitted && formFileds['escalationDate'].errors) && 
+            (formFileds['escalationDate'].errors['greaterThan'])">
+                                Value should be greater than Response Due Date
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

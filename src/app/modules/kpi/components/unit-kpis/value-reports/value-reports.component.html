@@ -1,0 +1,383 @@
+<!-- REPORTING PANEL COMPONENT -->
+<div class="management-container">
+    <!-- HEADER SECTION -->
+    <div class="management-header">
+        <div class="header-content">
+            <div class="header-title-section">
+                <h1 class="page-title">
+                    <i class="fa fa-chart-line"></i>
+                    Reporting Panel
+                </h1>
+                <p class="page-subtitle">Manage and track KPI reporting across all departments</p>
+            </div>
+
+            <div class="header-actions">
+                <!-- Strategy Filter -->
+                <div class="filter-section">
+                    <label class="filter-label">Strategy:</label>
+                    <select class="filter-select" id="strategyId" [(ngModel)]="selectedStrategyId"
+                        (change)="onStrategySelected($event.target)" [class.filter-active]="selectedStrategyId != 0">
+                        <option value="0">All Strategies</option>
+                        <option *ngFor="let data of strategies" value="{{data.id}}">
+                            {{data.name}}
+                        </option>
+                    </select>
+                </div>
+
+                <!-- Organization Filter (WORK_SPACE_ADMIN only) -->
+                <div class="filter-section" *ngxPermissionsOnly="['WORK_SPACE_ADMIN']">
+                    <label class="filter-label">Department:</label>
+                    <select class="filter-select" id="organizationId" (change)="onOrganizationSelect($event.target)"
+                        [class.filter-active]="selectedUnit != 0">
+                        <option value="0">All Departments</option>
+                        <option *ngFor="let unit of allUnits" value="{{unit.id}}">
+                            {{unit.name}}
+                        </option>
+                    </select>
+                </div>
+
+                <!-- Status Filter -->
+                <div class="filter-section">
+                    <label class="filter-label">Status:</label>
+                    <select class="filter-select" id="kpiDataId" (change)="onUnitKPIStatusSelect($event.target)"
+                        [class.filter-active]="selectedStatus != 0">
+                        <option value="0">All Statuses</option>
+                        <option *ngFor="let data of unitKPIStatuses" value="{{data.id}}">
+                            {{data.value}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABLE SECTION -->
+    <div class="table-section">
+        <div class="table-wrapper">
+            <form [formGroup]="unitKPIsModal">
+                <table class="management-table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="header-cell">
+                                    <span>Department</span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="header-cell">
+                                    <span>KPI Name</span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="header-cell">
+                                    <span>Weight</span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="header-cell">
+                                    <span>Data Type</span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="header-cell">
+                                    <span>Target</span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="header-cell">
+                                    <span>Custodian</span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="header-cell">
+                                    <span>Sponsor</span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="header-cell">
+                                    <span>Status</span>
+                                </div>
+                            </th>
+                            <th style="text-align: center;">
+                                <div class="header-cell">
+                                    <span>Actions</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody formArrayName="unitKPIsFormArray">
+                        <ng-container *ngFor="let unitKPI of unitKPIFormGroups(); let i = index" [formGroupName]="i">
+                            <tr class="table-data-row" [class.row-alternate]="i % 2 === 1">
+                                <!-- Department -->
+                                <td>
+                                    <div class="cell-text">
+                                        {{ unitKPI.get('organizationName')?.value }}
+                                    </div>
+                                </td>
+
+                                <!-- KPI Name -->
+                                <td>
+                                    <div class="cell-text">
+                                        {{ unitKPI.get('kpiName')?.value }}
+                                    </div>
+                                </td>
+
+                                <!-- Weight -->
+                                <td>
+                                    <div class="cell-text">
+                                        {{ unitKPI.get('weight')?.value }}
+                                    </div>
+                                </td>
+
+                                <!-- Data Type -->
+                                <td>
+                                    <div class="cell-text">
+                                        {{ unitKPI.get('measurmentUnit')?.value }}
+                                    </div>
+                                </td>
+
+                                <!-- Target -->
+                                <td>
+                                    <div class="cell-text">
+                                        {{ unitKPI.get('target')?.value }}
+                                    </div>
+                                </td>
+
+                                <!-- Custodian -->
+                                <td>
+                                    <div class="cell-text">
+                                        {{ unitKPI.get('dataCustodionName')?.value }}
+                                    </div>
+                                </td>
+
+                                <!-- Sponsor -->
+                                <td>
+                                    <div class="cell-text">
+                                        {{ unitKPI.get('dataSponsorName')?.value }}
+                                    </div>
+                                </td>
+
+                                <!-- Status -->
+                                <td>
+                                    <span [ngClass]="'status-badge ' + colorBasedOnStatus(unitKPI)" class="status-badge"
+                                        [title]="unitKPI.get('status')?.value">
+                                        {{ unitKPI.get('status')?.value }}
+                                    </span>
+                                </td>
+
+                                <!-- Actions -->
+                                <td class="text-center">
+                                    <div class="actions-menu">
+                                        <div class="dropdown">
+                                            <button class="action-btn more-btn" type="button" id="dropdownMenu{{ i }}"
+                                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                                title="More options">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </button>
+
+                                            <div class="dropdown-menu dropdown-menu-end"
+                                                [attr.aria-labelledby]="'dropdownMenu' + i">
+                                                <!-- View -->
+                                                <button class="dropdown-item" type="button"
+                                                    (click)="viewKPI(unitKPI, ViewKPI_template)">
+                                                    <i class="fas fa-eye"></i>
+                                                    View KPI
+                                                </button>
+                                                <div class="dropdown-divider"></div>
+
+                                                <!-- DATA SPONSOR Actions -->
+                                                <ng-container *ngIf="selectedRole == 'DATA_SPONSER'">
+                                                    <button class="dropdown-item" type="button"
+                                                        [disabled]="unitKPI.get('statusCode')?.value != 3"
+                                                        (click)="approveViaSponser(unitKPI)">
+                                                        <i class="fas fa-check"></i>
+                                                        Approve
+                                                    </button>
+                                                    <!-- <button class="dropdown-item" type="button"
+                                                        (click)="unitKPIAchieved(unitKPI)">
+                                                        <i class="fa fa-flag"></i>
+                                                        Mark Achieved
+                                                    </button> -->
+                                                    <button class="dropdown-item" type="button"
+                                                        [disabled]="unitKPI.get('statusCode')?.value != 3"
+                                                        (click)="rejectViaSponser(unitKPI)">
+                                                        <i class="fas fa-times"></i>
+                                                        Return
+                                                    </button>
+                                                </ng-container>
+
+                                                <!-- KPI OWNER Actions -->
+                                                <ng-container *ngIf="selectedRole == 'KPI_OWNER'">
+                                                    <button class="dropdown-item" type="button"
+                                                        [disabled]="unitKPI.get('statusCode')?.value != 5"
+                                                        (click)="approveViaOwner(unitKPI)">
+                                                        <i class="fas fa-check"></i>
+                                                        Approve
+                                                    </button>
+                                                    <button class="dropdown-item" type="button"
+                                                        [disabled]="unitKPI.get('statusCode')?.value != 5"
+                                                        (click)="rejectViaOwner(unitKPI)">
+                                                        <i class="fas fa-times"></i>
+                                                        Return
+                                                    </button>
+                                                </ng-container>
+
+                                                <!-- WORK_SPACE_ADMIN Actions -->
+                                                <ng-container *ngIf="selectedRole == 'WORK_SPACE_ADMIN'">
+                                                    <button class="dropdown-item" type="button"
+                                                        [disabled]="(unitKPI.get('statusCode')?.value != 5 && unitKPI.get('statusCode')?.value != 3)"
+                                                        (click)="approveViaWorkSpaceAdmin(unitKPI)">
+                                                        <i class="fas fa-check"></i>
+                                                        Approve
+                                                    </button>
+                                                    <button class="dropdown-item" type="button"
+                                                        [disabled]="(unitKPI.get('statusCode')?.value != 5 && unitKPI.get('statusCode')?.value != 3)"
+                                                        (click)="rejectViaWorkSpaceAdmin(unitKPI)">
+                                                        <i class="fas fa-times"></i>
+                                                        Return
+                                                    </button>
+                                                </ng-container>
+
+                                                <div class="dropdown-divider"></div>
+
+                                                <!-- Attachments & Values -->
+                                                <button class="dropdown-item" type="button"
+                                                    (click)="reportingAttachmentsManagement(unitKPI, Attachment_template)">
+                                                    <i class="fas fa-paperclip"></i>
+                                                    Reporting Attachments
+                                                </button>
+                                                <button class="dropdown-item" type="button"
+                                                    (click)="unitKPIAttachmentsManagement(unitKPI, Attachment_template)">
+                                                    <i class="fas fa-paperclip"></i>
+                                                    KPI Attachments
+                                                </button>
+
+                                                <!-- Manage Values (DATA CUSTODIAN only) -->
+                                                <ng-container *ngIf="selectedRole == 'DATA_CUSTADION'">
+                                                    <button class="dropdown-item" type="button"
+                                                        [disabled]="!(unitKPI.get('statusCode')?.value == 2 || unitKPI.get('statusCode')?.value == 4 || unitKPI.get('statusCode')?.value == 6)"
+                                                        (click)="manageUnitKpiValues(unitKPI, Values_template, false)">
+                                                        <i class="fas fa-edit"></i>
+                                                        Manage Values
+                                                    </button>
+                                                </ng-container>
+
+                                                <!-- View Values (Other roles) -->
+                                                <ng-container *ngIf="selectedRole != 'DATA_CUSTADION'">
+                                                    <button class="dropdown-item" type="button"
+                                                        (click)="manageUnitKpiValues(unitKPI, Values_template, true)">
+                                                        <i class="fas fa-list"></i>
+                                                        View Values
+                                                    </button>
+                                                </ng-container>
+
+                                                <div class="dropdown-divider"></div>
+
+                                                <!-- Comments -->
+                                                <button class="dropdown-item" type="button"
+                                                    (click)="viewComments(unitKPI, Comments_template)">
+                                                    <i class="fas fa-comments"></i>
+                                                    Comments
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+
+    <!-- PAGINATION & FOOTER SECTION -->
+    <div class="pagination-section">
+        <div class="pagination-info">
+            <!-- Pagination Controls -->
+            <div class="pagination-nav">
+                <button class="pagination-btn" type="button" [disabled]="!paginationResult.hasPreviousPage"
+                    (click)="first()" title="First page">
+                    <i class="fa fa-angle-double-left"></i>
+                </button>
+                <button class="pagination-btn" type="button" [disabled]="!paginationResult.hasPreviousPage"
+                    (click)="previous()" title="Previous page">
+                    <i class="fa fa-angle-left"></i>
+                </button>
+
+                <div class="page-numbers">
+                    <button *ngFor="let page of pages()" class="page-number-btn" type="button"
+                        [class.active]="page == paginationItem.pageNumber" (click)="goToPage(page)">
+                        {{page}}
+                    </button>
+                </div>
+
+                <button class="pagination-btn" type="button" [disabled]="!paginationResult.hasNextPage" (click)="next()"
+                    title="Next page">
+                    <i class="fa fa-angle-right"></i>
+                </button>
+                <button class="pagination-btn" type="button" [disabled]="!paginationResult.hasNextPage" (click)="last()"
+                    title="Last page">
+                    <i class="fa fa-angle-double-right"></i>
+                </button>
+            </div>
+
+            <!-- Page Size Selector -->
+            <div class="page-size-selector">
+                <label for="pageSize">Items per page:</label>
+                <select id="pageSize" class="page-size-select" (change)="onLimitChange($event.target)">
+                    <option *ngFor="let option of pageLimitOptions" [value]="option">
+                        {{option}}
+                    </option>
+                </select>
+            </div>
+
+            <!-- Total Count -->
+            <div class="info-text">
+                <strong>{{paginationResult.totalCount}}</strong> total items
+            </div>
+        </div>
+
+        <!-- Role Selection Tabs -->
+        <div class="role-selection">
+            <button *ngxPermissionsOnly="['KPI_OWNER']" class="role-btn" type="button" id="KPI_OWNER_BTN"
+                (click)="getPaginatedValues(userRoles.KPI_OWNER)">
+                <i class="fas fa-user-tie"></i>
+                KPI Owner
+            </button>
+            <button *ngxPermissionsOnly="['DATA_CUSTADION']" class="role-btn" type="button" id="DATA_CUSTADION_BTN"
+                (click)="getPaginatedValues(userRoles.DATA_CUSTADION)">
+                <i class="fas fa-database"></i>
+                Data Custodian
+            </button>
+            <button *ngxPermissionsOnly="['DATA_SPONSER']" class="role-btn" type="button" id="DATA_SPONSER_BTN"
+                (click)="getPaginatedValues(userRoles.DATA_SPONSER)">
+                <i class="fas fa-user-check"></i>
+                Data Sponsor
+            </button>
+            <button *ngxPermissionsOnly="['WORK_SPACE_ADMIN']" class="role-btn" type="button" id="WORK_SPACE_ADMIN_BTN"
+                (click)="getPaginatedValues(userRoles.WORK_SPACE_ADMIN)">
+                <i class="fas fa-crown"></i>
+                Work Space
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MODALS -->
+<ng-template #ViewKPI_template let-modal>
+    <app-add-update-kpi-copy [modal]="viewKpiModal"></app-add-update-kpi-copy>
+</ng-template>
+
+<ng-template #Comments_template let-modal>
+    <app-comments-section [modal]="commentsModal"></app-comments-section>
+</ng-template>
+
+<ng-template #Attachment_template let-modal>
+    <app-attachment-manager [modal]="attachmentsModal"></app-attachment-manager>
+</ng-template>
+
+<ng-template #Values_template let-modal>
+    <app-manage-unit-kpi-values [modal]="valuesModal" (kpiValuesUpdatedEvent)="kpiValuesUpdatedEventHandler($event)">
+    </app-manage-unit-kpi-values>
+</ng-template>

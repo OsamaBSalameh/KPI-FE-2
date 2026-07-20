@@ -1,0 +1,54 @@
+<div class="kpi-modal-container">
+    <!-- Modal Overlay -->
+    <div class="kpi-modal-overlay" (click)="close()"></div>
+
+    <!-- Modal Content -->
+    <div class="kpi-modal">
+        <!-- Header -->
+        <div class="kpi-modal-header">
+            <h2 class="kpi-modal-title">
+                <i class="fas fa-undo-alt"></i>
+                Return Reason
+            </h2>
+            <button class="kpi-modal-close" (click)="close()" type="button" title="Close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Body -->
+        <div class="kpi-modal-body">
+            <div class="form-group">
+                <label for="return-reason" class="form-label">Please explain why you're returning this item</label>
+                <textarea 
+                    id="return-reason"
+                    class="form-textarea"
+                    [(ngModel)]="returnReason"
+                    placeholder="Type your reason here..."
+                    rows="6">
+                </textarea>
+                <div class="char-count">
+                    <span>{{ (returnReason || '').length }}/500 characters</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="kpi-modal-footer">
+            <button 
+                type="button" 
+                class="btn btn-secondary"
+                (click)="close()">
+                <i class="fas fa-times-circle"></i>
+                Close
+            </button>
+            <button 
+                type="button" 
+                class="btn btn-primary"
+                [disabled]="!returnReason || returnReason.trim() === ''"
+                (click)="done()">
+                <i class="fas fa-check-circle"></i>
+                Done
+            </button>
+        </div>
+    </div>
+</div>

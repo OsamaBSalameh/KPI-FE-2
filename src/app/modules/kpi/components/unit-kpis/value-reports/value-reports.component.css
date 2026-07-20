@@ -1,0 +1,246 @@
+/* ============================================================================
+   STATUS BADGE STYLES - Reporting Panel
+   ============================================================================ */
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    letter-spacing: 0.3px;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================================================
+   STATUS COLORS - Based on Status Code
+   ============================================================================ */
+
+/* PENDING (Status Code: 1) - Gray/Neutral */
+.status-badge.pending,
+.status-badge.status-pending {
+    background-color: #f0f2f5;
+    color: #6c757d;
+    border: 1px solid #dee2e6;
+}
+
+.status-badge.pending::before,
+.status-badge.status-pending::before {
+    content: "●";
+    margin-right: 0.5rem;
+    font-size: 0.7rem;
+    opacity: 0.7;
+}
+
+/* APPROVED (Status Code: 2) - Green */
+.status-badge.approved,
+.status-badge.status-approved {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.status-badge.approved::before,
+.status-badge.status-approved::before {
+    content: "✓";
+    margin-right: 0.5rem;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+/* SUBMITTED/PENDING REVIEW (Status Code: 3) - Blue */
+.status-badge.submitted,
+.status-badge.status-submitted,
+.status-badge.pending-review,
+.status-badge.status-pending-review {
+    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+.status-badge.submitted::before,
+.status-badge.status-submitted::before,
+.status-badge.pending-review::before,
+.status-badge.status-pending-review::before {
+    content: "⧖";
+    margin-right: 0.5rem;
+    font-size: 0.8rem;
+}
+
+/* ACTIVE/IN PROGRESS (Status Code: 4) - Cyan/Light Blue */
+.status-badge.active,
+.status-badge.status-active,
+.status-badge.in-progress,
+.status-badge.status-in-progress {
+    background: linear-gradient(135deg, #cfe2ff 0%, #b6d4fe 100%);
+    color: #084298;
+    border: 1px solid #b6d4fe;
+}
+
+.status-badge.active::before,
+.status-badge.status-active::before,
+.status-badge.in-progress::before,
+.status-badge.status-in-progress::before {
+    content: "⟳";
+    margin-right: 0.5rem;
+    font-size: 0.8rem;
+    animation: spin 2s linear infinite;
+}
+
+/* REJECTED/RETURNED (Status Code: 5) - Orange/Warning */
+.status-badge.rejected,
+.status-badge.status-rejected,
+.status-badge.returned,
+.status-badge.status-returned {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+.status-badge.rejected::before,
+.status-badge.status-rejected::before,
+.status-badge.returned::before,
+.status-badge.status-returned::before {
+    content: "⚠";
+    margin-right: 0.5rem;
+    font-size: 0.8rem;
+}
+
+/* ACHIEVED (Status Code: 6) - Purple/Success */
+.status-badge.achieved,
+.status-badge.status-achieved {
+    background: linear-gradient(135deg, #e2d5f5 0%, #d1c4e9 100%);
+    color: #5e35b1;
+    border: 1px solid #d1c4e9;
+}
+
+.status-badge.achieved::before,
+.status-badge.status-achieved::before {
+    content: "★";
+    margin-right: 0.5rem;
+    font-size: 0.8rem;
+}
+
+/* CANCELLED/INACTIVE (Status Code: 7) - Red/Danger */
+.status-badge.cancelled,
+.status-badge.status-cancelled,
+.status-badge.inactive,
+.status-badge.status-inactive {
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.status-badge.cancelled::before,
+.status-badge.status-cancelled::before,
+.status-badge.inactive::before,
+.status-badge.status-inactive::before {
+    content: "✕";
+    margin-right: 0.5rem;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+/* ARCHIVED (Status Code: 8) - Dark Gray */
+.status-badge.archived,
+.status-badge.status-archived {
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+    color: #495057;
+    border: 1px solid #dee2e6;
+}
+
+.status-badge.archived::before,
+.status-badge.status-archived::before {
+    content: "📦";
+    margin-right: 0.5rem;
+    font-size: 0.75rem;
+}
+
+/* ============================================================================
+   STATUS BADGE HOVER EFFECTS
+   ============================================================================ */
+
+.status-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.status-badge.approved:hover {
+    background: linear-gradient(135deg, #c3e6cb 0%, #b1dfbb 100%);
+}
+
+.status-badge.submitted:hover,
+.status-badge.pending-review:hover {
+    background: linear-gradient(135deg, #bee5eb 0%, #abdde5 100%);
+}
+
+.status-badge.active:hover,
+.status-badge.in-progress:hover {
+    background: linear-gradient(135deg, #b6d4fe 0%, #9ec5fe 100%);
+}
+
+.status-badge.rejected:hover,
+.status-badge.returned:hover {
+    background: linear-gradient(135deg, #ffeaa7 0%, #ffda6a 100%);
+}
+
+.status-badge.achieved:hover {
+    background: linear-gradient(135deg, #d1c4e9 0%, #c0b3dd 100%);
+}
+
+.status-badge.cancelled:hover,
+.status-badge.inactive:hover {
+    background: linear-gradient(135deg, #f5c6cb 0%, #f1b0b7 100%);
+}
+
+.status-badge.pending:hover {
+    background: #e9ecef;
+}
+
+.status-badge.archived:hover {
+    background: linear-gradient(135deg, #dee2e6 0%, #d3d8de 100%);
+}
+
+/* ============================================================================
+   ANIMATIONS
+   ============================================================================ */
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================================================
+   RESPONSIVE BADGE STYLES
+   ============================================================================ */
+
+@media (max-width: 768px) {
+    .status-badge {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    .status-badge::before {
+        margin-right: 0.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .status-badge {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.75rem;
+    }
+}
+
+.page-title i {
+    font-size: 3.5rem;
+}

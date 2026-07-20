@@ -1,0 +1,304 @@
+<div id="kpi-model" class=" modern-kpi-modal">
+    <div class="modal-header">
+        <div class="header-content">
+            <div class="icon-wrapper">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="title-section">
+                <h5 class="modal-title">{{actionType}} KPI</h5>
+                <p class="modal-subtitle">Define key performance indicators for your organization</p>
+            </div>
+        </div>
+        <button type="button" class="btn-close" (click)="close()" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <div id="kpiDiv" class="modal-body content-body">
+        <form [formGroup]="kpiForm" (ngSubmit)="onSubmit()">
+
+            <!-- Basic Information Card -->
+            <div class="form-card mb-4">
+                <div class="card-header-custom">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Basic Information</span>
+                </div>
+                <div class="card-body-custom">
+                    <div class="row g-3">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-hashtag input-icon"></i>
+                                    <label for="id" class="form-label">KPI Code</label>
+                                    <input type="number" class="form-control height-100per modern-input disabled-input"
+                                        formControlName="id" id="id" placeholder="Auto-generated" [attr.disabled]="true"
+                                        [ngClass]="{ 
+                                            'is-invalid': submitted && formFileds['id'].errors, 
+                                            'is-valid': submitted && !formFileds['id'].errors 
+                                        }">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-tags input-icon"></i>
+                                    <label for="kpiTags" class="form-label">KPI Tags</label>
+                                    <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="tags"
+                                        formControlName="kpiTags" [placeholder]="'Select relevant tags'"
+                                        [disabled]="isDropdownDisabled" class="modern-dropdown" [ngClass]="{ 
+                                            'is-invalid': submitted && formFileds['kpiTags'].errors, 
+                                            'is-valid': submitted && !formFileds['kpiTags'].errors 
+                                        }">
+                                    </ng-multiselect-dropdown>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+
+                                <div class="input-wrapper">
+                                    <i class="fas fa-caret-square-o-right input-icon"></i>
+                                    <label for="name" class="form-label">
+                                        KPI Name
+                                    </label>
+                                    <textarea formControlName="name" placeholder="Enter KPI name"
+                                        class="form-control modern-textarea" formControlName="name" rows="3" [ngClass]="{ 
+                                            'is-invalid': submitted && formFileds['name'].errors, 
+                                            'is-valid': submitted && !formFileds['name'].errors 
+                                        }"></textarea>
+                                </div>
+                                <div class="validation-messages" *ngIf="submitted && formFileds['name'].errors">
+                                    <small *ngIf="formFileds['name'].errors['required']" class="text-danger">
+                                        <i class="fas fa-exclamation-circle"></i> KPI name is required
+                                    </small>
+                                    <small *ngIf="formFileds['name'].errors['maxlength']" class="text-danger">
+                                        <i class="fas fa-exclamation-circle"></i> Maximum 100 characters allowed
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <div class="form-group">
+
+                                <div class="input-wrapper">
+                                    <i class="fas fa-align-left input-icon"></i>
+                                    <label for="description" class="form-label">
+                                        Description & Calculation Guide
+                                    </label>
+                                    <textarea formControlName="description"
+                                        placeholder="Describe the KPI and how it's calculated..."
+                                        class="form-control modern-textarea" formControlName="description" rows="3"
+                                        [ngClass]="{ 
+                                            'is-invalid': submitted && formFileds['description'].errors, 
+                                            'is-valid': submitted && !formFileds['description'].errors 
+                                        }"></textarea>
+                                </div>
+                                <div class="validation-messages" *ngIf="submitted && formFileds['description'].errors">
+                                    <small *ngIf="formFileds['description'].errors['maxlength']" class="text-danger">
+                                        <i class="fas fa-exclamation-circle"></i> Maximum 500 characters allowed
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Measurement & Configuration Card -->
+            <div class="form-card mb-4">
+                <div class="card-header-custom">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>Measurement Configuration</span>
+                </div>
+                <div class="card-body-custom">
+                    <div class="row g-3">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+
+                                <div class="input-wrapper">
+                                    <i class="fas fa-ruler input-icon"></i>
+                                    <label for="measurmentUnitId" class="form-label">
+                                        Measurement Unit
+                                        <span class="required-star">*</span>
+                                    </label>
+                                    <select formControlName="measurmentUnitId"
+                                        class="form-select height-100per modern-select" id="measurmentUnitId"
+                                        (change)="onMeasurmentUnitSelect($event.target)" [ngClass]="{ 
+                                            'is-invalid': submitted && formFileds['measurmentUnitId'].errors, 
+                                            'is-valid': submitted && !formFileds['measurmentUnitId'].errors 
+                                        }">
+                                        <option disabled hidden value="0">Select measurement unit</option>
+                                        <option *ngFor="let unit of measurmentUnits" [value]="unit.id">
+                                            {{unit.value}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="validation-messages"
+                                    *ngIf="submitted && formFileds['measurmentUnitId'].errors">
+                                    <small
+                                        *ngIf="formFileds['measurmentUnitId'].errors['required'] || formFileds['measurmentUnitId'].errors['min']"
+                                        class="text-danger">
+                                        <i class="fas fa-exclamation-circle"></i> Please select a measurement unit
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+
+                                <div class="input-wrapper">
+                                    <i class="fas fa-balance-scale input-icon"></i>
+                                    <label for="valueSense" class="form-label">
+                                        Value Sense
+                                        <span class="required-star">*</span>
+                                    </label>
+                                    <select formControlName="valueSense" class="form-select height-100per modern-select"
+                                        id="valueSense" [ngClass]="{ 
+                                            'is-invalid': submitted && formFileds['valueSense'].errors, 
+                                            'is-valid': submitted && !formFileds['valueSense'].errors 
+                                        }">
+                                        <option disabled hidden value="0">Select value sense</option>
+                                        <option *ngFor="let sense of valueSenseList" [value]="sense.id">
+                                            {{sense.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="validation-messages" *ngIf="submitted && formFileds['valueSense'].errors">
+                                    <small
+                                        *ngIf="formFileds['valueSense'].errors['required'] || formFileds['valueSense'].errors['min']"
+                                        class="text-danger">
+                                        <i class="fas fa-exclamation-circle"></i> Please select a value sense
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+
+                                <div class="input-wrapper">
+                                    <i class="fas fa-bullseye input-icon"></i>
+                                    <label for="objectiveId" class="form-label">
+                                        Linked Objective
+                                        <span class="required-star">*</span>
+                                    </label>
+                                    <select formControlName="objectiveId"
+                                        class="form-select height-100per modern-select" id="objectiveId" [ngClass]="{ 
+                                            'is-invalid': submitted && formFileds['objectiveId'].errors, 
+                                            'is-valid': submitted && !formFileds['objectiveId'].errors 
+                                        }">
+                                        <option disabled hidden value="0">Select strategic objective</option>
+                                        <option *ngFor="let objective of objectives" [value]="objective.id">
+                                            {{objective.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="validation-messages" *ngIf="submitted && formFileds['objectiveId'].errors">
+                                    <small
+                                        *ngIf="formFileds['objectiveId'].errors['required'] || formFileds['objectiveId'].errors['min']"
+                                        class="text-danger">
+                                        <i class="fas fa-exclamation-circle"></i> Please select an objective
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ownership & Responsibility Card -->
+            <div class="form-card mb-4">
+                <div class="card-header-custom">
+                    <i class="fas fa-users"></i>
+                    <span>Ownership & Responsibility</span>
+                </div>
+                <div class="card-body-custom">
+                    <div class="row g-3">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-user-shield input-icon"></i>
+                                    <label for="dataCustodianId" class="form-label">
+                                        Data Custodian
+                                        <span class="required-star">*</span>
+                                    </label>
+                                    <select formControlName="dataCustodianId"
+                                        class="form-select height-100per modern-select" id="dataCustodianId" [ngClass]="{ 
+                                            'is-invalid': submitted && formFileds['dataCustodianId'].errors, 
+                                            'is-valid': submitted && !formFileds['dataCustodianId'].errors 
+                                        }">
+                                        <option disabled hidden value="0">Select data custodian</option>
+                                        <option *ngFor="let custodian of custadionUsers" [value]="custodian.id">
+                                            {{custodian.fullName}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="validation-messages"
+                                    *ngIf="submitted && formFileds['dataCustodianId'].errors">
+                                    <small
+                                        *ngIf="formFileds['dataCustodianId'].errors['required']  || formFileds['dataCustodianId'].errors['min']"
+                                        class="text-danger">
+                                        <i class="fas fa-exclamation-circle"></i> Please select a data custodian
+                                    </small>
+                                </div>
+                                <small class="form-hint">
+                                    <i class="fas fa-info-circle"></i> Responsible for data quality and maintenance
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-user-tie input-icon"></i>
+                                    <label for="dataSponsorId" class="form-label">
+                                        Data Sponsor
+                                        <span class="required-star">*</span>
+                                    </label>
+                                    <select formControlName="dataSponsorId"
+                                        class="form-select height-100per modern-select" id="dataSponsorId" [ngClass]="{ 
+                                            'is-invalid': submitted && formFileds['dataSponsorId'].errors, 
+                                            'is-valid': submitted && !formFileds['dataSponsorId'].errors 
+                                        }">
+                                        <option disabled hidden value="0">Select data sponsor</option>
+                                        <option *ngFor="let sponsor of sponsorUsers" [value]="sponsor.id">
+                                            {{sponsor.fullName}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="validation-messages"
+                                    *ngIf="submitted && formFileds['dataSponsorId'].errors">
+                                    <small
+                                        *ngIf="formFileds['dataSponsorId'].errors['required']  || formFileds['dataSponsorId'].errors['min']"
+                                        class="text-danger">
+                                        <i class="fas fa-exclamation-circle"></i> Please select a data sponsor
+                                    </small>
+                                </div>
+                                <small class="form-hint">
+                                    <i class="fas fa-info-circle"></i> Accountable for KPI success and strategy
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="modal-footer-custom justify-content-between">
+                <button type="button" (click)="close()" class="btn btn-outline-danger">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button type="submit" [disabled]="isDropdownDisabled" class="btn btn-primary modern-btn btn-save"
+                    *ngxPermissionsOnly="['WORK_SPACE_ADMIN']">
+                    <i class="fas fa-save"></i> Save KPI
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

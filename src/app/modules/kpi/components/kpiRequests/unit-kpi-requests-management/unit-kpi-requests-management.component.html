@@ -1,0 +1,232 @@
+<div class="kpi-management-container">
+
+    <div class="management-header">
+        <div class="header-content">
+            <div class="header-title-section">
+                <h1 class="page-title">
+                    <i class="fas fa-tasks"></i>
+                    Requests Management
+                </h1>
+                <p class="page-subtitle">Create and manage KPI Requests for each department</p>
+            </div>
+
+            <div class="header-actions">
+
+                <div class="filter-section" style="padding: 0 1rem;">
+                    <label for="organizationFilter" class="filter-label">
+                        <i class="fas fa-filter me-2"></i>Strategy:
+                    </label>
+                    <select class="filter-select" id="strategyId" [(ngModel)]="selectedStrategyId"
+                        (change)="onStrategySelected($event.target)" [class.filter-active]="selectedStrategyId != 0">
+                        <option value="0">All Strategies</option>
+                        <option *ngFor="let data of strategies" [value]="data.id">{{data.name}}</option>
+                    </select>
+                </div>
+
+
+                <div class="search-bar-wrapper">
+                    <div class="search-input-group">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" [(ngModel)]="searchValue" (keydown.enter)="search()"
+                            placeholder="Search requests...">
+                        <button type="button" class="btn-search" (click)="search()" title="Search">
+                            <i class="fas fa-arrow-right color-primary"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-add-tag" (click)="add(AddUpdate_template)"
+                    *ngxPermissionsOnly="['WORK_SPACE_ADMIN']">
+                    <i class="fas fa-plus me-2"></i>Add
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         TABLE SECTION
+         ==================================================================== -->
+    <div class="table-section">
+        <div class="table-wrapper">
+            <table class="delegations-table">
+                <thead>
+                    <tr>
+                        <th width="8%">
+                            <div class="header-cell">
+                                <span>ID</span>
+                                <button class="sort-btn" (click)="sort('Id')" title="Sort by ID">
+                                    <i class="fas fa-sort"></i>
+                                </button>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-cell">
+                                <span>Department</span>
+                                <button class="sort-btn" (click)="sort('Department')" title="Sort by Department">
+                                    <i class="fas fa-sort"></i>
+                                </button>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-cell">
+                                <span>KPI Owner</span>
+                                <button class="sort-btn" (click)="sort('KPIOwner')" title="Sort by KPI Owner">
+                                    <i class="fas fa-sort"></i>
+                                </button>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-cell">
+                                <span>Created</span>
+                                <button class="sort-btn" (click)="sort('CreationDate')" title="Sort by Creation Date">
+                                    <i class="fas fa-sort"></i>
+                                </button>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-cell">
+                                <span>Status</span>
+                                <button class="sort-btn" (click)="sort('Status')" title="Sort by Status">
+                                    <i class="fas fa-sort"></i>
+                                </button>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-cell">
+                                <span>Due Date</span>
+                                <button class="sort-btn" (click)="sort('ReplayDueDate')" title="Sort by Due Date">
+                                    <i class="fas fa-sort"></i>
+                                </button>
+                            </div>
+                        </th>
+                        <th class="actions-column">
+                            <span>Actions</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Empty State -->
+                    <tr class="empty-row" *ngIf="!paginatedUnitKPIRequests || paginatedUnitKPIRequests.length === 0">
+                        <td colspan="7">
+                            <div class="empty-state">
+                                <i class="fas fa-inbox"></i>
+                                <p>No requests found</p>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Data Rows -->
+                    <tr class="table-data-row" *ngFor="let kpiRequest of paginatedUnitKPIRequests; let i = index"
+                        [class.row-alternate]="i % 2 === 1">
+                        <td class="col-id">
+                            <span class="id-badge">{{kpiRequest.id}}</span>
+                        </td>
+                        <td>
+                            <span class="cell-value">{{kpiRequest.organizationUnit?.name}}</span>
+                        </td>
+                        <td>
+                            <span class="cell-value">
+                                {{kpiRequest.organizationUnit?.owner?.firstName}}
+                                {{kpiRequest.organizationUnit?.owner?.lastName}}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="cell-value">{{kpiRequest.createdAt | date:'dd-MM-yyyy'}}</span>
+                        </td>
+                        <td>
+                            <span class="status-badge" [ngClass]="'status-' + kpiRequest.status?.code">
+                                {{kpiRequest.status?.value}}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="cell-value">{{kpiRequest.responseDueDate | date:'dd-MM-yyyy'}}</span>
+                        </td>
+                        <td class="col-actions">
+                            <div class="actions-menu">
+                                <div
+                                    *ngIf="kpiRequest.status?.code != 7 && kpiRequest.organizationUnit?.owner?.id == currentUserId">
+                                    <button type="button" class="action-btn edit-btn"
+                                        *ngxPermissionsOnly="['KPI_OWNER']"
+                                        (click)="update(kpiRequest, AddUpdate_template)" title="Response">
+                                        <i class="fa fa-reply"></i>
+                                    </button>
+                                </div>
+                                <button class="action-btn copy-btn" type="button"
+                                    *ngxPermissionsOnly="['WORK_SPACE_ADMIN', 'CEO', 'KPI_OWNER']"
+                                    (click)="review(kpiRequest, AddUpdate_template)">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <!-- ApprovedByCEO == 7 -->
+                                <button type="button" class="action-btn delete-btn" *ngxPermissionsOnly="['WORK_SPACE_ADMIN']"
+                                    [disabled]="kpiRequest.status?.code == 7" (click)="delete(kpiRequest, deleteModal)"
+                                    title="Delete">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Pagination Section -->
+    <div class="pagination-section">
+        <div class="pagination-info">
+            <span class="info-text">
+                total: <strong>{{paginationResult.totalCount}}</strong> kpi requests
+            </span>
+            <div class="page-size-selector">
+                <label for="pageSize">Items per page:</label>
+                <select id="pageSize" class="page-size-select" (change)="onLimitChange($event.target)"
+                    [value]="paginationItem.pageSize">
+                    <option *ngFor="let option of pageLimitOptions" [value]="option">
+                        {{option}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <nav class="pagination-nav">
+            <button type="button" class="pagination-btn" [disabled]="!paginationResult.hasPreviousPage"
+                (click)="first()" title="First page">
+                <i class="fas fa-angle-double-left"></i>
+            </button>
+            <button type="button" class="pagination-btn" [disabled]="!paginationResult.hasPreviousPage"
+                (click)="previous()" title="Previous page">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <div class="page-numbers">
+                <button type="button" class="page-number-btn" *ngFor="let page of pages()"
+                    [class.active]="page === paginationItem.pageNumber" (click)="goToPage(page)">
+                    {{page}}
+                </button>
+            </div>
+
+            <button type="button" class="pagination-btn" [disabled]="!paginationResult.hasNextPage" (click)="next()"
+                title="Next page">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <button type="button" class="pagination-btn" [disabled]="!paginationResult.hasNextPage" (click)="last()"
+                title="Last page">
+                <i class="fas fa-angle-double-right"></i>
+            </button>
+        </nav>
+    </div>
+</div>
+
+<!-- Add/Update Modal Template -->
+<ng-template #AddUpdate_template let-modal>
+    <app-add-update-unit-kpi-request [modal]="addUpdateModal"
+        (unitKPIRequestAddedEvent)="unitKPIRequestAddedEventHandler($event)"
+        (unitKPIRequestUpdatedEvent)="unitKPIRequestUpdatedEventHandler($event)">
+    </app-add-update-unit-kpi-request>
+</ng-template>
+
+<!-- Delete Modal Template -->
+<ng-template #deleteModal>
+    <app-delete-modal [modal]="deleteModalReference" (deletedEvent)="unitKPIRequestDeletedEventHandler($event)">
+    </app-delete-modal>
+</ng-template>

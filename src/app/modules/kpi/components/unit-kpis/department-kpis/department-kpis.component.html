@@ -1,0 +1,264 @@
+<div class="tags-management-container">
+    <!-- Header Section -->
+    <div class="management-header">
+        <div class="header-content">
+            <div class="header-title-section">
+                <h1 class="kpis-main-title">
+                    <i class="fas fa-chart-line"></i>
+                    Department KPIs
+                </h1>
+                <p class="kpis-subtitle">Track and monitor departmental performance metrics</p>
+            </div>
+
+            <!-- Filters -->
+            <div class="header-actions">
+                <!-- Organization Filter -->
+                <div class="filter-section" *ngxPermissionsOnly="['CEO', 'WORK_SPACE_ADMIN']">
+                    <label class="filter-label me-2">
+                        <i class="fas fa-building"></i>
+                        Department
+                    </label>
+                    <select class="filter-select" id="organizationId"
+                        [class.filter-active]="selectedUnit != 0" (change)="onOrganizationSelect($event.target)">
+                        <option value="0">All Departments</option>
+                        <option *ngFor="let unit of allUnits" value="{{unit.id}}">
+                            {{unit.name}}
+                        </option>
+                    </select>
+                    <span class="filter-icon" *ngIf="selectedUnit != 0">
+                        <i class="fas fa-check-circle"></i>
+                    </span>
+                </div>
+
+                <!-- Strategy Filter -->
+                <div class="filter-section">
+                    <label class="filter-label me-2">
+                        <i class="fas fa-map"></i>
+                        Strategy
+                    </label>
+                    <select class="filter-select" id="strategyId"
+                        [class.filter-active]="selectedStrategyId != 0" [(ngModel)]="selectedStrategyId"
+                        (change)="onStrategySelected($event.target)">
+                        <option value="0">All Strategies</option>
+                        <option *ngFor="let data of strategies" value="{{data.id}}">
+                            {{data.name}}
+                        </option>
+                    </select>
+                    <span class="filter-icon" *ngIf="selectedStrategyId != 0">
+                        <i class="fas fa-check-circle"></i>
+                    </span>
+                </div>
+
+                <!-- Export Button -->
+                <!-- <div class="filter-action">
+                    <button class="btn btn-export" title="Export to Excel">
+                        <i class="fas fa-download"></i>
+                        <span>Export</span>
+                    </button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================================
+         TABLE SECTION - Department KPIs Data
+         ============================================================================ -->
+    <div class="table-section">
+        <div class="table-wrapper">
+            <table class="kpis-table" dir="ltr" id="excel-table">
+                <thead>
+                    <tr class="table-header-row">
+                        <th class="table-header-cell" *ngxPermissionsOnly="['CEO', 'WORK_SPACE_ADMIN']" width="12%">
+                            <span class="header-content">
+                                <i class="fas fa-sitemap"></i>
+                                Department
+                            </span>
+                        </th>
+                        <th class="table-header-cell" width="18%">
+                            <span class="header-content">
+                                <i class="fas fa-tag"></i>
+                                KPI Name
+                            </span>
+                        </th>
+                        <th class="table-header-cell" width="10%">
+                            <span class="header-content">
+                                <i class="fas fa-layer-group"></i>
+                                Type
+                            </span>
+                        </th>
+                        <th class="table-header-cell" width="10%">
+                            <span class="header-content">
+                                <i class="fas fa-bullseye"></i>
+                                Target
+                            </span>
+                        </th>
+                        <th class="table-header-cell" width="8%">
+                            <span class="header-content">
+                                <i class="fas fa-weight"></i>
+                                Weight
+                            </span>
+                        </th>
+                        <th class="table-header-cell" width="9%">
+                            <span class="header-content">Q1</span>
+                        </th>
+                        <th class="table-header-cell" width="9%">
+                            <span class="header-content">Q2</span>
+                        </th>
+                        <th class="table-header-cell" width="9%">
+                            <span class="header-content">Q3</span>
+                        </th>
+                        <th class="table-header-cell" width="9%">
+                            <span class="header-content">Q4</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Empty State -->
+                    <tr class="table-empty-row" *ngIf="!unitKPIs || unitKPIs.length === 0">
+                        <td [attr.colspan]="9" class="empty-state">
+                            <div class="empty-state-content">
+                                <i class="fas fa-inbox"></i>
+                                <p>No KPI data available</p>
+                                <small>Try adjusting your filters</small>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Data Rows -->
+                    <ng-container *ngFor="let unitKPI of unitKPIs; let i = index">
+                        <tr class="table-data-row" [class.row-alternate]="i % 2 === 1">
+                            <!-- Department Name -->
+                            <td class="table-data-cell" *ngxPermissionsOnly="['CEO', 'WORK_SPACE_ADMIN']">
+                                <span class="cell-badge cell-department">
+                                    <i class="fas fa-building"></i>
+                                    {{unitKPI.unitKPIRequest?.organizationUnit?.name}}
+                                </span>
+                            </td>
+
+                            <!-- KPI Name -->
+                            <td class="table-data-cell">
+                                <div class="cell-content">
+                                    <span class="cell-title">{{unitKPI.kpiCopy?.name}}</span>
+                                </div>
+                            </td>
+
+                            <!-- Type (Quarterly/Yearly) -->
+                            <td class="table-data-cell">
+                                <span class="cell-badge" [class.type-quarterly]="unitKPI.reportingCategory == 1"
+                                    [class.type-yearly]="unitKPI.reportingCategory != 1">
+                                    {{unitKPI.reportingCategory == 1 ? 'Quarterly' : 'Yearly'}}
+                                </span>
+                            </td>
+
+                            <!-- Target Value -->
+                            <td class="table-data-cell">
+                                <span class="cell-value cell-target">
+                                    {{unitKPI.target}}
+                                </span>
+                            </td>
+
+                            <!-- Weight -->
+                            <td class="table-data-cell">
+                                <span class="cell-value cell-weight">
+                                    {{unitKPI.weight}}%
+                                </span>
+                            </td>
+
+                            <!-- Quarterly or Yearly Values -->
+                            <div *ngIf="unitKPI.reportingCategory == 1; then quarterlyBlock else yearlyBlock;"></div>
+                        </tr>
+
+
+                        <!-- ============================================================================
+         QUARTERLY VALUES TEMPLATE
+         ============================================================================ -->
+                        <ng-template #quarterlyBlock>
+                            <td *ngFor="let value of unitKPI.values | orderBy: 'asc'; let i = index"
+                                class="table-data-cell">
+                                <div class="quarterly-value-wrapper">
+                                    <div class="value-display">
+                                        <span class="value-number">{{value.value}}</span>
+                                    </div>
+                                    <span class="verification-badge" [class.verified]="value.isVerified"
+                                        [class.unverified]="!value.isVerified"
+                                        [title]="value.isVerified ? 'Verified' : 'Unverified'">
+                                        <i
+                                            [class]="value.isVerified ? 'fas fa-check-circle' : 'fas fa-exclamation-circle'"></i>
+                                        {{value.isVerified ? 'Verified' : 'Unverified'}}
+                                    </span>
+                                </div>
+                            </td>
+                        </ng-template>
+
+                        <!-- ============================================================================
+         YEARLY VALUES TEMPLATE
+         ============================================================================ -->
+                        <ng-template #yearlyBlock>
+                            <td colspan="4" class="table-data-cell">
+                                <div class="yearly-value-wrapper" *ngIf="unitKPI.values != null">
+                                    <div class="value-display">
+                                        <span class="value-number">{{unitKPI.values[0].value}}</span>
+                                    </div>
+                                    <span class="verification-badge" [class.verified]="unitKPI.values[0].isVerified"
+                                        [class.unverified]="!unitKPI.values[0].isVerified"
+                                        [title]="unitKPI.values[0].isVerified ? 'Verified' : 'Unverified'">
+                                        <i
+                                            [class]="unitKPI.values[0].isVerified ? 'fas fa-check-circle' : 'fas fa-exclamation-circle'"></i>
+                                        {{unitKPI.values[0].isVerified ? 'Verified' : 'Unverified'}}
+                                    </span>
+                                </div>
+                            </td>
+                        </ng-template>
+
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- Pagination Section -->
+    <div class="pagination-section">
+        <div class="pagination-info">
+            <span class="info-text">
+                total: <strong>{{paginationResult.totalCount}}</strong> kpis
+            </span>
+            <div class="page-size-selector">
+                <label for="pageSize">Items per page:</label>
+                <select id="pageSize" class="page-size-select" (change)="onLimitChange($event.target)"
+                    [value]="paginationItem.pageSize">
+                    <option *ngFor="let option of pageLimitOptions" [value]="option">
+                        {{option}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <nav class="pagination-nav">
+            <button type="button" class="pagination-btn" [disabled]="!paginationResult.hasPreviousPage"
+                (click)="first()" title="First page">
+                <i class="fas fa-angle-double-left"></i>
+            </button>
+            <button type="button" class="pagination-btn" [disabled]="!paginationResult.hasPreviousPage"
+                (click)="previous()" title="Previous page">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <div class="page-numbers">
+                <button type="button" class="page-number-btn" *ngFor="let page of pages()"
+                    [class.active]="page === paginationItem.pageNumber" (click)="goToPage(page)">
+                    {{page}}
+                </button>
+            </div>
+
+            <button type="button" class="pagination-btn" [disabled]="!paginationResult.hasNextPage" (click)="next()"
+                title="Next page">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <button type="button" class="pagination-btn" [disabled]="!paginationResult.hasNextPage" (click)="last()"
+                title="Last page">
+                <i class="fas fa-angle-double-right"></i>
+            </button>
+        </nav>
+    </div>
+</div>

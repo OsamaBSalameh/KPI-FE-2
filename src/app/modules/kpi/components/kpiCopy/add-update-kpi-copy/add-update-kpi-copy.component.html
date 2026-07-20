@@ -1,0 +1,295 @@
+<!-- <div id="kpiCopy-model" class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">{{actionType}} KPI-Copy</h5>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool btn-tool-danger" (click)="close()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div id="kpiCopyDiv" class="modal-body content-body">
+        <form [formGroup]="kpiCopyForm" (ngSubmit)="onSubmit()">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="blueColor" style="word-break: break-word;">{{kpiCopyForm.get("name")?.value}}</h2>
+                </div>
+
+                <div class="col-lg-12">
+                    <label>Description / Calculation guide</label>
+                    <textarea formControlName="description" placeholder="Description" class="form-control font-size-22"
+                        rows="5" [ngClass]="{ 'is-invalid': submitted && formFileds['description'].errors }"
+                        [ngClass]="{ 'is-valid': submitted && !formFileds['description'].errors }"></textarea>
+                    <div class="validation-div text-danger">
+                        <span *ngIf="(submitted && formFileds['description'].errors) && 
+                            (formFileds['description'].errors['maxlength'])">
+                            Maximum allowed characters is 500
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-lg-3">
+                    <label>Measurment Unit<span class="redStar">*</span></label>
+                    <select formControlName="measurmentUnitId" class="form-select form-control font-size-16 height-50"
+                        id="measurmentUnitId" (change)="onMeasurmentUnitSelect($event.target)"
+                        [ngClass]="{ 'is-invalid': submitted && formFileds['measurmentUnitId'].errors }"
+                        [ngClass]="{ 'is-valid': submitted && !formFileds['measurmentUnitId'].errors }">
+                        <option disabled hidden value="0">Select Measurment Unit</option>
+                        <option *ngFor="let data of measurmentUnits" value="{{data.id}}">{{data.value}}
+                        </option>
+                    </select>
+                    <div class="validation-div text-danger">
+                        <span *ngIf="(submitted && formFileds['measurmentUnitId'].errors) && 
+                                    (formFileds['measurmentUnitId'].errors['required'])">
+                            Value is Mandatory
+                        </span>
+                        <span *ngIf="(submitted && formFileds['measurmentUnitId'].errors) && 
+                        (formFileds['measurmentUnitId'].errors['min'])">
+                            Value is Mandatory
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <label>Value Sense<span class="redStar">*</span></label>
+                    <select formControlName="valueSense" class="form-select form-control font-size-16 height-50"
+                        id="valueSense" [ngClass]="{ 'is-invalid': submitted && formFileds['valueSense'].errors }"
+                        [ngClass]="{ 'is-valid': submitted && !formFileds['valueSense'].errors }">
+                        <option disabled hidden value="0">Select Sense</option>
+                        <option *ngFor="let sense of valueSenseList" value="{{sense.id}}">{{sense.name}}
+                        </option>
+                    </select>
+                    <div class="validation-div text-danger">
+                        <span *ngIf="(submitted && formFileds['valueSense'].errors) && 
+                                    (formFileds['valueSense'].errors['required'])">
+                            Value is Mandatory
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <label>Data Custodian<span class="redStar">*</span></label>
+                    <select formControlName="dataCustodianId" class="form-select form-control font-size-16 height-50"
+                        id="dataCustodianId"
+                        [ngClass]="{ 'is-invalid': submitted && formFileds['dataCustodianId'].errors }"
+                        [ngClass]="{ 'is-valid': submitted && !formFileds['dataCustodianId'].errors }">
+                        <option disabled hidden [ngValue]="0">Select Data Custodian</option>
+                        <option *ngFor="let custadion of custadionUsers" [ngValue]="custadion.id">
+                            {{custadion.fullName}}
+                        </option>
+                    </select>
+
+                    <div class="validation-div text-danger">
+                        <span *ngIf="(submitted && formFileds['dataCustodianId'].errors) && 
+                                        (formFileds['dataCustodianId'].errors['required'])">
+                            Value is Mandatory
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <label>Data Sponsor<span class="redStar">*</span></label>
+                    <select formControlName="dataSponsorId" class="form-select form-control font-size-16 height-50"
+                        id="dataSponsorId" [ngClass]="{ 'is-invalid': submitted && formFileds['dataSponsorId'].errors }"
+                        [ngClass]="{ 'is-valid': submitted && !formFileds['dataSponsorId'].errors }">
+                        <option disabled hidden [ngValue]="0">Select Data Sponsor</option>
+                        <option *ngFor="let sponser of sponsorUsers" [ngValue]="sponser.id">
+                            {{sponser.fullName}}
+                        </option>
+                    </select>
+                    <div class="validation-div text-danger">
+                        <span *ngIf="(submitted && formFileds['dataSponsorId'].errors) && 
+                                    (formFileds['dataSponsorId'].errors['required'])">
+                            Value is Mandatory
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer justify-content-between">
+                <button type="button" (click)="close()" class="btn btn-outline-danger"
+                    data-dismiss="modal">Close</button>
+                <button type="submit" [disabled]="isDropdownDisabled" class="btn btn-primary"
+                    *ngxPermissionsOnly="['SPMO','KPI_OWNER']">Save changes</button>
+            </div>
+        </form>
+    </div>
+</div> -->
+
+<div id="kpiCopy-model" class="modern-kpi-modal">
+    <!-- Unified Header -->
+    <div class="modal-header">
+        <div class="header-content">
+            <div class="icon-wrapper">
+                <i class="fas fa-eye"></i> <!-- Changed icon to 'Eye' for View mode -->
+            </div>
+            <div class="title-section">
+                <h5 class="modal-title">{{actionType}} KPI Details</h5>
+                <p class="modal-subtitle">View key performance indicator details</p>
+            </div>
+        </div>
+        <button type="button" class="btn-close" (click)="close()" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <div id="kpiCopyDiv" class="modal-body content-body">
+        <form [formGroup]="kpiCopyForm" (ngSubmit)="onSubmit()">
+
+            <!-- === SECTION 1: Basic Information (Read-Only) === -->
+            <div class="form-card mb-4">
+                <div class="card-header-custom">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Basic Information</span>
+                </div>
+                <div class="card-body-custom">
+                    <div class="row g-3">
+
+                        <!-- KPI Name (Read-Only Display) -->
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-caret-square-o-right input-icon"></i>
+                                    <label for="viewName" class="form-label">KPI Name</label>
+                                    <!-- Using a div with the input styling for read-only look, or a disabled input -->
+                                    <div class="form-control height-100per modern-input disabled-input"
+                                        style="font-weight: 600; font-size: 1.1rem; background-color: #f8fafc; border-color: #e2e8f0;">
+                                        {{kpiCopyForm.get("name")?.value}}  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Description (Read-Only) -->
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-align-left input-icon"></i>
+                                    <label for="viewDescription" class="form-label">Description & Calculation
+                                        Guide</label>
+                                    <textarea formControlName="description" placeholder="Description..."
+                                        class="form-control modern-textarea disabled-input" rows="3"
+                                        style="background-color: #f8fafc; color: #475569;" readonly></textarea>
+                                    <div class="validation-messages"
+                                        *ngIf="submitted && formFileds['description'].errors">
+                                        <small *ngIf="formFileds['description'].errors['maxlength']"
+                                            class="text-danger">
+                                            <i class="fas fa-exclamation-circle"></i> Maximum 500 characters allowed.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- === SECTION 2: Configuration & Ownership (Read-Only) === -->
+            <div class="form-card mb-4">
+                <div class="card-header-custom">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>Configuration & Ownership</span>
+                </div>
+                <div class="card-body-custom">
+                    <div class="row g-3">
+
+                        <!-- Measurement Unit -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-ruler input-icon"></i>
+                                    <label for="viewUnit" class="form-label">Measurement Unit</label>
+                                    <select formControlName="measurmentUnitId"
+                                        class="form-select height-100per modern-select disabled-input" id="viewUnit"
+                                        [ngClass]="{ 'is-invalid': submitted && formFileds['measurmentUnitId'].errors }">
+                                        <option disabled hidden value="0">Select measurement unit</option>
+                                        <option *ngFor="let unit of measurmentUnits" [value]="unit.id">
+                                            {{unit.value}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Value Sense -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-balance-scale input-icon"></i>
+                                    <label for="viewSense" class="form-label">Value Sense</label>
+                                    <select formControlName="valueSense"
+                                        class="form-select height-100per modern-select disabled-input" id="viewSense"
+                                        [ngClass]="{ 'is-invalid': submitted && formFileds['valueSense'].errors }">
+                                        <option disabled hidden value="0">Select value sense</option>
+                                        <option *ngFor="let sense of valueSenseList" [value]="sense.id">
+                                            {{sense.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Data Custodian -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-user-shield input-icon"></i>
+                                    <label for="viewCustodian" class="form-label">Data Custodian</label>
+                                    <select formControlName="dataCustodianId"
+                                        class="form-select height-100per modern-select" id="viewCustodian"
+                                        [ngClass]="{ 'is-invalid': submitted && formFileds['dataCustodianId'].errors }">
+                                        <option disabled hidden value="0">Select data custodian</option>
+                                        <option *ngFor="let custodian of custadionUsers" [value]="custodian.id">
+                                            {{custodian.fullName}}
+                                        </option>
+                                    </select>
+                                    <small class="form-hint">
+                                        <i class="fas fa-info-circle"></i> Responsible for data quality and maintenance
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Data Sponsor -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-user-tie input-icon"></i>
+                                    <label for="viewSponsor" class="form-label">Data Sponsor</label>
+                                    <select formControlName="dataSponsorId"
+                                        class="form-select height-100per modern-select" id="viewSponsor"
+                                        [ngClass]="{ 'is-invalid': submitted && formFileds['dataSponsorId'].errors }">
+                                        <option disabled hidden value="0">Select data sponsor</option>
+                                        <option *ngFor="let sponsor of sponsorUsers" [value]="sponsor.id">
+                                            {{sponsor.fullName}}
+                                        </option>
+                                    </select>
+                                    <small class="form-hint">
+                                        <i class="fas fa-info-circle"></i> Accountable for KPI success and strategy
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="modal-footer-custom justify-content-between">
+                <button type="button" (click)="close()" class="btn btn-outline-danger">
+                    <i class="fas fa-times"></i> Close
+                </button>
+                <!-- Hidden or disabled save button since this is View mode -->
+                <button type="submit" [disabled]="isDropdownDisabled" class="btn btn-primary modern-btn btn-save"
+                    *ngxPermissionsOnly="['WORK_SPACE_ADMIN','KPI_OWNER']">
+                    <i class="fas fa-save"></i> Save Changes
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

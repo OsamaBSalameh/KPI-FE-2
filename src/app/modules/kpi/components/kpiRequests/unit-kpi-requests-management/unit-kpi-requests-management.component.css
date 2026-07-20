@@ -1,0 +1,86 @@
+/* Empty State */
+.empty-row td {
+    padding: 40px 12px;
+    text-align: center;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: #868e96;
+}
+
+.empty-state i {
+    font-size: 48px;
+    color: #dee2e6;
+}
+
+.empty-state p {
+    margin: 0;
+    font-size: 16px;
+}
+
+/* Status Badge */
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Requested_By_WORK_SPACE_ADMIN = 1, */
+.status-badge.status-1 {
+    background: #e7f5ff;
+    color: #5FC6D2;
+}
+
+/* Draft_Save_By_KPI_OWNER = 2, */
+.status-badge.status-2 {
+    background: #fff3bf;
+    /* color: #484AB6; */
+}
+
+/* Responded_By_KPI_OWNER = 3, */
+.status-badge.status-3 {
+    background: #e7f5ff;
+    color: #484AB6;
+}
+
+/* Returned_By_WORK_SPACE_ADMIN = 4, */
+.status-badge.status-4 {
+    background: #ffe0e0;
+    color: #D3001F;
+}
+
+/* Approved_By_WORK_SPACE_ADMIN_1 = 5, */
+.status-badge.status-5 {
+    background: #f0f0f0;
+    color: #FCBA63;
+}
+
+/* Approved_By_WORK_SPACE_ADMIN_2 = 6, */
+.status-badge.status-6 {
+    background: #f0f0f0;
+    color: #256BA2;
+}
+
+/* Approved_By_CEO = 7, */
+.status-badge.status-7 {
+    background: #d3f9d8;
+    color: #288C78;
+}
+
+/* Returned_By_CEO = 8, */
+.status-badge.status-8 {
+    background: #ffe0e0;
+    color: #D3001F;
+}
+
+.page-title i {
+    font-size: 3.5rem;
+}

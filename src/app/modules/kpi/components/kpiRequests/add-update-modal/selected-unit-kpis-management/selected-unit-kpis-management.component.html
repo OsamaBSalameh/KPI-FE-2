@@ -1,0 +1,145 @@
+<div class="">
+    <div [formGroup]="selectUnitKPIsModal">
+
+        <div *ngIf="actionType != 'Add'" class="card">
+            <div class="mb-3">
+                <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="kpis" formControlName="selectedKPIs"
+                    [placeholder]="'Select KPIs'" (onSelect)="onKPISelect($event)" [disabled]="actionType == 'Review'"
+                    (onDeSelect)="onDeSelectKPI($event)" (onDeSelectAll)="onDeSelectAll()"
+                    (onSelectAll)="onSelectAllKPIs($event)">
+                </ng-multiselect-dropdown>
+            </div>
+            <table class="table table-bordered table-hover" style="text-align: center;" dir="ltr">
+                <thead>
+                    <tr>
+                        <th class="font-size-16 text-start">Name</th>
+                        <th class="font-size-16 text-start">Custodian</th>
+                        <th class="font-size-16 text-start">Sponser</th>
+                        <th class="font-size-16 text-start">Measurmeant</th>
+                        <th class="font-size-16 text-start">Target</th>
+                        <th class="font-size-16 text-start">Frequency</th>
+                        <th class="font-size-16 text-start">Achieve Date</th>
+                        <th class="font-size-16 text-start">Weight<span class="blueColor" style="float: right;">{{100 -
+                                weightSum}}</span></th>
+                        <th class="font-size-16" width="5%" style="text-align: center;">
+                            <i class="fa fa-cogs" aria-hidden="true"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody formArrayName="unitKPIsFormArray">
+                    <tr *ngFor="let unitKPI of unitKPIFormGroups(); let i = index" [formGroupName]="i">
+                        <td class="text-start">
+                            <label controlName="kpiName" class="font-size-14"></label>
+                        </td>
+                        <td>
+                            <label controlName="dataCustodionName" class="font-size-14"></label>
+                        </td>
+                        <td>
+                            <label controlName="dataSponsorName" class="font-size-14"></label>
+                        </td>
+
+                        <td>
+                            <label controlName="measurmentUnit" class="font-size-14"></label>
+                        </td>
+                        <td>
+                            <input formControlName="target" type="number" class="form-control font-size-14" id="target"
+                                placeholder="Target"
+                                [ngClass]="{ 'is-invalid': submitted && unitKPI.controls['target'].errors }"
+                                [ngClass]="{ 'is-valid': submitted && !unitKPI.controls['target'].errors }" />
+                        </td>
+                        <td>
+                            <select formControlName="reportingCategory" class="form-select form-control font-size-14"
+                                id="reportingCategory"
+                                [ngClass]="{ 'is-invalid': submitted && unitKPI.controls['reportingCategory'].errors }"
+                                [ngClass]="{ 'is-valid': submitted && !unitKPI.controls['reportingCategory'].errors }">
+                                <option disabled hidden value="0">Select Reporting Frequency (Monthely)
+                                </option>
+                                <option *ngFor="let category of reportingCategories" value="{{category.id}}">
+                                    {{category.name}}
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input formControlName="achievementDate" placeholder="dd-mm-yyyy"
+                                    name="dp_AchievementDate" type="text" #achievementDateId="ngbDatepicker"
+                                    [ngClass]="{ 'is-invalid': submitted && unitKPI.controls['achievementDate'].errors }"
+                                    [ngClass]="{ 'is-valid': submitted && !unitKPI.controls['achievementDate'].errors }"
+                                    (click)="achievementDateId.toggle()" class="form-control font-size-14"
+                                    ngbDatepicker />
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" type="button"
+                                        [disabled]="actionType != 'Update' || !is_KPI_OWNER_ActionNeeded()"
+                                        (click)="achievementDateId.toggle()"></button>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <input formControlName="weight" type="number"
+                                class="form-control dummyWeightClass font-size-14" id="weight" placeholder="Weight"
+                                [ngClass]="{ 'is-invalid': submitted && ((weightSum != 100) || unitKPI.controls['weight'].errors) }"
+                                [ngClass]="{ 'is-valid': submitted && (weightSum == 100) && !unitKPI.controls['weight'].errors }"
+                                (keyup)="checkWeightSum($event.target)">
+                        </td>
+
+                        <td class="dropdown text-end">
+                            <button class="btn dropdown align-middle" type="button" id="dropdownMenu20"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div class="three-dots"></div>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end font-size-18"
+                                aria-labelledby="dropdownMenu20">
+                                <button class="dropdown-item" type="button"
+                                    (click)="viewKPI(unitKPI, ViewKPI_template)">View
+                                </button>
+
+                                <button class="dropdown-item" type="button"
+                                    *ngIf="(is_KPI_OWNER_ActionNeeded() && has_KPI_OWNER_Permissin())"
+                                    (click)="updateKPI_ByOWNER(unitKPI, ViewKPI_template)">Update
+                                </button>
+
+                                <button class="dropdown-item" type="button"
+                                    *ngIf=" (is_Approved_Via_CEO() && has_WORK_SPACE_ADMIN_Permission())"
+                                    (click)="updateKPI_By_WORK_SPACE_ADMIN(unitKPI, ViewKPI_template)">Update
+                                </button>
+
+                                <button class="dropdown-item" type="button"
+                                    (click)="unitKPIAttachmentsManagement(unitKPI, Attachment_template)">Attachments
+                                </button>
+
+                                <!-- To be added later -->
+                                <!-- <button class="dropdown-item" type="button"
+                                            (click)="attachmentsManagement(unitKPI, Attachment_template)">Value Attachments
+                                        </button> -->
+
+                                <button class="dropdown-item" type="button"
+                                    (click)="viewComments(unitKPI, Comments_template)">Comments
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <div class="inner-validation-div text-danger">
+                        <span *ngIf="(submitted && weightSumNotEnough)">
+                            weight sum should be 100
+                        </span>
+                    </div>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<ng-template #ViewKPI_template let-modal>
+    <app-add-update-kpi-copy (kpiCopyAddedEvent)="kpiCopyAddedEventHandler($event)"
+        (kpiCopyUpdatedEvent)="kpiCopyUpdatedEventHandler($event)" [modal]="viewKpiModal">
+    </app-add-update-kpi-copy>
+</ng-template>
+
+<ng-template #Comments_template let-modal>
+    <app-comments-section [modal]="commentsModal"></app-comments-section>
+</ng-template>
+
+<ng-template #Attachment_template let-modal>
+    <app-attachment-manager [modal]="attachmentsModal"></app-attachment-manager>
+</ng-template>

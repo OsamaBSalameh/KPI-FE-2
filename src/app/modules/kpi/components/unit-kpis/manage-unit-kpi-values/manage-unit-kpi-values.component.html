@@ -1,0 +1,224 @@
+<div id="unit-kpi-values-model" class="modal-content d-flex flex-column"
+    style="max-height: 90vh; border: none; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+
+    <!-- <div class="modal-header"
+        style="border-radius: 12px 12px 0 0; background: linear-gradient(135deg, #01426A 0%, #5FC6D2 100%) ;">
+        <div class="header-content">
+            <div class="icon-wrapper" style="background: rgba(255,255,255,0.2);">
+                <i class="fas fa-chart-bar" style="color: white; font-size: 1.2rem;"></i>
+            </div>
+            <div class="title-section">
+                <h5 class="modal-title" style="color: white; margin: 0; font-weight: 600;">KPI Values</h5>
+                <p class="modal-subtitle" style="color: rgba(255,255,255,0.9); margin: 0; font-size: 0.85rem;"></p>
+            </div>
+        </div>
+        <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+            style="filter: invert(1); opacity: 0.8; background: none; border: none;">
+            <i class="fas fa-times"></i>
+        </button>
+    </div> -->
+
+    <div class="modal-header">
+        <div class="header-content">
+            <div class="icon-wrapper">
+                <i class="fas fa-chart-bar"></i>
+            </div>
+            <div class="title-section">
+                <h5 class="modal-title">KPI Values</h5>
+                <p class="modal-subtitle">Review and verify performance metrics</p>
+            </div>
+        </div>
+        <button type="button" class="btn-close" (click)="close()" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+
+    <div class="modal-body content-bod">
+
+        <div class="form-card mb-4" style="border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+            <div class="card-header-custom" style="background-color: #f1f5f9; border-bottom: 1px solid #e2e8f0;">
+                <i class="fas fa-info-circle"></i>
+                <span>Overview</span>
+            </div>
+            <div class="card-body-custom">
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-2 border-end border-light">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <small class="text-muted text-uppercase fw-bold"
+                                    style="font-size: 0.7rem; letter-spacing: 0.5px;">
+                                    <i class="fas fa-building text-muted me-2" style="font-size: 0.9rem;"></i>
+                                    Department</small>
+                                <div class="fw-bold text-dark font-size-18">{{kpi.organizationName}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8 border-end border-light">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <small class="text-muted text-uppercase fw-bold"
+                                    style="font-size: 0.7rem; letter-spacing: 0.5px;">
+                                    <i class="fas fa-tag text-muted me-2" style="font-size: 0.9rem;"></i>
+                                    KPI Name</small>
+                                <div class="fw-semibold text-dark font-size-18" [title]="kpi.kpiName">
+                                    {{kpi.kpiName}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <small class="text-muted text-uppercase fw-bold"
+                                    style="font-size: 0.7rem; letter-spacing: 0.5px;">
+                                    <i class="fas fa-calendar-alt text-muted me-2" style="font-size: 0.9rem;"></i>
+                                    Frequency</small>
+                                <div class="mt-1">
+                                    <span class="font-size-16 badge px-3 py-2 rounded-pill font-weight-bold"
+                                        [ngClass]="reportingCategory == 1 ? 'bg-sec bg-opacity-10 text-white' : 'bg-purp bg-opacity-10 text-white'">
+                                        {{ reportingCategory == 1 ? 'Quarterly' : 'Yearly' }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-card mb-4" style="border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+            <div class="card-header-custom" style="background-color: #f1f5f9; border-bottom: 1px solid #e2e8f0;">
+                <i class="fa fa-chart-line"></i>
+                <span>Values</span>
+            </div>
+
+            <div class="card-body-custom">
+                <div *ngIf="reportingCategory === 2" class="animate-fade-in">
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-hashtag input-icon"></i>
+                            <label for="name" class="form-label">
+                                Current Value
+                            </label>
+
+                            <input [(ngModel)]="value" type="number" class="form-control height-100per modern-input"
+                                id="value" placeholder="Enter value" style="font-weight: 600;"
+                                [readonly]="( viewOnly || !(kpi['statusCode'] == 2 || kpi['statusCode'] == 4 || kpi['statusCode'] == 6))">
+
+                            <div class="mt-3 d-flex justify-content-between align-items-center">
+                                <span class="badge px-3 py-2 rounded-pill fw-bold"
+                                    [ngClass]="unitKPIValue.isVerified ? 'bg-success bg-opacity-10 text-success' : 'bg-secondary bg-opacity-10 text-secondary'"
+                                    style="font-size: 0.9rem;">
+                                    {{ unitKPIValue.isVerified ? 'Verified' : 'Unverified' }}
+                                </span>
+
+                                <div class="" *ngIf="modal.isWorkSpaceAdmin">
+                                    <!-- <button class="btn btn-sm btn-success me-2" (click)="verify(unitKPIValue.id)"
+                                        [disabled]="unitKPIValue.isVerified" title="Verify Value"
+                                        style="border-radius: 8px; padding: 6px 12px;">
+                                        <i class="fa fa-check me-1"></i> Verify
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" (click)="deny(unitKPIValue.id)"
+                                        [disabled]="!unitKPIValue.isVerified" title="Deny Value"
+                                        style="border-radius: 8px; padding: 6px 12px;">
+                                        <i class="fa fa-times me-1"></i> Unverify
+                                    </button> -->
+
+                                    <button class="btn btn-sm btn-light border-0 shadow-sm"
+                                        (click)="unitKPIValue.isVerified ? deny(unitKPIValue.id) : verify(unitKPIValue.id)"
+                                        [title]="unitKPIValue.isVerified ? 'Unverify' : 'Verify'" [ngClass]="{
+                                  'text-white btn-success': !unitKPIValue.isVerified,
+                                  'btn-danger': unitKPIValue.isVerified
+                                }" style="border-radius: 8px; padding: 6px 12px;">
+                                        <i class="fa me-1"
+                                            [ngClass]="unitKPIValue.isVerified ? 'fa-times' : 'fa-check'"></i>
+                                        {{ unitKPIValue.isVerified ? 'Unverify' : 'Verify' }}
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div *ngIf="reportingCategory === 1" class="table-responsive rounded shadow-sm border"
+                    style="border: none; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light" style="background-color: #f8fafc !important;">
+                            <tr>
+                                <th scope="col" width="25%"
+                                    class="py-3 ps-4 fw-bold text-secondary small text-uppercase">
+                                    Period
+                                </th>
+                                <th scope="col" class="py-3 fw-bold text-secondary small text-uppercase text-end">
+                                    Value
+                                </th>
+                                <th scope="col" class="py-3 fw-bold text-secondary small text-uppercase text-center">
+                                    Status
+                                </th>
+                                <th scope="col" width="15%"
+                                    class="py-3 fw-bold text-secondary small text-uppercase text-center pe-4"
+                                    *ngIf="modal.isWorkSpaceAdmin">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of unitKPIValues" style="border-bottom: 1px solid #f1f5f9;">
+                                <td class="ps-4 py-3">
+                                    <div class="fw-bold text-dark" style="font-size: 0.95rem;">Q{{item.order}}</div>
+                                    <small class="text-muted" style="font-size: 0.75rem;">
+                                        {{ item.startDate | date:'MMM y' }} - {{ item.endDate | date:'MMM y' }}
+                                    </small>
+                                </td>
+                                <td class="py-3 text-end">
+                                    <input [(ngModel)]="item.value" type="number"
+                                        class="form-control form-control-sm text-end font-size-16"
+                                        [readonly]="viewOnly || !((kpi['statusCode'] == 2 || kpi['statusCode'] == 4 || kpi['statusCode'] == 6) && WithinInterval(item.startDate, item.endDate))"
+                                        style="height: 40px; border-radius: 8px; margin: 0 auto; display: inline-block; font-weight: 600;">
+                                </td>
+                                <td class="text-center py-3">
+                                    <span class="badge px-3 py-2 rounded-pill fw-bold"
+                                        [ngClass]="item.isVerified ? 'bg-success bg-opacity-10 text-success' : 'bg-secondary bg-opacity-10 text-secondary'"
+                                        style="font-size: 0.8rem;">
+                                        {{ item.isVerified ? 'Verified' : 'Unverified' }}
+                                    </span>
+                                </td>
+                                <td class="text-center pe-4 py-3" *ngIf="modal.isWorkSpaceAdmin">
+                                    <div class="btn-group" role="group">
+                                        <button class="btn btn-sm btn-light border-0 shadow-sm"
+                                            (click)="item.isVerified ? deny(item.id) : verify(item.id)"
+                                            [title]="item.isVerified ? 'Unverify' : 'Verify'" [ngClass]="{
+                                  'text-success hover-success': !item.isVerified,
+                                  'text-danger hover-danger': item.isVerified
+                                }" style="border-radius: 8px; padding: 6px 12px;">
+                                            <i class="fa"
+                                                [ngClass]="item.isVerified ? 'fa-times-circle' : 'fa-check-circle'"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="modal-footer-custom justify-content-between">
+        <button type="button" (click)="close()" class="btn btn-outline-danger">
+            <i class="fas fa-times"></i> Cancel
+        </button>
+        <button type="submit" [disabled]="viewOnly" class="btn btn-primary modern-btn btn-save"
+            *ngxPermissionsOnly="['WORK_SPACE_ADMIN']" (click)="report()">
+            <i class="fa fa-file-alt me-2"></i> Report Values
+        </button>
+    </div>
+</div>
