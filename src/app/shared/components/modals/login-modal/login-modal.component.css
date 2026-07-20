@@ -1,0 +1,59 @@
+label {
+    position: relative;
+}
+
+label>.icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: silver;
+}
+
+label>input {
+    padding-left: calc(1em + 10px + 8px);
+    /* icon width + icon padding-left + desired separation*/
+    height: 2em;
+}
+
+/*
+    SVG SpriteSheet
+  */
+
+.spritesheet {
+    display: none;
+}
+
+.icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+}
+
+.width-35{
+    width: 35%;
+}
+
+.input-icons {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.input-icons i {
+    position: absolute;
+}
+
+
+.icon {
+    padding: 18px 0 0 0px;
+    font-size: 20px;
+    min-width: 40px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px 5px 10px 35px;
+}

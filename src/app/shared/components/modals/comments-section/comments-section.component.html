@@ -1,0 +1,201 @@
+<!-- Note List -->
+<!-- <div class="container mt-4 card direct-chat">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-12">
+            <div class="card-header">
+                <h3 class="card-title">Discussion Board</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="customScroll">
+                <div *ngFor="let comment of paginatedComments" class="card p-3">
+                    <div class="d-flex justify-content-between">
+                        <div class="user d-flex flex-row">
+                            <div>
+                                <img src="../../../../../assets/images/UserImage.png" width="50"
+                                    class="user-img rounded-circle mr-2">
+                            </div>
+                            <span>
+                                <small class="font-weight-bold text-primary">{{comment.auther?.name}}</small>
+                                <div class="font-weight-bold">{{comment.value}}</div>
+                            </span>
+                        </div>
+                        <div>
+                            <small class="date">{{comment.createdAt | date:'short'}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pb-3">
+                <textarea name="text" placeholder="+ Add a note" class="form-control addtxt"
+                    [(ngModel)]="commentValue"></textarea>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal-footer justify-content-between">
+        <button type="button" (click)="close()" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+        <button type="button" (click)="addComment()" class="btn btn-primary">Comment</button>
+    </div>
+</div> -->
+
+
+<!-- Dark list -->
+<!-- <div class="card direct-chat direct-chat-contacts-open">
+    <div class="card-header">
+        <h3 class="card-title">Discussion Board</h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="direct-chat-messages"></div>
+        <div class="direct-chat-contacts">
+            <ul class="contacts-list">
+                <li *ngFor="let comment of paginatedComments">
+                    <a href="#">
+                        <img class="contacts-list-img" src="../../../../../assets/images/UserImage.png"
+                            alt="User Avatar">
+
+                        <div class="contacts-list-info">
+                            <span class="contacts-list-name">
+                                {{comment.auther?.name}}
+                                <small class="contacts-list-date float-end">{{comment.createdAt |
+                                    date:'short'}}</small>
+                            </span>
+                            <span class="contacts-list-msg">{{comment.value}}</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card-footer">
+        <form action="#" method="post">
+            <div class="input-group">
+                <input type="text" name="message" [(ngModel)]="commentValue" placeholder="Type Message ..."
+                    class="form-control">
+                <span class="input-group-append">
+                    <button type="button" class="btn btn-warning" (click)="addComment()">Comment</button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div> -->
+
+
+<!-- Chat list -->
+<!-- <div class="card direct-chat direct-chat-warning comment-card">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i _ngcontent-emk-c156="" class="fas fa-comments text-primary mr-2"></i>
+            Discussion Board
+        </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool btn-tool-danger" data-card-widget="remove" (click)="close()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="direct-chat-messages">
+            <div *ngFor="let comment of paginatedComments; let i = index">
+                <div class="direct-chat-msg" [ngClass]="{ 'right': i%2==1 }">
+                    <div class="direct-chat-infos clearfix">
+                        <span class="direct-chat-name float-start">{{comment.auther?.firstName}} {{comment.auther?.lastName}}</span>
+                        <span class="direct-chat-timestamp float-end">{{comment.createdAt | date:'short'}}</span>
+                    </div>
+                    <img class="direct-chat-img" src={{comment.auther?.profilePicturePath}}
+                        alt="message user image">
+                    <div class="direct-chat-text font-size-20">
+                        {{comment.value}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-footer">
+        <form action="#" method="post">
+            <div class="input-group">
+                <textarea type="text" name="message" [(ngModel)]="commentValue" placeholder="Type Message ..."
+                    class="form-control comment-area font-size-20"> </textarea>
+                <span class="input-group-append">
+                    <button type="button" class="btn btn-success" (click)="addComment()">
+                        <i class="fa fa-sticky-note" aria-hidden="true"></i>
+                        Comment
+                    </button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+ -->
+
+
+ <div class="card ">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-comments text-primary mr-2"></i>
+            Discussion
+        </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool btn-tool-danger" (click)="close()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="card-body customScroll">
+        <div class="chat-container">
+            <div *ngFor="let comment of paginatedComments; let i = index" 
+                 class="chat-message" 
+                 [ngClass]="{ 'sent': i%2==1, 'received': i%2==0 }">
+                
+                <!-- 1. Avatar (Always on the outer edge) -->
+                <img class="chat-avatar" [src]="comment.auther?.profilePicturePath" alt="User">
+
+                <!-- 2. Content Wrapper (Name + Bubble) -->
+                <div class="chat-content">
+                    <!-- Name and Time -->
+                    <div class="chat-meta">
+                        <span class="chat-name font-size-14">{{comment.auther?.firstName}} {{comment.auther?.lastName}}</span>
+                        <span class="chat-time font-size-14">{{comment.createdAt | date:'short'}}</span>
+                    </div>
+                    
+                    <!-- The Bubble -->
+                    <div class="chat-bubble font-size-18">
+                        {{comment.value}}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card-footer">
+        <form action="#" method="post">
+            <div class="input-group">
+                <textarea type="text" name="message" [(ngModel)]="commentValue" placeholder="Type Message ..."
+                    class="form-control chat-input font-size-20"> </textarea>
+                <button type="button" class="btn btn-primary btn-send" (click)="addComment()">
+                    Send
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

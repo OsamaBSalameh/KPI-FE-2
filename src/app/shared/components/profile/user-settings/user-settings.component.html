@@ -1,0 +1,32 @@
+<div class="card" style="min-height: 600px !important;">
+    <div class="card-header p-2">
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a class="nav-link active" href="#personalInfo" data-bs-toggle="tab">Personal
+                    Information</a></li>
+            <!-- <li class="nav-item"><a class="nav-link" href="#passwordManagement" data-bs-toggle="tab">Password</a></li> -->
+            <!-- <li class="nav-item"><a class="nav-link" href="#profilePicture" data-bs-toggle="tab">Profile Picture</a></li> -->
+        </ul>
+    </div>
+    <div class="card-body">
+        <div class="tab-content">
+            <div class="active tab-pane" id="personalInfo">
+                <app-personal-information-management [modal]="modal"
+                    (userUpdatedEvent)="userUpdatedEventHandler(reLoginModal)">
+                </app-personal-information-management>
+            </div>
+            <!-- <div class="tab-pane" id="passwordManagement">
+                <app-password-management (userPasswordUpdatedEvent)="userUpdatedEventHandler(reLoginModal)">
+                </app-password-management>
+            </div> -->
+            <!-- <div class="tab-pane" id="profilePicture">
+                <app-profile-picture-management [modal]="modal" (userProfilePictureUpdatedEvent)="userProfilePictureEventHandler($event)"></app-profile-picture-management>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+
+<ng-template #reLoginModal>
+    <app-re-login-modal [modal]="reLoginModalReference">
+    </app-re-login-modal>
+</ng-template>

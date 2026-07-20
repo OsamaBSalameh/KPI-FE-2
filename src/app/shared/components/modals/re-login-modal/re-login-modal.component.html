@@ -1,0 +1,21 @@
+<div tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4>Logout <i class="fa fa-lock"></i></h4>
+        </div>
+        <div class="modal-body text-center justify-content-between">
+            <div class="text-danger" style="font-size: 24px;">
+                we will auto logout in: {{myTime}}
+            </div>
+
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" [style.width.%]="(myTimeOriginalValue - myTime) * (100/myTimeOriginalValue)"
+                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <br>
+            <i class="fa fa-question-circle"></i> You need to logout and re login in order to update changes
+        </div>
+        <div class="modal-footer"><a class="btn btn-outline-danger btn-block" href="javascript:;" (click)="logout()">Logout</a></div>
+    </div>
+</div>

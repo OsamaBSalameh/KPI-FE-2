@@ -1,0 +1,33 @@
+<div class="card card-primary" style="min-height: 600px !important;">
+  <div class="card-header">
+    <h3 class="card-title">About Me</h3>
+  </div>
+  <div class="card-body">
+
+    <div class="text-center">
+      <img class="profile-user-img img-fluid img-circle" src={{this.modal.profilePicturePath}}
+        alt="User profile picture">
+    </div>
+
+    <h3 class="profile-username text-center">{{this.modal.firstName}} {{this.modal.lastName}}</h3>
+    <!-- <p class="text-muted text-center">{{this.modal.organizationUnit?.name}}</p> -->
+    <hr>
+
+    <strong><i class="fas fa-book mr-1"></i> Department</strong>
+    <p class="text-muted">
+      {{this.modal.organizationUnit?.name}}
+    </p>
+    <hr>
+
+    <!-- <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+    <p class="text-muted">Malibu, California</p>
+    <hr> -->
+
+    <strong><i class="fas fa-pencil-alt mr-1"></i> User Name</strong>
+    <p class="text-muted">{{this.modal.userName}}</p>
+    <hr>
+
+    <strong><i class="far fa-file-alt mr-1"></i> Email</strong>
+    <p class="text-muted">{{this.modal.email}}</p>
+  </div>
+</div>

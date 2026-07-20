@@ -1,0 +1,58 @@
+<form [formGroup]="personalInfoForm" (ngSubmit)="onSubmit()" class="form-horizontal">
+    <div class="form-group row">
+        <label for="userName" class="col-sm-2 col-form-label">User Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="userName" placeholder="User Name" formControlName="userName"
+                [ngClass]="{ 'is-invalid': submitted && formFileds['userName'].errors }"
+                [ngClass]="{ 'is-valid': submitted && !formFileds['userName'].errors }">
+            <div class="validation-div text-danger">
+                <span *ngIf="(submitted && formFileds['userName'].errors) && 
+                                        (formFileds['userName'].errors['required'])">
+                    Value is Mandatory
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="firstName" placeholder="First Name" formControlName="firstName"
+                [ngClass]="{ 'is-invalid': submitted && formFileds['firstName'].errors }"
+                [ngClass]="{ 'is-valid': submitted && !formFileds['firstName'].errors }">
+            <div class="validation-div text-danger">
+                <span *ngIf="(submitted && formFileds['firstName'].errors) && 
+                                        (formFileds['firstName'].errors['required'])">
+                    Value is Mandatory
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="lastName" placeholder="Last Name" formControlName="lastName"
+                [ngClass]="{ 'is-invalid': submitted && formFileds['lastName'].errors }"
+                [ngClass]="{ 'is-valid': submitted && !formFileds['lastName'].errors }">
+            <div class="validation-div text-danger">
+                <span *ngIf="(submitted && formFileds['lastName'].errors) && 
+                                        (formFileds['lastName'].errors['required'])">
+                    Value is Mandatory
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="form-group row">
+        <label for="phoneNumber" class="col-sm-2 col-form-label">Phone Number</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="phoneNumber" placeholder="Phone Number"
+                formControlName="phoneNumber"
+                [ngClass]="{ 'is-invalid': submitted && formFileds['phoneNumber'].errors }"
+                [ngClass]="{ 'is-valid': submitted && !formFileds['phoneNumber'].errors }">
+        </div>
+    </div> -->
+
+    <!-- <div class="form-group justify-content-between profile-footer">
+        <hr style="width: 96%;">
+        <button type="submit" class="btn btn btn-outline-primary">Save changes</button>
+    </div> -->
+</form>

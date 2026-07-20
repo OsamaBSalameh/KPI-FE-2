@@ -1,0 +1,153 @@
+<div class="chat-container">
+    <!-- ============================================================================
+         TWO-COLUMN LAYOUT: Conversations (Left) + Chat (Right)
+         ============================================================================ -->
+    <div class="chat-layout">
+
+        <!-- ====================================================================
+             LEFT SIDEBAR - CONVERSATIONS LIST
+             ==================================================================== -->
+        <aside class="chat-sidebar conversations-panel">
+
+            <!-- Header -->
+            <div class="conversations-header">
+                <div class="header-content">
+                    <h2 class="conversations-title">
+                        <i class="fas fa-comments"></i>
+                        Messages
+                    </h2>
+                    <p class="conversations-subtitle">Your conversations</p>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="conversations-search">
+                <div class="search-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" [(ngModel)]="searchValue" (keyup)="search()"
+                        placeholder="Search conversations...">
+                    <!-- <button class="search-clear" *ngIf="searchValue" (click)="clearSearch()" title="Clear search">
+                        <i class="fas fa-times"></i>
+                    </button> -->
+                </div>
+            </div>
+
+            <!-- Conversations List -->
+            <div class="conversations-list">
+                <!-- Empty State -->
+                <div class="empty-state" *ngIf="!searchedMessages || searchedMessages.length === 0">
+                    <div class="empty-state-icon">
+                        <i class="fas fa-inbox"></i>
+                    </div>
+                    <p class="empty-state-text">
+                        {{ searchValue ? 'No conversations found' : 'No messages yet' }}
+                    </p>
+                    <small class="empty-state-hint">
+                        {{ searchValue ? 'Try a different search' : 'Start a conversation' }}
+                    </small>
+                </div>
+
+                <!-- Conversation Items -->
+                <div class="conversation-item" [ngClass]="{ 'active': message.selected }"
+                    *ngFor="let message of searchedMessages" (click)="userSelected(message)"
+                    [attr.data-unread]="(message?.unreadCount ?? 0) > 0">
+
+                    <!-- Avatar -->
+                    <div class="conversation-avatar">
+                        <img [src]="message.userImage" [alt]="message.otherUserFullName" class="avatar-image">
+                    </div>
+
+                    <!-- Conversation Info -->
+                    <div class="conversation-info">
+                        <div class="conversation-header">
+                            <h3 class="conversation-name">
+                                {{message.otherUserFullName}}
+                            </h3>
+                            <span class="conversation-time">
+                                {{message.sendAt | date:'short'}}
+                            </span>
+                        </div>
+                        <p class="conversation-message" [class.unread]="(message?.unreadCount ?? 0) > 0">
+                            {{message.lastMessage ?? 'No messages yet'}}
+                        </p>
+                    </div>
+
+                    <!-- Unread Badge -->
+                    <div class="unread-badge" *ngIf="(message?.unreadCount ?? 0) > 0">
+                        {{message.unreadCount}}
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ====================================================================
+             RIGHT PANEL - CHAT AREA
+             ==================================================================== -->
+        <main class="chat-main" *ngIf="otherUserSelected && (otherUserSelected?.userId)">
+
+            <!-- Chat Header -->
+            <div class="chat-header">
+                <div class="header-left">
+                    <div class="header-avatar">
+                        <img [src]="otherUserSelected.userImage" [alt]="otherUserSelected.fullName"
+                            class="avatar-image">
+                    </div>
+                    <div class="header-info">
+                        <h2 class="header-name">
+                            {{otherUserSelected.fullName}}
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages Container -->
+            <div class="messages-container" #chatBox>
+                <div class="messages-wrapper">
+                    <!-- Message Groups -->
+                    <div class="message-group" *ngFor="let msg of selectedMessages"
+                        [class.sent]="msg.senderId === currentUser.id"
+                        [class.received]="msg.senderId !== currentUser.id">
+
+                        <!-- Received Message -->
+                        <div *ngIf="msg.senderId !== currentUser.id" class="message-bubble received-message">
+                            <p class="message-text">{{msg.content}}</p>
+                            <span class="message-time">{{msg.sendAt | date:'short'}}</span>
+                        </div>
+
+                        <!-- Sent Message -->
+                        <div *ngIf="msg.senderId === currentUser.id" class="message-bubble sent-message">
+                            <p class="message-text">{{msg.content}}</p>
+                            <span class="message-time">{{msg.sendAt | date:'short'}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Footer / Input Area -->
+            <div class="chat-footer">
+                <div class="input-wrapper">
+                    <button class="attachment-btn" title="Attach file">
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                    <input type="text" class="message-input" [(ngModel)]="messageText" (keydown.enter)="sendMessage()"
+                        placeholder="Type your message...">
+                    <button class="send-btn" (click)="sendMessage()"
+                        [disabled]="!messageText || messageText.trim() === ''" title="Send message">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Empty Chat State -->
+        <main class="chat-main empty-chat" *ngIf="!otherUserSelected || !otherUserSelected?.userId">
+            <div class="empty-chat-content">
+                <div class="empty-chat-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h2>No conversation selected</h2>
+                <p>Select a conversation from the list to start chatting</p>
+            </div>
+        </main>
+    </div>
+</div>

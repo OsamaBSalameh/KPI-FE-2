@@ -1,0 +1,13 @@
+<!-- <a [routerLink]="tile.link" class="tile home-tiles-white-color small-box-footer">
+    <i [class]="tile.icon + ' tileIcon'"></i>
+    <div class="text">
+        <h1 class="tile-head-margin-0">{{tile.name}}</h1>
+    </div>
+</a> -->
+
+<div class="tile-navigator">
+    <a [routerLink]="tile.link" class="tile-card">
+        <i class="tile-icon" [ngClass]="tile.icon"></i>
+        <h3 class="tile-title">{{tile.name}}</h3>
+    </a>
+</div>

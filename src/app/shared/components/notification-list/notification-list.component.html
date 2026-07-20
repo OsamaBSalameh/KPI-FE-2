@@ -1,0 +1,77 @@
+<div class="notifications-container">
+
+    <!-- ====================================================================
+         HEADER SECTION
+         ==================================================================== -->
+    <div class="notifications-header">
+        <div class="header-content">
+            <h1 class="notifications-title">
+                <i class="fas fa-bell"></i>
+                My Notifications
+            </h1>
+            <p class="notifications-subtitle">Stay updated with your activities</p>
+        </div>
+
+        <button class="btn btn-dismiss-all" (click)="dismissAll()"
+            [disabled]="!notifications || notifications.length === 0" title="Dismiss all notifications">
+            <i class="fas fa-check-double"></i>
+            Dismiss All
+        </button>
+    </div>
+
+    <!-- ====================================================================
+         NOTIFICATIONS LIST
+         ==================================================================== -->
+    <div class="notifications-list">
+
+        <!-- Empty State -->
+        <div class="empty-state" *ngIf="!notifications || notifications.length === 0">
+            <i class="fas fa-inbox"></i>
+            <h3>No Notifications</h3>
+            <p>You're all caught up! Check back later for updates.</p>
+        </div>
+
+        <!-- Notification Items -->
+        <div *ngFor="let notification of notifications; let i = index" class="notification-item"
+            [ngClass]="'notification-' + getNotificationType(notification?.messageType ?? 1)">
+
+            <!-- Left Border Indicator -->
+            <div class="notification-indicator"></div>
+
+            <!-- Notification Content -->
+            <div class="notification-content">
+
+                <!-- Main Message -->
+                <div class="notification-header">
+                    <div class="notification-message-wrapper">
+                        <i class="notification-icon" [ngClass]="getNotificationIcon(notification?.messageType ?? 1)"></i>
+                        <h3 class="notification-message">{{notification.message}}</h3>
+                    </div>
+                    <span class="notification-time">{{notification.dateCalculation}}</span>
+                </div>
+
+                <!-- Sender Info -->
+                <div class="notification-meta">
+                    <span class="sender-info">
+                        <i class="fas fa-user-circle"></i>
+                        {{notification.sender?.firstName}} {{notification.sender?.lastName}}
+                    </span>
+                </div>
+
+                <!-- Actions -->
+                <div class="notification-actions">
+                    <button class="action-btn action-view" (click)="view(notification)" title="View details">
+                        <i class="fas fa-eye"></i>
+                        View
+                    </button>
+                    <button class="action-btn action-dismiss" (click)="dismiss(notification)"
+                        title="Dismiss notification">
+                        <i class="fas fa-times"></i>
+                        Dismiss
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,355 @@
+<!-- Old Tiles -->
+<div *ngIf="false">
+    <section class="content customNav">
+        <div>
+
+            <div class="row">
+                <div class="col-lg-4 col-4" *ngxPermissionsOnly="['SUPER_ADMIN']">
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>Units</h3>
+
+                            <p>departments</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-ios-world"></i>
+                        </div>
+                        <a routerLink="/administration/units" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-4" *ngxPermissionsOnly="['SUPER_ADMIN']">
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>Users</h3>
+
+                            <p>System users</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-stalker"></i>
+                        </div>
+                        <a routerLink="/administration/users" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-4" *ngxPermissionsOnly="['SUPER_ADMIN']">
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>Tags</h3>
+
+                            <p>KPI tags (for search)</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pricetags"></i>
+                        </div>
+                        <a routerLink="/lookups/tags" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4" *ngxPermissionsOnly="['WORK_SPACE_ADMIN', 'KPI_OWNER']">
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>KPI Copies</h3>
+
+                            <p>Copies from KPI templates</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-ios-copy"></i>
+                        </div>
+                        <a routerLink="/kpi-copy/list" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4" *ngxPermissionsOnly="['WORK_SPACE_ADMIN', 'DATA_CUSTADION', 'DATA_SPONSER']">
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>KPIs</h3>
+
+                            <p>KPI Templates</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a routerLink="/kpi/list" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4" *ngxPermissionsOnly="['WORK_SPACE_ADMIN', 'CEO', 'KPI_OWNER']">
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>KPI Requests</h3>
+
+                            <p>Unit KPI requests</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-radio-waves"></i>
+                        </div>
+                        <a routerLink="/kpi/request-list" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4" *ngxPermissionsOnly="['WORK_SPACE_ADMIN']">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>Objectives</h3>
+
+                            <p>team objectives</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-android-locate"></i>
+                        </div>
+                        <a routerLink="/design/objectives" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4" *ngxPermissionsOnly="['WORK_SPACE_ADMIN']">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>Strategies</h3>
+
+                            <p>Company strategies</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-android-clipboard"></i>
+                        </div>
+                        <a routerLink="/design/strategies" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4" *ngxPermissionsOnly="['WORK_SPACE_ADMIN']">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>Scorecards</h3>
+
+                            <p>Main scorecards</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-ios-bookmarks"></i>
+                        </div>
+                        <a routerLink="/design/scorecards" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4" *ngxPermissionsOnly="['DATA_CUSTADION', 'DATA_SPONSER', 'KPI_OWNER', 'WORK_SPACE_ADMIN']">
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3>Reporting</h3>
+
+                            <p>KPI Values reporting</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                        <a routerLink="/kpi/value-reports" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- Hidden for now -->
+                <!-- <div class="col-lg-4" *ngxPermissionsOnly="['DATA_CUSTADION', 'KPI_OWNER']">
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3>Achieved KPIs</h3>
+
+                            <p>Achieved and Finished KPIs</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-checkmark-circled"></i>
+                        </div>
+                        <a routerLink="/kpi/achieved-kpis" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div> -->
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4"></div>
+                <div class="col-lg-4" *ngxPermissionsOnly="['SUPER_ADMIN']">
+                    <div class="small-box bg-primary">
+                        <div class="inner">
+                            <h3>History</h3>
+                            <p>Actions history</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-filing"></i>
+                        </div>
+                        <a routerLink="/administration/audit-trail" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4"></div>
+                <div class="col-lg-4" *ngxPermissionsOnly="['SUPER_ADMIN', 'KPI_OWNER']">
+                    <div class="small-box bg-primary">
+                        <div class="inner">
+                            <h3>Delegations</h3>
+                            <p>Delegate Tasks</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-filing"></i>
+                        </div>
+                        <a routerLink="/administration/delegations" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4"></div>
+            </div>
+
+                        <div class="row">
+                <div class="col-lg-4"></div>
+                <div class="col-lg-4" *ngxPermissionsOnly="['SUPER_ADMIN', 'KPI_OWNER']">
+                    <div class="small-box bg-primary">
+                        <div class="inner">
+                            <h3>Work-Spaces</h3>
+                            <p>Delegate Tasks</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-filing"></i>
+                        </div>
+                        <a routerLink="/administration/delegations" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4"></div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- New Tils -->
+<!-- <ng-template #light>
+    <div class="home-nav-big-screen">
+        <div class="home-nav-big-txt home-img-bg">
+            <div style="padding: 0% 12%;">
+                <div>SIMAH KPI PLATFORM</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="home-nav-wrap row">
+
+        <div class="tiles-header" *ngIf="administrationList.length > 0">Administration</div>
+        <div class="col-3" *ngFor="let tile of administrationList">
+            <app-tile-navigator *ngxPermissionsOnly="tile.roles" [tile]="tile"></app-tile-navigator>
+        </div>
+
+        <div class="tiles-header" *ngIf="kpiList.length > 0">KPI</div>
+        <div class="col-3" *ngFor="let tile of kpiList">
+            <app-tile-navigator *ngxPermissionsOnly="tile.roles" [tile]="tile"></app-tile-navigator>
+        </div>
+
+        <div class="tiles-header" *ngIf="designList.length > 0">Design</div>
+        <div class="col-3" *ngFor="let tile of designList">
+            <app-tile-navigator *ngxPermissionsOnly="tile.roles" [tile]="tile"></app-tile-navigator>
+        </div>
+
+    </div>
+</ng-template> -->
+
+<!-- <ng-template #light>
+    <div class="home-nav-big-screen">
+        <div class="home-nav-big-txt home-img-bg">
+            <div style="padding: 0% 12%;">
+                <div>SIMAH KPI PLATFORM</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="home-nav-wrap row">
+
+        <div class="tiles-header" *ngIf="administrationList.length > 0">Administration</div>
+        <div class="col-3" *ngFor="let tile of administrationList">
+            <app-tile-navigator *ngxPermissionsOnly="tile.roles" [tile]="tile"></app-tile-navigator>
+        </div>
+
+        <div class="tiles-header" *ngIf="kpiList.length > 0">KPI</div>
+        <div class="col-3" *ngFor="let tile of kpiList">
+            <app-tile-navigator *ngxPermissionsOnly="tile.roles" [tile]="tile"></app-tile-navigator>
+        </div>
+
+        <div class="tiles-header" *ngIf="designList.length > 0">Design</div>
+        <div class="col-3" *ngFor="let tile of designList">
+            <app-tile-navigator *ngxPermissionsOnly="tile.roles" [tile]="tile"></app-tile-navigator>
+        </div>
+
+    </div>
+</ng-template> -->
+
+<div class="home-page-container">
+
+    <!-- ====================================================================
+         HERO SECTION
+         ==================================================================== -->
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <i class="fas fa-chart-line"></i>
+                SIMAH KPI Platform
+            </h1>
+            <p class="hero-subtitle">Manage, Monitor & Optimize Your Key Performance Indicators</p>
+        </div>
+        <div class="hero-background"></div>
+    </div>
+
+    <!-- ====================================================================
+         NAVIGATION TILES
+         ==================================================================== -->
+    <div class="tiles-container">
+
+        <!-- ADMINISTRATION SECTION -->
+        <div class="tiles-section" *ngIf="administrationList.length > 0">
+            <div class="section-header">
+                <i class="fas fa-cog"></i>
+                <h2>Administration</h2>
+            </div>
+            <div class="tiles-grid">
+                <div *ngFor="let tile of administrationList">
+                    <app-tile-navigator *ngxPermissionsOnly="tile.roles" [tile]="tile">
+                    </app-tile-navigator>
+                </div>
+            </div>
+        </div>
+
+        <!-- KPI SECTION -->
+        <div class="tiles-section" *ngIf="kpiList.length > 0">
+            <div class="section-header">
+                <i class="fas fa-chart-bar"></i>
+                <h2>KPI Management</h2>
+            </div>
+            <div class="tiles-grid">
+                <div *ngFor="let tile of kpiList">
+                    <app-tile-navigator *ngxPermissionsOnly="tile.roles" [tile]="tile">
+                    </app-tile-navigator>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESIGN SECTION -->
+        <div class="tiles-section" *ngIf="designList.length > 0">
+            <div class="section-header">
+                <i class="fas fa-pencil-ruler"></i>
+                <h2>Design & Strategy</h2>
+            </div>
+            <div class="tiles-grid">
+
+                <div *ngFor="let tile of designList">
+                    <app-tile-navigator *ngxPermissionsOnly="tile.roles" [tile]="tile">
+                    </app-tile-navigator>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

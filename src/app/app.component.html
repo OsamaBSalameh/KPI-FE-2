@@ -1,0 +1,29 @@
+<ng-template [ngxPermissionsOnly]="['SUPER_ADMIN','WORK_SPACE_ADMIN', 'CEO', 'KPI_OWNER', 'DATA_CUSTADION', 'DATA_SPONSER']"
+  [ngxPermissionsOnlyThen]="thenBlock" [ngxPermissionsOnlyElse]="elseBlock">
+</ng-template>
+
+<ng-template #elseBlock>
+  <router-outlet></router-outlet>
+</ng-template>
+
+<ng-template #thenBlock>
+  <div class="wrapper" style="max-width: 100%;">
+    <app-header>
+    </app-header>
+
+    <app-navigation>
+    </app-navigation>
+    <div class="content-wrapper">
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+
+  </div>
+</ng-template>
+
+
+<!-- <ngx-spinner type="ball-scale-multiple"></ngx-spinner> -->
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" type="timer" [fullScreen]="true">
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

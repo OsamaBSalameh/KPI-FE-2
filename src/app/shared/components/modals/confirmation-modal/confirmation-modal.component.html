@@ -1,0 +1,31 @@
+<div class="modern-confirmation-modal">
+    <div class="modal-content confirmation-modal-content">
+        <!-- Icon Section -->
+        <div class="confirmation-icon-section">
+            <div class="icon-container confirmation-icon">
+                <i class="fas fa-question-circle"></i>
+            </div>
+        </div>
+
+        <!-- Content Section -->
+        <div class="modal-body confirmation-modal-body">
+            <h2 class="confirmation-title">Are you sure</h2>
+            <p class="confirmation-message">{{modal.message}}</p>
+        </div>
+
+        <!-- Footer Section -->
+        <div class="modal-footer confirmation-modal-footer">
+            <button type="button" 
+                class="btn btn-secondary" 
+                (click)="cancel()"
+                data-dismiss="modal">
+                <i class="fas fa-times me-2"></i>Cancel
+            </button>
+            <button type="button" 
+                class="btn btn-primary" 
+                (click)="confirm()">
+                <i class="fas fa-check me-2"></i>Confirm
+            </button>
+        </div>
+    </div>
+</div>
