@@ -1,0 +1,93 @@
+Roles:
+	1. Dashboard
+	
+	2. Appointments<Module>:
+		a. appointment-list					<UserAppointmentsComponent>
+			* can-add-update-appointment-list		* can-read-appointment-list		* can-delete-appointment-list
+		
+		b. block-days-request				<BlockDaysRequestComponent>
+			* can-add-update-block-days-request		* can-read-block-days-request	* can-delete-block-days-request
+		
+		c. block-days-list					<BlockedDaysComponent>
+			* can-add-update-block-days-list		* can-read-block-days-list		* can-delete-block-days-list
+		
+		
+		
+	3. Sales<Not Module>:
+		a. orders<Module>					<OrdersComponent>
+			* can-add-update-orders					* can-read-orders				* can-delete-orders
+		
+		b. refresh-cycle<Module>			<OrderCycleComponent>
+			* can-add-update-refresh-cycle			* can-read-refresh-cycle		* can-delete-refresh-cycle
+		
+		c. recurring-payments<Module>		<RecurringComponent>
+			* can-add-update-recurring-payments		* can-read-recurring-payments	* can-delete-recurring-payments
+			
+			
+
+	4. Content Management<Not Module>		<StaticPagesComponent>
+		a. terms-and-conditions<Module>		<StaticPagesComponent>
+			* can-add-update-terms-and-conditions	* can-read-terms-and-conditions		* can-delete-terms-and-conditions
+		
+		
+	5. Configuration<Not Module>
+		a. notifications<Module>			<NotificationsComponent>
+			* can-add-update-notifications			* can-read-notifications			* can-delete-notifications
+			
+		b. advisory-tips<Module>			<AdvisoryTipsComponent>
+			* can-add-update-advisory-tips			* can-read-advisory-tips			* can-delete-advisory-tips
+			
+		c. mobile-settings<Module>			<MobileSettingsComponent>
+			* can-add-update-mobile-settings		* can-read-mobile-settings			* can-delete-mobile-settings
+			
+		d. calculator-config<Module>		<CalculatorConfigComponent>
+			* can-add-update-calculator-config		* can-read-calculator-config		* can-delete-calculator-config
+	
+
+	
+	6. Systems<Not Module>
+		a. ratings<Module>					<RatingsComponent>
+			* can-add-update-ratings			* can-read-ratings			* can-delete-ratings
+			
+		b. faq<Module>						<FaqComponent>
+			* can-add-update-faq				* can-read-faq				* can-delete-faq
+			
+		c. forcedata<Module>				<ForcedataComponent>
+			* can-add-update-forcedata			* can-read-forcedata		* can-delete-forcedata
+			
+		d. maintenance<Module>				<MaintenanceComponent>
+			* can-add-update-maintenance		* can-read-maintenance		* can-delete-maintenance
+
+			
+		
+	7. Dispute<Not Module>
+		a. data<Module>						<DataComponent>
+			* can-add-update-data				* can-read-data					* can-delete-data
+			
+		b. types<Module>					<TypesComponent>
+			* can-add-update-types				* can-read-types				* can-delete-types
+			
+		c. attachments<Module>				<AttachmentsComponent>
+			* can-add-update-attachments		* can-read-attachments			* can-delete-attachments
+			
+		d. composer<Module>					<ComposerComponent>
+			* can-add-update-composer			* can-read-composer				* can-delete-composer
+			
+		e. segment-settings<Module>			<SegmentSettingsComponent>
+			* can-add-update-segment-settings	* can-read-segment-settings		* can-delete-segment-settings
+			
+							
+		
+	8. Alerts<Not Module>
+		a. alert<Module>					<AlertsComponent>
+			* can-add-update-alert				* can-read-alert			* can-delete-alert
+			
+		b. change-alert<AlertCRModule>		<AlertCRComponent>
+			* can-add-update-change-alert		* can-read-change-alert		* can-delete-change-alert
+			
+		c. campaign-alert<Module			<CampaignAlertComponent>
+			* can-add-update-campaign-alert		* can-read-campaign-alert	* can-delete-campaign-alert
+			
+			
+			
+			[Done Everything]
