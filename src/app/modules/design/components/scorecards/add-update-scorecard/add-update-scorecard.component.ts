@@ -9,6 +9,7 @@ import { ObjectiveScorecard } from '../../../entities/classes/scorecards-objecti
 import { ObjectiveProspectiveEnum } from '../../../entities/enums/objective-prospective-enum';
 import { ObjectivesService } from '../../../services/objectives.service';
 import { ScorecardsService } from '../../../services/scorecards.service';
+import { Prospective } from 'src/app/modules/lookups/entities/lookups-entities';
 
 @Component({
   selector: 'app-add-update-scorecard',
@@ -25,9 +26,11 @@ export class AddUpdateScorecardComponent extends AddUpdateBaseComponent implemen
   scorecard: Scorecard = new Scorecard({});
   objectives: Objective[] = []
   weightSumNotEnough: boolean = false;
-  objectiveProspectiveValues: any[] = [];
+  // objectiveProspectiveValues: any[] = [];
   weightSum: number = 0;
   selectedProspective: number = 0
+
+  allProspectives: Prospective[] = []
 
   override dropdownSettings = {
     idField: 'id',
@@ -62,7 +65,9 @@ export class AddUpdateScorecardComponent extends AddUpdateBaseComponent implemen
   override async ngOnInit(): Promise<void> {
     super.ngOnInit()
     this.initModal()
-    this.prepareObjectiveProspectiveEnum()
+    // this.prepareObjectiveProspectiveEnum()
+  
+    await this.initProspectives()
 
     await this.initObjectives()
     this.initForm()
@@ -293,10 +298,15 @@ export class AddUpdateScorecardComponent extends AddUpdateBaseComponent implemen
     this.weightSum = weightValues;
   }
 
-  private prepareObjectiveProspectiveEnum() {
-    this.objectiveProspectiveValues = enumToObject(ObjectiveProspectiveEnum)
-    this.objectiveProspectiveValues.forEach(pro => pro.value = pro.name.split(/(?=[A-Z])/).toString().replaceAll(',', ' '))
-  }
+  // private prepareObjectiveProspectiveEnum() {
+  //   this.objectiveProspectiveValues = enumToObject(ObjectiveProspectiveEnum)
+  //   this.objectiveProspectiveValues.forEach(pro => pro.value = pro.name.split(/(?=[A-Z])/).toString().replaceAll(',', ' '))
+  // }
+
+    private async initProspectives() {
+      let prospectivesResult = this.scorecardsService.getProspectives().pipe(takeUntil(this.destroy$))
+      this.allProspectives = await lastValueFrom(prospectivesResult) as Prospective[];
+    }
 
   private prepareAddUpdateModel() {
     let objectiveScorecards = this.objectiveScorecards().controls.map(element => {

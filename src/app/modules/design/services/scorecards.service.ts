@@ -3,26 +3,34 @@ import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BaseService } from 'src/app/core/base-service/base-service';
 import { Objective } from '../entities/classes/objective';
+import { ProspectivesService } from '../../lookups/services/lookups.service';
 
 @Injectable()
 export class ScorecardsService extends BaseService<Objective> implements OnInit, OnDestroy {
 
-    //#region Constructor
+  //#region Constructor
 
-    constructor(
-      private http: HttpClient,
-      private toaster: ToastrService
-    ) {
-      super(http, toaster);
-  
-      this.apiUrl = this.apiUrl + 'Scorecards'
-    }
-  
-  
-    override ngOnInit(): void { super.ngOnInit() }
-  
-    override ngOnDestroy() { super.ngOnDestroy() }
-  
-    //#endregion
+  constructor(
+    private http: HttpClient,
+    private toaster: ToastrService,
+    private prospectivesService: ProspectivesService
+  ) {
+    super(http, toaster);
+
+    this.apiUrl = this.apiUrl + 'Scorecards'
+  }
+
+
+  override ngOnInit(): void { super.ngOnInit() }
+
+  override ngOnDestroy() { super.ngOnDestroy() }
+
+  //#endregion
+
+  //#region  Prospective
+  public getProspectives() {
+    return this.prospectivesService.get();
+  }
+  //#endregion
 
 }

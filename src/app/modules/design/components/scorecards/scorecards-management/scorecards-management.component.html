@@ -42,7 +42,7 @@
                         <th width="15%">
                             <div class="header-cell-content">
                                 <span class="header-content">
-                                    <i class="fas fa-hashtag"></i>
+                                    <i class="fas fa-hashtag cell-target"></i>
                                     ID
                                 </span>
                                 <button class="sort-btn" (click)="sort('Id')" title="Sort by ID">
@@ -55,7 +55,7 @@
                         <th width="70%">
                             <div class="header-cell-content">
                                 <span class="header-content">
-                                    <i class="fas fa-caret-square-o-right"></i>
+                                    <i class="fas fa-caret-square-o-right cell-target"></i>
                                     Name
                                 </span>
                                 <button class="sort-btn" (click)="sort('Name')" title="Sort by Name">
@@ -66,10 +66,12 @@
 
                         <!-- Actions Column -->
                         <th width="15%">
-                            <span class="header-content">
-                                <i class="fas fa-cogs"></i>
-                                Actions
-                            </span>
+                            <div class="header-cell-content">
+                                <span class="header-content">
+                                    <i class="fas fa-cogs cell-target"></i>
+                                    Actions
+                                </span>
+                            </div>
                         </th>
                     </tr>
                 </thead>

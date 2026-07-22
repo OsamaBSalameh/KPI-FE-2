@@ -84,18 +84,19 @@
                 </div>
 
                 <div class="card-body-custom">
-                
+
                     <div class="row g-3">
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <div class="input-wrapper mb-5">
                                     <i class="fas fa-filter input-icon"></i>
-                                    <label for="objectiveFilterId" class="form-label">Filter Objectives by Scorecard Prospective</label>
+                                    <label for="objectiveFilterId" class="form-label">Filter Objectives by Scorecard
+                                        Prospective</label>
                                     <select class="form-select modern-select font-size-16" id="objectiveFilterId"
                                         (change)="objectivesFilter($event.target)">
                                         <option value="0">Select All</option>
-                                        <option *ngFor="let prospectiveValue of objectiveProspectiveValues"
-                                            value="{{prospectiveValue.id}}">{{prospectiveValue.value}}
+                                        <option *ngFor="let prospectiveValue of allProspectives"
+                                            value="{{prospectiveValue.id}}">{{prospectiveValue.name}}
                                         </option>
                                     </select>
                                 </div>
@@ -116,28 +117,29 @@
                         </div>
                     </div>
 
-                    <div formArrayName="objectiveScorecards" *ngFor="let objectiveScorecard of objectiveScorecardFormGroups(); let i = index">
+                    <div formArrayName="objectiveScorecards"
+                        *ngFor="let objectiveScorecard of objectiveScorecardFormGroups(); let i = index">
 
                         <form class="row" [formGroupName]="i">
 
                             <div class="form-group col-lg-8"
                                 [hidden]="selectedProspective != 0 && objectiveScorecard.controls['objectiveProspective'].value != selectedProspective">
-                                <input class="form-control modern-input" formControlName="objectiveName" type="text" style="padding: 0px 10px;"
-                                    [attr.disabled]="true"
+                                <input class="form-control modern-input" formControlName="objectiveName" type="text"
+                                    style="padding: 0px 10px;" [attr.disabled]="true"
                                     [ngClass]="{ 'is-invalid': submitted && objectiveScorecard.controls['objectiveName'].errors }"
                                     [ngClass]="{ 'is-valid': submitted && !objectiveScorecard.controls['objectiveName'].errors }" />
                             </div>
 
                             <div class="form-group col-lg-2"
                                 [hidden]="selectedProspective != 0 && objectiveScorecard.controls['objectiveProspective'].value != selectedProspective">
-                                <select formControlName="objectiveProspective" class="form-select modern-select form-control" class="form-select modern-select "
+                                <select formControlName="objectiveProspective"
+                                    class="form-select modern-select form-control" class="form-select modern-select "
                                     id="objectiveProspective" style="padding: 0px 10px;"
                                     [ngClass]="{ 'is-invalid': submitted && objectiveScorecard.controls['objectiveProspective'].errors }"
                                     [ngClass]="{ 'is-valid': submitted && !objectiveScorecard.controls['objectiveProspective'].errors }">
                                     <option disabled hidden value="0">Select Objective</option>
-                                    <option *ngFor="let prospective of objectiveProspectiveValues"
-                                        value={{prospective.id}}>
-                                        {{prospective.value}}</option>
+                                    <option *ngFor="let prospective of allProspectives" value={{prospective.id}}>
+                                        {{prospective.name}}</option>
                                 </select>
 
                                 <div class="inner-validation-div text-danger">
@@ -151,8 +153,9 @@
 
                             <div class="form-group col-lg-2"
                                 [hidden]="selectedProspective != 0 && objectiveScorecard.controls['objectiveProspective'].value != selectedProspective">
-                                <input class="form-control modern-input dummyWeightClass" formControlName="weight" type="number" style="padding: 0px 10px;"
-                                    step="1" placeholder="add weight" (keyup)="calculateWeight($event.target)"
+                                <input class="form-control modern-input dummyWeightClass" formControlName="weight"
+                                    type="number" style="padding: 0px 10px;" step="1" placeholder="add weight"
+                                    (keyup)="calculateWeight($event.target)"
                                     [ngClass]="{ 'is-invalid': submitted && weightSumNotEnough && objectiveScorecard.controls['weight'].errors }"
                                     [ngClass]="{ 'is-valid': submitted && !weightSumNotEnough && !objectiveScorecard.controls['weight'].errors }" />
 
