@@ -2838,16 +2838,8 @@ body.dark-theme .card-header-custom {
     border-bottom: 1px solid #374151;
 }
 
-body.dark-theme .ngx-dropdown-container .ngx-dropdown-button {
-    background: #1f2937 !important;
-    color: #e5e7eb !important;
-}
-
-body.dark-theme .ngx-dropdown-list-container {
-    background: #1f2937 !important;
-    color: #e5e7eb !important;
-}
-
+body.dark-theme .ngx-dropdown-container .ngx-dropdown-button,
+body.dark-theme .ngx-dropdown-list-container,
 body.dark-theme .ngx-dropdown-list-container ul li {
     background: #1f2937 !important;
     color: #e5e7eb !important;
@@ -2855,4 +2847,13 @@ body.dark-theme .ngx-dropdown-list-container ul li {
 
 body.dark-theme .ngx-dropdown-container .ngx-dropdown-list-container .search-container input {
     color: #e5e7eb !important;
+}
+
+body.dark-theme .ngb-dp-header,
+body.dark-theme .ngb-dp-weekdays {
+    background-color: #121828;
+}
+
+body.dark-theme .btn-light{
+    color: #e5e7eb;
 }
