@@ -13,6 +13,7 @@ export class HomeNavigatorComponent implements OnInit {
   administrationList: NavigationList[] = [];
   kpiList: NavigationList[] = [];
   designList: NavigationList[] = [];
+  lookupsList: NavigationList[] = [];
 
   //#endregion
 
@@ -21,7 +22,8 @@ export class HomeNavigatorComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.initLists();
+    // this.initLists();
+    this.initLists2();
     this.prepareTiles();
   }
 
@@ -32,15 +34,10 @@ export class HomeNavigatorComponent implements OnInit {
   private prepareTiles() {
     let currentRoles = this.authService.getUserRoles()?.split(',') as string[];
 
-    this.kpiList = this.kpiList.filter(
-      (l) => this.intersection(l.roles, currentRoles).length > 0
-    );
-    this.designList = this.designList.filter(
-      (l) => this.intersection(l.roles, currentRoles).length > 0
-    );
-    this.administrationList = this.administrationList.filter(
-      (l) => this.intersection(l.roles, currentRoles).length > 0
-    );
+    this.kpiList = this.kpiList.filter((l) => this.intersection(l.roles, currentRoles).length > 0);
+    this.designList = this.designList.filter((l) => this.intersection(l.roles, currentRoles).length > 0);
+    this.administrationList = this.administrationList.filter((l) => this.intersection(l.roles, currentRoles).length > 0);
+    this.lookupsList = this.lookupsList.filter((l) => this.intersection(l.roles, currentRoles).length > 0);
   }
 
   private intersection(arr1: string[], arr2: string[]): string[] {
@@ -147,6 +144,122 @@ export class HomeNavigatorComponent implements OnInit {
         icon: 'ion ion-android-locate',
         link: '/design/objectives',
         roles: ['WORK_SPACE_ADMIN'],
+      }
+    ];
+  }
+
+  private initLists2() {
+    this.administrationList = [
+      {
+        name: 'Departments',
+        icon: 'fas fa-building',
+        link: '/administration/units',
+        roles: ['SUPER_ADMIN'],
+      },
+      {
+        name: 'Work-Spaces',
+        icon: 'fas fa-object-group',
+        link: '/administration/work-space',
+        roles: ['SUPER_ADMIN'],
+      },
+      {
+        name: 'Users',
+        icon: 'fas fa-user-shield',
+        link: '/administration/users',
+        roles: ['SUPER_ADMIN'],
+      },
+      {
+        name: 'Delegations',
+        icon: 'fas fa-handshake',
+        link: '/administration/delegations',
+        roles: ['SUPER_ADMIN', 'KPI_OWNER'],
+      },
+      {
+        name: 'Audit Trail',
+        icon: 'fas fa-history',
+        link: '/administration/audit-trail',
+        roles: ['SUPER_ADMIN'],
+      },
+    ];
+
+    this.lookupsList = [
+      {
+        name: 'Tags',
+        icon: 'fas fa-tags',
+        link: '/lookups/tags',
+        roles: ['SUPER_ADMIN'],
+      },
+      {
+        name: 'Prospectives',
+        icon: 'fas fa-eye',
+        link: '/lookups/prospectives',
+        roles: ['SUPER_ADMIN', 'WORK_SPACE_ADMIN'],
+      },
+      {
+        name: 'Measurement Units',
+        icon: 'fas fa-ruler-combined',
+        link: '/lookups/measurement-units',
+        roles: ['SUPER_ADMIN', 'WORK_SPACE_ADMIN'],
+      },
+      {
+        name: 'Frequencies',
+        icon: 'fas fa-calendar-alt',
+        link: '/lookups/frequencies',
+        roles: ['SUPER_ADMIN', 'WORK_SPACE_ADMIN'],
+      },
+    ];
+
+    this.designList = [
+      {
+        name: 'Objectives',
+        icon: 'fas fa-bullseye',
+        link: '/design/objectives',
+        roles: ['WORK_SPACE_ADMIN'],
+      },
+      {
+        name: 'Scorecards',
+        icon: 'fas fa-clipboard-check',
+        link: '/design/scorecards',
+        roles: ['WORK_SPACE_ADMIN'],
+      },
+      {
+        name: 'Strategies',
+        icon: 'fas fa-lightbulb',
+        link: '/design/strategies',
+        roles: ['WORK_SPACE_ADMIN'],
+      }
+    ];
+
+    this.kpiList = [
+      {
+        name: 'KPI Templates',
+        icon: 'fas fa-file-alt',
+        link: '/kpi/list',
+        roles: ['WORK_SPACE_ADMIN'],
+      },
+      {
+        name: 'KPI Requests',
+        icon: 'fas fa-file-signature',
+        link: '/kpi/request-list',
+        roles: ['WORK_SPACE_ADMIN', 'CEO', 'KPI_OWNER'],
+      },
+      {
+        name: 'KPI Copies',
+        icon: 'fas fa-copy',
+        link: '/kpi-copy/list',
+        roles: ['WORK_SPACE_ADMIN', 'KPI_OWNER'],
+      },
+      {
+        name: 'Reporting',
+        icon: 'fas fa-chart-bar',
+        link: '/kpi/value-reports',
+        roles: ['DATA_CUSTODIAN', 'DATA_SPONSOR', 'KPI_OWNER', 'WORK_SPACE_ADMIN'],
+      },
+      {
+        name: 'Department KPIs',
+        icon: 'fas fa-chart-pie',
+        link: '/kpi/department-kpis',
+        roles: ['KPI_OWNER', 'WORK_SPACE_ADMIN', 'CEO'],
       }
     ];
   }
