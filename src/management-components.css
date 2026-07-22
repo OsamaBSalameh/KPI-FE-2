@@ -2854,6 +2854,37 @@ body.dark-theme .ngb-dp-weekdays {
     background-color: #121828;
 }
 
-body.dark-theme .btn-light{
+body.dark-theme .btn-light {
     color: #e5e7eb;
+}
+
+body.dark-theme .btn-light:hover {
+    color: #e5e7eb;
+    background-color: #1f2937;
+    border-color: #1f2937;
+}
+
+body.dark-theme .dropdown-list {
+    color: #e5e7eb;
+    background-color: #1f2937;
+    border-color: #1f2937;
+}
+
+.dropdown-list .filter-textbox input {
+    height: 100%;
+}
+
+body.dark-theme .dropdown-list .filter-textbox input {
+    color: #e5e7eb;
+    background-color: #1f2937;
+    border-color: #1f2937;
+}
+
+body.dark-theme .multiselect-item-checkbox div {
+    color: #e5e7eb !important;
+}
+
+body.dark-theme .multiselect-item-checkbox div:hover {
+    color: #1f2937 !important;
+    background-color: #e5e7eb !important;
 }
