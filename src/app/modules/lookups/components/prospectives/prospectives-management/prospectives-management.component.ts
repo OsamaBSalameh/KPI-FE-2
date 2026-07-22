@@ -2,21 +2,21 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { takeUntil } from 'rxjs';
 import { ModalBaseComponent } from 'src/app/shared/baseComponents/modal-base.component';
-import { Tag } from '../../../entities/lookups-entities';
-import { TagsService } from '../../../services/lookups.service';
+import { Prospective } from '../../../entities/lookups-entities';
+import { ProspectivesService } from '../../../services/lookups.service';
 
 @Component({
-  selector: 'app-tags-management',
-  templateUrl: './tags-management.component.html',
-  styleUrls: ['./tags-management.component.css'],
+  selector: 'app-prospectives-management',
+  templateUrl: './prospectives-management.component.html',
+  styleUrls: ['./prospectives-management.component.css'],
 })
-export class TagsManagementComponent
+export class ProspectivesManagementComponent
   extends ModalBaseComponent
   implements OnInit, OnDestroy
 {
   //#region Variables
 
-  paginatedTags: Tag[] = [];
+  paginatedProspectives: Prospective[] = [];
   searchValue: string = '';
 
   sortingBy = {
@@ -28,7 +28,7 @@ export class TagsManagementComponent
 
   //#region Constructor
 
-  constructor(private tagsService: TagsService, modalService: NgbModal) {
+  constructor(private prospectivesService: ProspectivesService, modalService: NgbModal) {
     super(modalService);
   }
 
@@ -74,13 +74,13 @@ export class TagsManagementComponent
   sort(sortBy: string) {
     switch (sortBy) {
       case this.sortingBy.id:
-        this.paginatedTags.sort((a, b) => {
+        this.paginatedProspectives.sort((a, b) => {
           return <number>a.id - <number>b.id;
         });
         break;
 
       case this.sortingBy.name:
-        this.paginatedTags.sort((a, b) => {
+        this.paginatedProspectives.sort((a, b) => {
           return a.name?.localeCompare(b.name as string) as number;
         });
         break;
@@ -94,25 +94,25 @@ export class TagsManagementComponent
 
   //#region Handlers
 
-  tagAddedEventHandler(event: any) {
+  prospectiveAddedEventHandler(event: any) {
     this.getPaginatedValues();
   }
 
-  tagUpdatedEventHandler(event: any) {
+  prospectiveUpdatedEventHandler(event: any) {
     this.getPaginatedValues();
   }
 
-  tagDeletedEventHandler(event: number) {
-    this.tagsService
+  prospectiveDeletedEventHandler(event: number) {
+    this.prospectivesService
       .delete(event)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         error: () => {
-          this.tagsService.errorToaster('Faild to delete');
+          this.prospectivesService.errorToaster('Faild to delete');
         },
         next: () => {
           this.getPaginatedValues();
-          this.tagsService.successToaster('Deleted successfully');
+          this.prospectivesService.successToaster('Deleted successfully');
         },
       });
   }
@@ -122,12 +122,12 @@ export class TagsManagementComponent
   //#region Private Functions
 
   private getFormTypesPaginated() {
-    this.tagsService
+    this.prospectivesService
       .getValuesPaginated(this.paginationItem)
       .pipe(takeUntil(this.destroy$))
       .subscribe((res: any) => {
         this.fillPaginationData(res);
-        this.paginatedTags = res.items as Tag[];
+        this.paginatedProspectives = res.items as Prospective[];
       });
   }
 

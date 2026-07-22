@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AddUpdateBaseComponent } from 'src/app/shared/baseComponents/add-update-base.component';
-import { Tag } from '../../../entities/tag';
-import { TagsService } from '../../../services/tags.service';
+import { Tag } from '../../../entities/lookups-entities';
+import { TagsService } from '../../../services/lookups.service';
 
 @Component({
   selector: 'app-add-update-tag',

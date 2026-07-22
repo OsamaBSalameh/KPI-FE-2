@@ -1,0 +1,126 @@
+<!-- <div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">{{actionType}}</h3>
+    </div>
+
+    <form [formGroup]="prospectiveForm" (ngSubmit)="onSubmit()">
+        <div class="card-body">
+            <div class="form-group">
+                <label for="name">Prospective name</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter prospective name"
+                    [ngClass]="{ 'is-invalid': submitted && formFileds['name'].errors }"
+                    [ngClass]="{ 'is-valid': submitted && !formFileds['name'].errors }">
+            </div>
+        </div>
+
+        <div class="card-footer justify-content-between">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" (click)="close()" class="btn btn-outline-danger">Close</button>
+            </div>
+    </form>
+</div> -->
+
+<!-- <div>
+    <div *ngIf="addUpdateState == 1" class="alert alert-success" role="alert">
+        Saved </div>
+    <div *ngIf="addUpdateState == 2" class="alert alert-danger" role="alert">
+        not saved </div>
+</div> -->
+
+<div id="prospective-model" class="modern-kpi-modal">
+    <div class="modal-header">
+        <div class="header-content">
+            <div class="icon-wrapper">
+                <i class="fas fa-tags"></i> <!-- Icon representing objective/target -->
+            </div>
+            <div class="title-section">
+                <h5 class="modal-title">{{actionType}} Prospective</h5>
+                <p class="modal-subtitle">Define the prospectives, that will be used later with KPIs</p>
+            </div>
+        </div>
+        <button type="button" class="btn-close" (click)="close()" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <div id="prospectiveDiv" class="modal-body content-body">
+        <form [formGroup]="prospectiveForm" (ngSubmit)="onSubmit()">
+
+
+            <div class="form-card">
+                <div class="card-header-custom">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>Prospective Details</span>
+                </div>
+                <div class="card-body-custom">
+                    <div class="row g-3">
+
+                        <!-- Objective Name -->
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-caret-square-o-right input-icon"></i>
+                                    <label for="name" class="form-label">Name<span
+                                            class="required-star">*</span></label>
+                                    <input type="text" class="form-control modern-input height-70per"
+                                        formControlName="name" id="name" placeholder="Enter prospective name"
+                                        [ngClass]="{ 'is-invalid': submitted && formFileds['name'].errors }"
+                                        [ngClass]="{ 'is-valid': submitted && !formFileds['name'].errors }">
+                                </div>
+                                <div class="validation-messages">
+                                    <span *ngIf="(submitted && formFileds['name'].errors) && 
+                                    (formFileds['name'].errors['required'])">
+                                        Value is Mandatory
+                                    </span>
+                                    <span *ngIf="(submitted && formFileds['name'].errors) && 
+                        (formFileds['name'].errors['maxlength'])">
+                                        Maximum allowed characters is 100
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-8">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-caret-square-o-right input-icon"></i>
+                                    <label for="description" class="form-label">Description<span
+                                            class="required-star">*</span></label>
+                                    <input type="text" class="form-control modern-input height-70per"
+                                        formControlName="description" id="description"
+                                        placeholder="Descript what This Prospective stands for"
+                                        [ngClass]="{ 'is-invalid': submitted && formFileds['description'].errors }"
+                                        [ngClass]="{ 'is-valid': submitted && !formFileds['description'].errors }">
+                                </div>
+                                <div class="validation-messages">
+                                    <span *ngIf="(submitted && formFileds['description'].errors) && 
+                                    (formFileds['description'].errors['required'])">
+                                        Value is Mandatory
+                                    </span>
+                                    <span *ngIf="(submitted && formFileds['description'].errors) && 
+                        (formFileds['description'].errors['maxlength'])">
+                                        Maximum allowed characters is 100
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Unified Footer -->
+            <div class="modal-footer-custom justify-content-between">
+                <button type="button" (click)="close()" class="btn btn-outline-danger">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button type="submit" [disabled]="view" class="btn btn-primary modern-btn btn-save"
+                    *ngxPermissionsOnly="['SUPER_ADMIN']">
+                    <i class="fas fa-save"></i> Save changes
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

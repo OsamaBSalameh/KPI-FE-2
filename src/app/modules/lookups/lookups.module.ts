@@ -7,13 +7,17 @@ import { AddUpdateTagComponent } from './components/tags/add-update-tag/add-upda
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { TagsService } from './services/tags.service';
+import { ProspectivesService, TagsService } from './services/lookups.service';
+import { ProspectivesManagementComponent } from './components/prospectives/prospectives-management/prospectives-management.component';
+import { AddUpdateProspectiveComponent } from './components/prospectives/add-update-prospective/add-update-prospective.component';
 
 
 @NgModule({
   declarations: [
     TagsManagementComponent,
-    AddUpdateTagComponent
+    AddUpdateTagComponent,
+    ProspectivesManagementComponent,
+    AddUpdateProspectiveComponent
   ],
   imports: [
     CommonModule,
@@ -23,6 +27,6 @@ import { TagsService } from './services/tags.service';
     NgbModule,
     SharedModule
   ],
-  providers: [TagsService]
+  providers: [TagsService, ProspectivesService]
 })
 export class LookupsModule { }
