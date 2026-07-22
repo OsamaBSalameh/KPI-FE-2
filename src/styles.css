@@ -441,6 +441,9 @@ body.dark-theme .units-table {
 
 body.dark-theme .management-table thead,
 body.dark-theme .users-table thead,
+body.dark-theme .tags-table thead,
+body.dark-theme .kpi-copies-table thead,
+body.dark-theme .delegations-table thead,
 body.dark-theme .units-table thead {
     background: #1f2937;
     border-bottom-color: #374151;

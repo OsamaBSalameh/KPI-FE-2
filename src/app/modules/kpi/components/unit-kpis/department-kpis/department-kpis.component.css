@@ -1,7 +1,12 @@
-.i-blue-color{
+.i-blue-color {
     color: #0e58c7d1;
 }
 
-.i-red-color{
+.i-red-color {
     color: #ef4152e0;
+}
+
+.table-header {
+    background: var(--bg-light);
+    border-bottom: 2px solid var(--border-color);
 }

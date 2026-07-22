@@ -410,6 +410,10 @@ body.dark-theme .units-table {
 
 body.dark-theme .management-table thead,
 body.dark-theme .users-table thead,
+body.dark-theme .tags-table thead,
+body.dark-theme .kpi-copies-table thead,
+body.dark-theme .delegations-table thead,
+body.dark-theme .table-header,
 body.dark-theme .units-table thead {
     background: #1f2937;
     border-bottom-color: #374151;
@@ -443,8 +447,10 @@ body.dark-theme .units-table td {
 }
 
 body.dark-theme .kpi-table thead,
+body.dark-theme .kpi-copies-table thead,
 body.dark-theme .kpi-table th {
     border-bottom: 1px solid #374151 !important;
+    background: #1f2937;
 }
 
 body.dark-theme .table-data-row.row-alternate {
@@ -1544,10 +1550,6 @@ body.dark-theme .id-badge {
     transition: all var(--transition-fast);
 }
 
-.tags-table tbody tr:hover {
-    background: var(--bg-light);
-}
-
 .tags-table td {
     padding: var(--spacing-md);
     vertical-align: middle;
@@ -1573,7 +1575,6 @@ body.dark-theme .id-badge {
 
 .tag-name-text {
     font-weight: 500;
-    color: var(--text-dark);
 }
 
 /* Tag Row Hover Effects */
@@ -1698,12 +1699,7 @@ body.dark-theme .id-badge {
 }
 
 .delegations-table tbody tr {
-    border-bottom: 1px solid var(--border-color);
     transition: all var(--transition-fast);
-}
-
-.delegations-table tbody tr:hover {
-    background: var(--bg-light);
 }
 
 .delegations-table td {
@@ -1729,6 +1725,7 @@ body.dark-theme .id-badge {
 }
 
 body.dark-theme .work-space-table thead {
+    background: #1f2937;
     border-bottom: 1px solid #374151;
 }
 
@@ -2343,7 +2340,6 @@ body.dark-theme .work-space-table thead {
 .cell-value {
     font-weight: 600;
     font-size: 0.95rem;
-    color: #333;
     display: flex;
     align-items: center;
     gap: 0.5rem;

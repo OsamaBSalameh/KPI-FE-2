@@ -14,8 +14,10 @@
 }
 
 body.dark-theme .kpi-table thead,
+body.dark-theme .kpi-copies-table thead,
 body.dark-theme .kpi-table th {
     border-bottom: 1px solid #374151 !important;
+    background: #1f2937;
 }
 
 .kpi-table th {
