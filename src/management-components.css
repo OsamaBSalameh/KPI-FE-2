@@ -2888,3 +2888,28 @@ body.dark-theme .multiselect-item-checkbox div:hover {
     color: #1f2937 !important;
     background-color: #e5e7eb !important;
 }
+
+body.dark-theme .dropdown-item {
+    color: #e5e7eb;
+    background-color: #1f2937;
+}
+
+body.dark-theme .dropdown-item:hover {
+    color: #1f2937 !important;
+    background-color: #e5e7eb !important;
+}
+
+body.dark-theme .btn {
+    color: #e5e7eb;
+}
+
+body.dark-theme .dropdown-item.disabled,
+.dropdown-item:disabled {
+    color: #6c757d !important;
+    pointer-events: none;
+    background-color: transparent;
+}
+
+body.dark-theme .dropdown-menu .dropdown-item{
+    background-color: #121827;
+}
