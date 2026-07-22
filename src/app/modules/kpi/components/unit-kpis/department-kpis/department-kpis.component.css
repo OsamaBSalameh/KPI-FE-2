@@ -10,3 +10,7 @@
     background: var(--bg-light);
     border-bottom: 2px solid var(--border-color);
 }
+
+.page-title i {
+    font-size: 3.5rem;
+}

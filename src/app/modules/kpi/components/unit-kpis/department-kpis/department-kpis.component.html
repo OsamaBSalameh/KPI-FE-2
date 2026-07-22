@@ -1,25 +1,24 @@
-<div class="tags-management-container">
+<div class="units-management-container">
     <!-- Header Section -->
     <div class="management-header">
         <div class="header-content">
             <div class="header-title-section">
-                <h1 class="kpis-main-title">
-                    <i class="fas fa-chart-line"></i>
-                    Department KPIs
+                <h1 class="page-title">
+                    <i class="fas fa-chart-line me-3"></i> Department KPIs
                 </h1>
-                <p class="kpis-subtitle">Track and monitor departmental performance metrics</p>
+                <p class="page-subtitle">Track and monitor departmental performance metrics</p>
             </div>
 
             <!-- Filters -->
             <div class="header-actions">
                 <!-- Organization Filter -->
-                <div class="filter-section" *ngxPermissionsOnly="['CEO', 'WORK_SPACE_ADMIN']">
-                    <label class="filter-label me-2">
-                        <i class="fas fa-building"></i>
+                <div class="filter-section" style="padding: 0 1rem;" *ngxPermissionsOnly="['CEO', 'WORK_SPACE_ADMIN']">
+                    <label class="filter-label">
+                        <i class="fas fa-building me-2"></i>
                         Department
                     </label>
-                    <select class="filter-select" id="organizationId"
-                        [class.filter-active]="selectedUnit != 0" (change)="onOrganizationSelect($event.target)">
+                    <select class="filter-select" id="organizationId" [class.filter-active]="selectedUnit != 0"
+                        (change)="onOrganizationSelect($event.target)">
                         <option value="0">All Departments</option>
                         <option *ngFor="let unit of allUnits" value="{{unit.id}}">
                             {{unit.name}}
@@ -31,14 +30,13 @@
                 </div>
 
                 <!-- Strategy Filter -->
-                <div class="filter-section">
-                    <label class="filter-label me-2">
-                        <i class="fas fa-map"></i>
+                <div class="filter-section" style="padding: 0 1rem;">
+                    <label class="filter-label">
+                        <i class="fas fa-map me-2"></i>
                         Strategy
                     </label>
-                    <select class="filter-select" id="strategyId"
-                        [class.filter-active]="selectedStrategyId != 0" [(ngModel)]="selectedStrategyId"
-                        (change)="onStrategySelected($event.target)">
+                    <select class="filter-select" id="strategyId" [class.filter-active]="selectedStrategyId != 0"
+                        [(ngModel)]="selectedStrategyId" (change)="onStrategySelected($event.target)">
                         <option value="0">All Strategies</option>
                         <option *ngFor="let data of strategies" value="{{data.id}}">
                             {{data.name}}
@@ -65,7 +63,7 @@
          ============================================================================ -->
     <div class="table-section">
         <div class="table-wrapper">
-            <table class="kpis-table" dir="ltr" id="excel-table">
+            <table class="units-table" dir="ltr" id="excel-table">
                 <thead class="table-header">
                     <tr class="table-header-row">
                         <th class="table-header-cell" *ngxPermissionsOnly="['CEO', 'WORK_SPACE_ADMIN']" width="12%">
