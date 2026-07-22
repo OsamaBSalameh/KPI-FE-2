@@ -351,5 +351,20 @@
             </div>
         </div>
 
+                <!-- LOOKUP SECTION -->
+        <div class="tiles-section" *ngIf="lookupsList.length > 0">
+            <div class="section-header">
+                <i class="fas fa-database"></i>
+                <h2>Lookups</h2>
+            </div>
+            <div class="tiles-grid">
+
+                <div *ngFor="let tile of lookupsList">
+                    <app-tile-navigator *ngxPermissionsOnly="tile.roles" [tile]="tile">
+                    </app-tile-navigator>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
